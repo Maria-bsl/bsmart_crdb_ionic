@@ -1,0 +1,82 @@
+<div class="w-screen h-screen bg-[var(--mat-sys-surface-container-high)]">
+  <app-header-section [s_showBackButton]="false"></app-header-section>
+  <div class="w-full grid place-items-center py-8">
+    <div
+      class="w-52 h-52 rounded-full grid place-items-center border-4 border-[var(--mat-sys-on-secondary)]"
+    >
+      <mat-icon
+        class="!w-24 !h-24 !text-[var(--mat-sys-outline)]"
+        svgIcon="person-fill"
+        matPrefix
+      ></mat-icon>
+    </div>
+  </div>
+  <div class="flex flex-col p-4 w-full space-y-4">
+    <div class="flex flex-col w-full">
+      <h1 class="mat-headline-small">
+        {{ "PROFILE_PAGE.LABELS.PROFILE" | translate }}
+      </h1>
+      <mat-list role="list" class="!space-y-2">
+        <mat-list-item
+          role="listitem"
+          class="!bg-[var(--mat-sys-on-secondary)] !p-2 !w-full !h-16 !rounded-sm"
+          matRipple
+        >
+          <a
+            (click)="openEditProfilePage($event)"
+            class="flex flex-row items-center justify-between !py-3 w-full relative"
+          >
+            <div class="flex flex-row items-center space-x-1">
+              <mat-icon
+                class="!w-10 !h-10 !text-[var(--mat-sys-inverse-primary)]"
+                svgIcon="person-check-fill"
+                matPrefix
+              ></mat-icon>
+              <a class="mat-title-large">
+                {{ "PROFILE_PAGE.LABELS.PROFILE_PROMPT_TEXT" | translate }}
+              </a>
+            </div>
+            <mat-icon
+              class="!text-[var(--mat-sys-inverse-primary)]"
+              svgIcon="chevron-right"
+              matPrefix
+            ></mat-icon>
+          </a>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="flex flex-col w-full">
+      <h1 class="mat-headline-small">
+        {{ "PROFILE_PAGE.LABELS.SECURITY" | translate }}
+      </h1>
+      <mat-list role="list" class="!space-y-2">
+        <mat-list-item
+          role="listitem"
+          class="!bg-[var(--mat-sys-on-secondary)] !p-2 !w-full !h-16 !rounded-sm"
+          matRipple
+        >
+          <a
+            (click)="openChangePasswordPage($event)"
+            class="flex flex-row items-center justify-between !py-3 w-full relative"
+          >
+            <div class="flex flex-row items-center space-x-1">
+              <mat-icon
+                class="!w-10 !h-10 !text-[var(--mat-sys-inverse-primary)]"
+                svgIcon="unlock-fill"
+                matPrefix
+              ></mat-icon>
+              <a class="mat-title-large">
+                {{ "PROFILE_PAGE.LABELS.CHANGE_PASSWORD_TEXT" | translate }}
+              </a>
+            </div>
+            <mat-icon
+              class="!text-[var(--mat-sys-inverse-primary)]"
+              svgIcon="chevron-right"
+              matPrefix
+            ></mat-icon>
+          </a>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>

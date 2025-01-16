@@ -1,0 +1,38 @@
+<h6 class="mat-headline-small">
+  {{ "RESULTS_PAGE.LABELS.WELCOME_TEXT" | translate }}
+</h6>
+<h6 class="mat-title-small">
+  {{ "RESULTS_PAGE.LABELS.EXAMS_TEXT" | translate }}
+</h6>
+<ng-container *ngIf="examTypes$ | async as examTypes">
+  <mat-list role="list" class="!space-y-2">
+    <mat-list-item
+      *ngFor="let examType of examTypes; index as ind"
+      role="listitem"
+      class="!bg-[var(--mat-sys-on-secondary)] !p-2 !h-20 !rounded-sm"
+      matRipple
+    >
+      <a
+        [routerLink]="'/tabs/tab-1/results/' + (examType.ExamSno | toBase64)"
+        class="flex flex-row items-center justify-between !py-3 w-full"
+      >
+        <div class="flex flex-row items-center space-x-1">
+          <img
+            class="w-12"
+            src="assets/images/exam_6320487.png"
+            alt=""
+            srcset=""
+          />
+          <h6 class="mat-body-large pt-2 capitalize">
+            {{ examType.Exam_Type.toLocaleLowerCase() }}
+          </h6>
+        </div>
+        <mat-icon
+          class="!text-[var(--mat-sys-inverse-primary)]"
+          svgIcon="chevron-right"
+          matPrefix
+        ></mat-icon>
+      </a>
+    </mat-list-item>
+  </mat-list>
+</ng-container>

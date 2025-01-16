@@ -1,0 +1,85 @@
+<div class="w-full h-full relative">
+  <button
+    mat-icon-button
+    mat-dialog-close
+    class="absolute right-1 top-1 float-right !bg-[var(--md-sys-color-neutral-variant)]"
+  >
+    <mat-icon class="text-black" matPrefix svgIcon="x-lg"></mat-icon>
+  </button>
+  <mat-dialog-content class="flex flex-col w-full relative">
+    <ion-title class="w-full text-center">
+      {{ "FEES_PAGE.LABELS.PAY_WITH_MPESA" | translate }}
+    </ion-title>
+    <form
+      *ngIf="!mpesaService.isLoading(); else processingTransaction"
+      [formGroup]="payFormGroup"
+      class="my-2"
+    >
+      <div class="flex flex-col w-full">
+        <ion-text class="mat-body-small !font-semibold placeholer-text">
+          {{ "FEES_PAGE.LABELS.PHONE_NUMBER" | translate }}
+        </ion-text>
+        <mat-form-field class="form-field-input">
+          <span matTextPrefix>+255 &nbsp;</span>
+          <input
+            #phone
+            type="tel"
+            [formControl]="input_CustomerMSISDN"
+            matInput
+            placeholder="666-999-666"
+          />
+          <mat-error>
+            @if (input_CustomerMSISDN | hasFormControlError: 'required') {
+            {{ "FEES_PAGE.ERRORS.MISSING_PHONE_NUMBER" | translate }}
+            } @else if (input_CustomerMSISDN | hasFormControlError: 'pattern') {
+            {{ "FEES_PAGE.ERRORS.INVALID_PHONE_NUMBER" | translate }}
+            }
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col w-full">
+        <ion-text class="mat-body-small !font-semibold placeholer-text">
+          {{ "FEES_PAGE.LABELS.AMOUNT" | translate }}
+        </ion-text>
+        <mat-form-field class="form-field-input">
+          <input
+            [value]="
+              data.package?.Package_Amount
+                ? (data.package?.Package_Amount | currency : 'TZS')
+                : (data.amount | currency : 'TZS')
+            "
+            type="text"
+            matInput
+            placeholder="TZS"
+            [readonly]="true"
+          />
+        </mat-form-field>
+      </div>
+      <div
+        class="w-full bg-[var(--md-sys-color-on-primary-container)] p-1 rounded"
+      >
+        <h6 class="!w-full !text-center mat-body-small">
+          {{ "FEES_PAGE.LABELS.PAYMENT_REQUEST" | translate }}
+        </h6>
+      </div>
+      <button
+        (click)="submitPayWithMpesaForm($event)"
+        type="button"
+        class="w-full my-4"
+        mat-flat-button
+      >
+        {{ "FEES_PAGE.ACTIONS.PAY" | translate }}
+        {{
+          data.package?.Package_Amount
+            ? (data.package?.Package_Amount | currency : "TZS")
+            : (data.amount | currency : "TZS")
+        }}
+      </button>
+    </form>
+    <ng-template #processingTransaction>
+      <div class="w-full h-full grid place-items-center py-4">
+        <span class="loader"></span>
+      </div>
+    </ng-template>
+  </mat-dialog-content>
+</div>

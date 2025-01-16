@@ -1,0 +1,196 @@
+<div class="w-full h-fit bg-white rounded-lg p-2 flex flex-col">
+  <h1 class="!text-black mat-headline-large w-full">
+    {{ "REGISTER.TITLE_TEXT" | translate }}
+  </h1>
+  <form class="w-full flex flex-col space-y-4 relative overflow-hidden">
+    <ng-container [formGroup]="parentRegService.parentForm">
+      <div
+        #firstPartRegister
+        class="flex flex-col w-full space-y-1 h-fit duration-500"
+      >
+        <div class="flex flex-col">
+          <h6 class="mat-label-small text-black">
+            {{ "REGISTER.REGISTER_FORM.LABELS.FULL_NAME" | translate }}
+          </h6>
+          <mat-form-field class="form-field-input">
+            <input
+              matInput
+              type="text"
+              [placeholder]="
+                'REGISTER.REGISTER_FORM.PLACEHOLDERS.FULL_NAME' | translate
+              "
+              [formControl]="parentRegService.Parent_Name"
+            />
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col">
+          <h6 class="mat-label-small text-black">
+            {{ "REGISTER.REGISTER_FORM.LABELS.PHONE_NUMBER" | translate }}
+          </h6>
+          <mat-form-field class="form-field-input">
+            <span class="text-black" matTextPrefix>+255 &nbsp;</span>
+            <input
+              matInput
+              type="tel"
+              [placeholder]="
+                'REGISTER.REGISTER_FORM.PLACEHOLDERS.PHONE_NUMBER' | translate
+              "
+              [formControl]="parentRegService.Mobile_No"
+            />
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col">
+          <h6 class="mat-label-small text-black">
+            {{ "REGISTER.REGISTER_FORM.LABELS.USERNAME" | translate }}
+          </h6>
+          <mat-form-field class="form-field-input">
+            <input
+              matInput
+              type="text"
+              [placeholder]="
+                'REGISTER.REGISTER_FORM.PLACEHOLDERS.USERNAME' | translate
+              "
+              [formControl]="parentRegService.User_Name"
+            />
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col">
+          <h6 class="mat-label-small text-black">
+            {{ "REGISTER.REGISTER_FORM.LABELS.EMAIL_ADDRESS" | translate }}
+          </h6>
+          <mat-form-field class="form-field-input">
+            <input
+              matInput
+              type="email"
+              [placeholder]="
+                'REGISTER.REGISTER_FORM.PLACEHOLDERS.EMAIL_ADDRESS' | translate
+              "
+              [formControl]="parentRegService.Email_Address"
+            />
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container [formGroup]="studentRegService.studentForm">
+      <div
+        #secondPartRegister
+        formArrayName="SDetails"
+        class="flex flex-col w-full space-y-1 h-fit absolute top-0 left-0 right-0 translate-x-full duration-500"
+      >
+        <ng-container
+          *ngFor="
+            let sDetail of studentRegService.SDetails.controls;
+            index as ind
+          "
+          formGroupName="{{ ind }}"
+        >
+          <div class="flex flex-col">
+            <h6 class="mat-label-small text-black">
+              {{ "REGISTER.REGISTER_FORM.LABELS.SCHOOL" | translate }}
+            </h6>
+            <mat-form-field class="form-field-input">
+              <input
+                matInput
+                type="text"
+                [placeholder]="
+                  'REGISTER.REGISTER_FORM.PLACEHOLDERS.SCHOOL' | translate
+                "
+                [matAutocomplete]="auto"
+                formControlName="SearchFacility"
+              />
+              <mat-autocomplete #auto="matAutocomplete">
+                @for (option of studentRegService.filteredFacultiesOptions$ |
+                async; track option) {
+                <mat-option [value]="option.Facility_Name">{{
+                  option.Facility_Name
+                }}</mat-option>
+                }
+              </mat-autocomplete>
+              <mat-error>
+                @if
+                (studentRegService.SDetails.controls.at(0)?.get('SearchFacility')?.hasError('required'))
+                {
+                {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+                } @else if
+                (studentRegService.SDetails.controls.at(0)?.get('SearchFacility')?.hasError('invalidFacultyName'))
+                {
+                {{
+                  "REGISTER.REGISTER_FORM.ERRORS.SCHOOL_NAME_DOES_NOT_EXIST"
+                    | translate
+                }}
+                }
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="flex flex-col">
+            <h6 class="mat-label-small text-black">
+              {{ "REGISTER.REGISTER_FORM.LABELS.ADMISSION_NO" | translate }}
+            </h6>
+            <mat-form-field class="form-field-input">
+              <input
+                matInput
+                type="text"
+                [placeholder]="
+                  'REGISTER.REGISTER_FORM.PLACEHOLDERS.ADMISSION_NO' | translate
+                "
+                formControlName="Admission_No"
+              />
+              <mat-error>
+                {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <div class="flex flex-row items-center justify-end">
+      <button
+        *ngIf="!isFirstPartRegister()"
+        class="!text-[var(--mat-sys-error)]"
+        mat-button
+        (click)="submitRegisterFormGroup($event)"
+        type="button"
+      >
+        {{ "REGISTER.REGISTER_FORM.LABELS.PREV" | translate }}
+      </button>
+      <button
+        (click)="
+          isFirstPartRegister()
+            ? submitRegisterFormGroup($event)
+            : submitRegisterForm($event)
+        "
+        mat-flat-button
+        type="button"
+      >
+        @if (isFirstPartRegister()) {
+        {{ "REGISTER.REGISTER_FORM.LABELS.NEXT" | translate }}
+        } @else {
+        {{ "REGISTER.REGISTER_FORM.LABELS.CONTINUE" | translate }}
+        }
+      </button>
+    </div>
+  </form>
+  <div class="flex flex-row items-center justify-center mt-8">
+    <span class="text-black text-xs"
+      >{{ "REGISTER.ALREADY_SIGNED_UP" | translate }}
+      <ion-text
+        [routerLink]="'/login'"
+        color="primary"
+        class="text-xs hover:underline"
+        >{{ "REGISTER.LOGIN_HERE" | translate }}</ion-text
+      >
+    </span>
+  </div>
+</div>

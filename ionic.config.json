@@ -1,5 +1,7 @@
 {
   "name": "bsmart_crdb_mobile_app",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular-standalone"
 }

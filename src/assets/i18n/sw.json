@@ -1,0 +1,298 @@
+{
+  "DEFAULTS": {
+    "LOADING": "Kupakia",
+    "CONFIRM": "Thibitisha",
+    "INVALID_FORM": "Simu batili",
+    "FAILED": "Imeshindwa",
+    "OK": "Sawa",
+    "YES": "Ndio",
+    "NO": "Hapana",
+    "VIEW": "Mwoneko",
+    "THIS_CANT_BE_UNDONE": "Hii haiwezi kutenduliwa.",
+    "FILE_DOWNLOADED_SUCCESSFULLY": "Faili yako ilipakuliwa kwa mafanikio!",
+    "SUBMIT": "Wasilisha",
+    "DOWNLOAD": "Kupakua",
+    "NOT_AVAILABLE_TEXT": "Haipatikani",
+    "WARNING": "Onyo",
+    "INFO": "Taarifa",
+    "RESET": "Weka upya",
+    "ERRORS": {
+      "CANNOT_BE_BLANK": "Haiwezi kuwa tupu",
+      "UNEXPECTED_ERROR_OCCURED": "An unexpected error occurred, please try again or contact support."
+    },
+    "ADS": [
+      {
+        "TITLE": "CRDB Lipa Hapa",
+        "DESCRIPTION": "Kukamilisha malipo kwa urahisi kwa wafanyabiashara wote kutoka benki na mitandao ya simu."
+      }
+    ],
+    "DIALOGS": {
+      "SURE_LOGOUT_TEXT": "Una uhakika unataka kuondoka?"
+    }
+  },
+  "SELECT_LANGUAGE_PAGE": {
+    "WELCOME_TEXT": "Karibu kwenye B-smart Academia",
+    "KISWAHILI": "Kiswahili",
+    "ENGLISH": "Kiingereza"
+  },
+  "LOGIN": {
+    "WELCOME_TEXT": "Karibu tena",
+    "LOGIN_FORM": {
+      "LABELS": {
+        "USERNAME": "jina la mtumiaji",
+        "PASSWORD": "Nenotambulishi",
+        "FORGOT_PASSWORD": "Umesahau neno wa siri?",
+        "DONT_HAVE_AN_ACCOUNT": "Uko mpia kwenye B-Smart?",
+        "CLICK_HERE": "Bonyeza hapa!"
+      },
+      "PLACEHOLDERS": {
+        "USERNAME": "Ingiza jina la mtumiaji",
+        "PASSWORD": "Ingiza neno lako wa siri"
+      },
+      "ERRORS": {
+        "USERNAME_OR_PASSWORD_INCORRECT": "Jina la mtumiaji au nenosiri uliloingiza sio sahihi."
+      },
+      "ACTIONS": {
+        "SUBMIT": "Wasilisha"
+      }
+    }
+  },
+  "REGISTER": {
+    "TITLE_TEXT": "Jisajili",
+    "ALREADY_SIGNED_UP": "Tayari umeshaweka saini?",
+    "LOGIN_HERE": "Ingia ndani",
+    "REGISTER_FORM": {
+      "LABELS": {
+        "FULL_NAME": "Jina kamili",
+        "PHONE_NUMBER": "Namba ya simu",
+        "USERNAME": "Jina la mtumiaji",
+        "EMAIL_ADDRESS": "Barua pepe",
+        "PREV": "Nyuma",
+        "NEXT": "Ajayo",
+        "CONTINUE": "Endelea",
+        "SCHOOL": "Shule",
+        "ADMISSION_NO": "Nambari ya kuingia"
+      },
+      "PLACEHOLDERS": {
+        "FULL_NAME": "Ingiza jina kamili",
+        "PHONE_NUMBER": "xxx-xxx-xxx",
+        "USERNAME": "ingiza jina la mtumiaji",
+        "EMAIL_ADDRESS": "Ex. mfano@swaye.com",
+        "SCHOOL": "Tafuta jina la shule",
+        "ADMISSION_NO": "Ingiza nambari ya kuingia"
+      },
+      "ERRORS": {
+        "INVAID_PHONE_NUMBER": "Nambari ya simu batili.",
+        "SCHOOL_NAME_DOES_NOT_EXIST": "Jina la shule hii halipo.",
+        "MISSING_FULL_NAME": "Umesahau kuingiza jina kamili.",
+        "MISSING_PHONE_NUMBER": "Umesahau kuingiza namba ya simu.",
+        "MISSING_USERNAME": "Umesahau kuingiza jina la mtumiaji.",
+        "MISSING_EMAIL_ADDRESS": "Umesahau kuingiza barua pepe.",
+        "INVALID_EMAIL": "Anwani ya barua pepe uliyoingiza ni batili.",
+        "MISSING_SCHOOL": "Umesahahu kuchagua shule",
+        "MISSING_ADMISSION_NO": "Umesahau kuingiza nambari ya kuingia"
+      },
+      "SUCCESS": {
+        "SUCCESSFULLY_REGISTERED_TEXT": "Imesajiliwa kwa mafanikio!",
+        "EMAIL_SENT_TEXT": "Barua pepe ilikuwa kwa {{}} na hati zako za kuingia.",
+        "OPEN_MAIL_APP": "Fungua programu yako ya barua."
+      }
+    }
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE_TEXT": "Umesahawu neno siri",
+    "SEND": "Tuma"
+  },
+  "ADD_STUDENT_PAGE": {
+    "TITLE": "Ongeza Mwanafunzi",
+    "SUCCESS": {
+      "SUCCESS_ADD_STUDENT": "Mwanafunzi aliongeza kwa mafanikio!"
+    },
+    "ERRORS": {
+      "FAILED_TO_FIND_FACULTIES_TEXT": "Imeshindwa kupata vyuo."
+    }
+  },
+  "HOME_PAGE": {
+    "LABELS": {
+      "TITLE": "Karibu",
+      "SUBTITLE": "Tafadhali chagua mwanafunzi",
+      "JAMBO": "Jambo",
+      "DELETE_STUDENT": "Futa mwanafunzi",
+      "DELETED_STUDENT_SUCCESSFULLY": "Mwanafunzi afutwa kazi kwa mafanikio!",
+      "FAILED_TO_DELETE_STUDENT": "Imeshindwa kumfuta mwanafunzi.",
+      "ADD_STUDENT": "Ongeza Mwanafunzi",
+      "HOME": "Nyumbani",
+      "TRANSPORT": "Usafiri",
+      "PROFILE": "Umbo"
+    }
+  },
+  "DASHBOARD_PAGE": {
+    "CATEGORIES_TEXT": "Kategoria",
+    "STATISTICS_TEXT": "Takwimu",
+    "LABELS": {
+      "SCHOOL_FEES": "Ada ya shule",
+      "FEES": "ADA",
+      "TIME_TABLE": "Ratiba",
+      "RESULTS": "Matokeo",
+      "ATTENDANCE": "Mahudhurio",
+      "LIBRARY": "Maktaba",
+      "BOOKS": "Vitabu",
+      "NOTIFICATIONS": "Taarifa",
+      "GET_SUPPORT": "Msaada",
+      "SWITCH_ACCOUNT": "Badilisha akaunti",
+      "LOGOUT": "Ingia nje",
+      "ATTENDANCE_RECORD_TEXT": "Rekodi ya kuhudhuria ni",
+      "FEES_RECORD_TEXT": "Bado una deni la"
+    }
+  },
+  "FEES_PAGE": {
+    "LABELS": {
+      "INVOICE": "Ankara",
+      "NO_FEES_AVAILABLE": "Hakuna ada inayopatikana",
+      "PENDING": "Inasubiri",
+      "PAID": "Kulipwa",
+      "INVOICE_NUMBER": "Nambari ya ankara",
+      "SCHOOL": "Shule",
+      "DATE_DUE": "Tarehe inayostahili",
+      "AMOUNT": "Kiasi",
+      "PAY_WITH_MPESA": "Lipa kwa M-PESA",
+      "PHONE_NUMBER": "Namba ya simu",
+      "PAYMENT_REQUEST": "Utapokea ombi la malipo. Tafadhali, hakikisha simu yako imewashwa, kadi yako ya sim inafanya kazi. Ingiza PIN yako ili kukamilisha."
+    },
+    "ERRORS": {
+      "MISSING_PHONE_NUMBER": "Tafadhali, nipe namba ya simu",
+      "INVALID_PHONE_NUMBER": "Namba ya simu si sahihi"
+    },
+    "ACTIONS": {
+      "PAY_NOW": "Lipa kwa sasa",
+      "PAY": "LIPA"
+    }
+  },
+  "TIME_TABLE_PAGE": {
+    "LABELS": {
+      "TIME_TABLE_TEXT": "Jedwali la wakati"
+    },
+    "DAYS_OF_WEEK": {
+      "monday": "Jumatatu",
+      "tuesday": "Jumanne",
+      "wednesday": "Jumatano",
+      "thursday": "Alhamisi",
+      "friday": "Ijumaa",
+      "saturday": "Jumamosi"
+    },
+    "ERRORS": {
+      "FAILED_TO_FETCH_TIME_TABLE": "Imeshindwa kupata meza ya wakati."
+    }
+  },
+  "RESULTS_PAGE": {
+    "LABELS": {
+      "WELCOME_TEXT": "Matokeo ya mtoto wako",
+      "EXAMS_TEXT": "Mitihani",
+      "YOU_ARE_EXCELLENT_TEXT": "Wewe, ni mzuri sana.",
+      "GOOD_WORK_TEXT": "Kazi nzuri! Endelea kuwa juu.",
+      "BETTER_LUCK_TEXT": "Jaribio nzuri, bahati nzuri wakati ujao."
+    },
+    "STUDENT_MARK_DETAIL_REPORT": {
+      "STUDENT_NAME": "Jina la mwanafunzi",
+      "FINAL_GRADE": "Daraja la mwisho",
+      "OVERALL": "Jumla"
+    },
+    "ERRORS": {
+      "NO_EXAM_RESULTS_FOUND": "Matokeo ya mtihani hayapatikani kwa wakati huu.",
+      "FAILED_TO_FIND_STUDENT_MARK": "Imeshindwa kupata alama za wanafunzi.",
+      "FAILED_TO_FETCH_EXAM_TYPE": "Imeshindwa kupata aina za mitihani",
+      "RESULTS_NOT_FOUND": "Hakuna matokeo ya mtihani yaliyopatikana"
+    }
+  },
+  "ATTENDANCE_PAGE": {
+    "LABELS": {
+      "NOT_AVAILABLE": "Hakuna rekodi (s) iliyopatikana.",
+      "ATTENDANCE": "Attendance",
+      "ABSENT": "Absent",
+      "PRESENT": "Present",
+      "ATTENDANCE_RECORD": "Attendance record"
+    }
+  },
+  "LIBRARY_PAGE": {
+    "LABELS": {
+      "LIBRARY": "Maktaba",
+      "BOOKS_RETURNED": "Vimerudishwa",
+      "BOOKS_BORROWED": "Vilivyokopwa",
+      "LEFT_IN_STOCK": "vitabu vilivyoachwa kwenye hisa."
+    },
+    "ERRORS": {
+      "NO_BOOKS_AVAILABLE": "Hakuna vitabu vinavyopatikana."
+    }
+  },
+  "BOOKS_PAGE": {
+    "LABELS": {
+      "TITLE": "Vitabu",
+      "AVAILABLE_SUBJECTS": "Masomo yote"
+    },
+    "ERRORS": {
+      "NO_BOOKS_FOUND": "Hakuna vitabu vilivyopatikana"
+    }
+  },
+  "GET_SUPPORT_PAGE": {
+    "LABELS": {
+      "GET_SUPPORT_LABEL": "Pata Msaada",
+      "SUPPORT_TEXT": "Kwa ombi lolote la msaada kuhusu mtoto wako, taasisi yao au suala lingine lolote linalohusiana. Tafadhali wasiliana nasi kupitia njia zilizo hapa chini.",
+      "CALL_US": "Tupigie simu",
+      "MAIL_US": "Tutumie barua"
+    }
+  },
+  "CHANGE_PASSWORD_FORM": {
+    "FORM": {
+      "LABELS": {
+        "CURRENT_PASSWORD": "Nywila ya sasa",
+        "NEW_PASSWORD": "Nywila mpya",
+        "CONFIRM_PASSWORD": "Thibitisha nywila"
+      },
+      "PLACEHOLDER": {
+        "CURRENT_PASSWORD": "Ingiza nenosiri la sasa",
+        "NEW_PASSWORD": "Unda nywila"
+      }
+    },
+    "ERRORS": {
+      "FAILED_TO_GET_PARENT_DETAILS": "Imeshindwa kupata maelezo ya mzazi.",
+      "FAILED_TO_UPDATE_PASSWORD_TEXT": "Imeshindwa kusasisha nywila. Tafadhali jaribu tena au wasiliana na msaada.",
+      "PASSWORD_DO_NOT_MATCH": "Nywila hazilingani na"
+    }
+  },
+  "MAPS_PAGE": {
+    "LABELS": {
+      "YOUR_LOCATION_TEXT": "Mahali pako",
+      "ROUTE_DETAILS": "Maelezo ya Njia",
+      "ROUTE_NNAME": "Jina la njia",
+      "DROP_OFF_TIME": "Muda wa Kushuka",
+      "PICK_UP_TIME": "Muda wa Kuchukua",
+      "LANDMARK_AREA": "Eneo la alama ya ardhi",
+      "VEHICLE_REGISTRATION_NO": "Usajili wa gari No.",
+      "DRIVR_MOBILE": "Simu ya Mkononi ya Dereva",
+      "ATTENDANT_MOBILE": "Mhudhuriaji Simu ya Mkononi",
+      "CALL_DRIVER": "Dereva wa simu",
+      "CALL_ATTENDANT": "Mhudumu wa simu",
+      "C": "Eneo"
+    }
+  },
+  "PROFILE_PAGE": {
+    "LABELS": {
+      "PROFILE": "Maelezo yako",
+      "SECURITY": "Usalama",
+      "PROFILE_PROMPT_TEXT": "Sasisha maelezo",
+      "CHANGE_PASSWORD_TEXT": "Badilisha neno siri"
+    }
+  },
+  "EDIT_PROFILE_PAGE": {
+    "FORM": {
+      "LABELS": {
+        "PARENT_NAME": "Jina la mzazi",
+        "EMAIL_ADDRESS": "Barua pepe"
+      },
+      "PLACEHOLDERS": {
+        "PARENT_NAME": "Ingiza jina la mzazi",
+        "EMAIL_ADDRESS": "Ingiza barua pepe"
+      }
+    }
+  }
+}

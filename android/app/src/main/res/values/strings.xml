@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">bsmart_crdb_mobile_app</string>
+    <string name="title_activity_main">bsmart_crdb_mobile_app</string>
+    <string name="package_name">com.bizlogicsolutions.bsmart.crdb</string>
+    <string name="custom_url_scheme">com.bizlogicsolutions.bsmart.crdb</string>
+</resources>

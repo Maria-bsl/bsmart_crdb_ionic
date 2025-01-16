@@ -1,0 +1,83 @@
+<div #invoiceReceipt class="w-full h-fit">
+  <mat-card
+    class="mt-2 !bg-[var(--mat-sys-on-secondary)]"
+    appearance="outlined"
+  >
+    <mat-card-content class="w-full flex flex-col">
+      <div class="w-full h-full flex flex-row items-center justify-between">
+        <mat-card-subtitle class="mat-body-small">{{
+          "FEES_PAGE.LABELS.INVOICE_NUMBER" | translate
+        }}</mat-card-subtitle>
+        <mat-card-subtitle class="mat-body-medium">{{
+          invoice.Invoice_No
+        }}</mat-card-subtitle>
+      </div>
+      <mat-divider class="w-full !my-2"></mat-divider>
+      <div class="flex flex-col w-full space-y-1">
+        <div class="w-full h-full flex flex-row items-center justify-between">
+          <mat-card-subtitle class="mat-body-small pr-2">{{
+            "FEES_PAGE.LABELS.SCHOOL" | translate
+          }}</mat-card-subtitle>
+          <mat-card-subtitle
+            class="mat-body-medium text-right truncate capitalize"
+            >{{ selectedStudent.Facility_Name.toLocaleLowerCase() }}
+          </mat-card-subtitle>
+        </div>
+        <div class="w-full h-full flex flex-row items-center justify-between">
+          <mat-card-subtitle class="mat-body-small pr-2">{{
+            "FEES_PAGE.LABELS.DATE_DUE" | translate
+          }}</mat-card-subtitle>
+          <mat-card-subtitle
+            class="mat-body-medium text-right truncate capitalize"
+          >
+            @if (invoice.Invoice_Date) {
+            {{ invoice.Invoice_Date | date : "dd MMM yyyy" }}
+            } @else if (invoice.Expired_Date) {
+            {{ invoice.Expired_Date | date : "dd MMM yyyy" }}
+            } @else if (invoice.Paid_Date) {
+            {{ invoice.Paid_Date | date : "dd MMM yyyy" }}
+            }
+          </mat-card-subtitle>
+        </div>
+      </div>
+      <mat-divider class="w-full !my-2"></mat-divider>
+      <div class="w-full h-full flex flex-row items-center justify-between">
+        <mat-card-subtitle class="mat-body-small">{{
+          "FEES_PAGE.LABELS.AMOUNT" | translate
+        }}</mat-card-subtitle>
+        <mat-card-subtitle class="mat-body-medium !font-semibold">
+          @if (invoice.Invoice_Amount) {
+          {{ invoice.Invoice_Amount | currency : "TZS" }}
+          } @else if (invoice.Paid_Amount) {
+          {{ invoice.Paid_Amount | currency : "TZS" }}
+          } @else if (invoice.Pending_Amount) {
+          {{ invoice.Pending_Amount | currency : "TZS" }}
+          }
+        </mat-card-subtitle>
+      </div>
+      <section *ngIf="!isDownloading()" #actions id="actions" class="block">
+        <button
+          *ngIf="!canDownload; else downloadButton"
+          (click)="openPayFees($event)"
+          class="w-full py-2 my-2 !rounded-none flex flex-row-reverse space-x-2 items-center"
+          mat-flat-button
+        >
+          <a>{{ "FEES_PAGE.ACTIONS.PAY_NOW" | translate }}</a>
+          <mat-icon svgIcon="arrow-right"></mat-icon>
+        </button>
+        <ng-template #downloadButton>
+          <button
+            (click)="downloadInvoiceFee($event)"
+            class="w-full py-2 my-2 !rounded-none flex flex-row-reverse space-x-2 items-center"
+            id="download-button"
+            #downloadButton
+            mat-button
+          >
+            {{ "DEFAULTS.DOWNLOAD" | translate }}
+            <mat-icon svgIcon="download"></mat-icon>
+          </button>
+        </ng-template>
+      </section>
+    </mat-card-content>
+  </mat-card>
+</div>

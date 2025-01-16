@@ -1,0 +1,21 @@
+<form class="flex flex-col w-full">
+  <h2
+    mat-dialog-title
+    class="mat-title-large capitalize !font-semibold !bg-gray-50 text-black"
+  >
+    {{ data.title }}
+  </h2>
+  <p
+    mat-dialog-content
+    class="mat-body-lage !font-normal !px-4 py-2 text-black"
+  >
+    {{ data.message }}
+  </p>
+  <mat-divider></mat-divider>
+  <div class="flex flex-row items-center justify-end"></div>
+  <mat-dialog-actions>
+    <button class="!text-black" mat-stroked-button mat-dialog-close>
+      {{ "DEFAULTS.OK" | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>

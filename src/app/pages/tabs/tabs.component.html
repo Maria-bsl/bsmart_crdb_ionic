@@ -1,0 +1,30 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button
+      routerLinkActive="isActive"
+      tab="tab-1"
+      [routerLink]="'/tabs/tab-1'"
+    >
+      <ion-icon size="large" name="home"></ion-icon>
+      <ion-label>{{ "HOME_PAGE.LABELS.HOME" | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      routerLinkActive="isActive"
+      tab="transport"
+      [routerLink]="'/tabs/transport'"
+    >
+      <ion-icon size="large" name="bus-outline"></ion-icon>
+      <ion-label>{{ "HOME_PAGE.LABELS.TRANSPORT" | translate }}</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      routerLinkActive="isActive"
+      tab="profile"
+      [routerLink]="'/tabs/profile'"
+    >
+      <ion-icon size="large" name="person-outline"></ion-icon>
+      <ion-label>{{ "HOME_PAGE.LABELS.PROFILE" | translate }}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

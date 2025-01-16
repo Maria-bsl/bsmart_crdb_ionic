@@ -1,0 +1,63 @@
+/* These tokens are generated using https://themes.angular-material.dev/ */
+/* Preview: https://themes.angular-material.dev/?seed-error=%23ba1a1a&seed-neutral=%2373796f&seed-neutral-variant=%236f7a6a&seed-primary=%234CAE48&seed-secondary=%23230E15&seed-tertiary=%230E231C */
+/* Seed Colors: primary: #4CAE48, secondary: #230E15, tertiary: #0E231C, error: #ba1a1a, neutral: #73796f, neutral-variant: #6f7a6a */
+
+/* Light Theme */
+:root,
+:host {
+  --mat-sys-primary: #006e13;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #94fa89;
+  --mat-sys-on-primary-container: #002202;
+  --mat-sys-inverse-primary: #4cae48; /*This was changed from #79dd70 to #4CAE48*/
+  --mat-sys-primary-fixed: #94fa89;
+  --mat-sys-primary-fixed-dim: #79dd70;
+  --mat-sys-on-primary-fixed: #002202;
+  --mat-sys-on-primary-fixed-variant: #00530c;
+  --mat-sys-secondary: #74565f;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-secondary-container: #ffd9e2;
+  --mat-sys-on-secondary-container: #2b151c;
+  --mat-sys-secondary-fixed: #ffd9e2;
+  --mat-sys-secondary-fixed-dim: #e3bdc6;
+  --mat-sys-on-secondary-fixed: #2b151c;
+  --mat-sys-on-secondary-fixed-variant: #5b3f47;
+  --mat-sys-tertiary: #4d635a;
+  --mat-sys-on-tertiary: #ffffff;
+  --mat-sys-tertiary-container: #d0e8dd;
+  --mat-sys-on-tertiary-container: #0a1f18;
+  --mat-sys-tertiary-fixed: #d0e8dd;
+  --mat-sys-tertiary-fixed-dim: #b4ccc1;
+  --mat-sys-on-tertiary-fixed: #0a1f18;
+  --mat-sys-on-tertiary-fixed-variant: #364b43;
+  --mat-sys-background: #fcf9f7;
+  --mat-sys-on-background: #1c1c1b;
+  --mat-sys-surface: #fcf9f7;
+  --mat-sys-surface-dim: #dcd9d8;
+  --mat-sys-surface-bright: #fcf9f7;
+  --mat-sys-surface-container-lowest: #ffffff;
+  --mat-sys-surface-container-low: #f6f3f1;
+  --mat-sys-surface-container: #f0edeb;
+  --mat-sys-surface-container-high: #ebe7e6;
+  --mat-sys-surface-container-highest: #e5e2e0;
+  --mat-sys-on-surface: #1c1c1b;
+  --mat-sys-shadow: #000000;
+  --mat-sys-scrim: #000000;
+  --mat-sys-surface-tint: #5a6057;
+  --mat-sys-inverse-surface: #31302f;
+  --mat-sys-inverse-on-surface: #f3f0ee;
+  --mat-sys-outline: #757872;
+  --mat-sys-outline-variant: #c5c8bf;
+  --mat-sys-neutral: #787776;
+  --mat-sys-neutral10: #1c1c1b;
+  --mat-sys-error: #ba1a1a;
+  --mat-sys-error-container: #ffdad6;
+  --mat-sys-on-error: #ffffff;
+  --mat-sys-on-error-container: #410002;
+  --mat-sys-surface-variant: #e1e3db;
+  --mat-sys-on-surface-variant: #444842;
+  --mat-sys-neutral-variant: #757871;
+  --mat-sys-neutral-variant20: #2e312c;
+  --mat-sys-inverse-secondary: #e3bdc6;
+  --mat-sys-inverse-tertiary: #b4ccc1;
+}

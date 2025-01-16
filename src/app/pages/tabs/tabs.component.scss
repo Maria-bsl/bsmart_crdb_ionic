@@ -1,0 +1,11 @@
+.isActive {
+  color: var(--mat-sys-primary);
+}
+
+mat-toolbar {
+  //background: var(--sys-surface) !important;
+}
+
+mat-toolbar button:not(.isActive) {
+  color: var(--mat-sys-neutral);
+}

@@ -1,0 +1,93 @@
+<ion-content class="w-screen h-screen overflow-hidden relative">
+  <div class="w-full h-full px-2 py-2 relative">
+    <app-header-section></app-header-section>
+    <div class="flex flex-col w-full py-4">
+      <h1 class="mat-headline-medium">
+        {{ "HOME_PAGE.LABELS.TITLE" | translate }}
+      </h1>
+      <h1 class="mat-title-medium">
+        {{ "HOME_PAGE.LABELS.SUBTITLE" | translate }}
+      </h1>
+    </div>
+    <div
+      class="w-80 h-80 rounded-full bg-[var(--mat-sys-tertiary-fixed-dim)] shadow border-4 border-[var(--mat-sys-primary)] mx-auto relative"
+    >
+      <div #carousel class="carousel w-full h-full">
+        <ng-container
+          *ngFor="
+            let student of (studentDetails$ | async)?.Students;
+            index as ind
+          "
+        >
+          <div
+            matRipple
+            [id]="'item-' + ind"
+            class="carousel-item w-full flex flex-col justify-center rounded-full relative"
+            (click)="openStudentDashboard($event, student)"
+          >
+            <h6 class="mat-title-large capitalize text-center !font-regular">
+              {{ student.SFullName.toLocaleLowerCase() }}
+            </h6>
+            <h6 class="mat-title-medium capitalize text-center !font-light">
+              {{ student.Facility_Name.toLocaleLowerCase() }}
+            </h6>
+            <h6 class="mat-title-small capitalize text-center !font-light">
+              {{ student.Acad_Year.toLocaleLowerCase() }}
+            </h6>
+          </div>
+        </ng-container>
+      </div>
+      <div
+        *ngIf="studentDetails$ | async as studentDetails"
+        class="w-14 h-14 grid place-items-center rounded-full bg-[var(--mat-sys-error)] absolute right-2 top-[75%]"
+      >
+        <button
+          (click)="
+            removeStudent(
+              $event,
+              studentDetails.Students.at(carouselAtStudent$.value)
+            )
+          "
+          class="w-full h-full"
+          mat-icon-button
+        >
+          <mat-icon class="text-[var(--mat-sys-on-secondary)]" svgIcon="trash">
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="flex w-full justify-center gap-2 py-2 px-16">
+      <mat-progress-bar
+        mode="determinate"
+        [value]="
+          ((carouselAtStudent$.value + 1) /
+            (studentDetails$ | async)?.Students?.length!) *
+          100
+        "
+      ></mat-progress-bar>
+    </div>
+    <div class="flex flex-col w-full">
+      <div class="flex flex-row items-center w-full justify-center">
+        <ion-button
+          (click)="openAddStudentForm($event)"
+          class="mx-auto my-12"
+          type="button"
+          >{{ "HOME_PAGE.LABELS.ADD_STUDENT" | translate }}</ion-button
+        >
+      </div>
+      <div
+        class="flex flex-row items-center bg-[var(--mat-sys-on-secondary)] shadow rounded-lg"
+      >
+        <img src="assets/images/lipa-hapa-logo.png" alt="" srcset="" />
+        <div class="flex flex-col py-1">
+          <h6 class="mat-title-small">
+            {{ ("DEFAULTS.ADS" | translate)[0]["TITLE"] }}
+          </h6>
+          <h6 class="mat-label-small !font-light px-1">
+            {{ ("DEFAULTS.ADS" | translate)[0]["DESCRIPTION"] }}
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

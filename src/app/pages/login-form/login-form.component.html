@@ -1,0 +1,87 @@
+<div class="w-full h-fit bg-white rounded-lg p-2 flex flex-col">
+  <h1 class="!text-black mat-headline-large w-full">
+    {{ "LOGIN.WELCOME_TEXT" | translate }}
+  </h1>
+  <form
+    [formGroup]="loginFormGroup"
+    id="login-form"
+    class="w-full flex flex-col space-y-4"
+    (ngSubmit)="submitForm($event)"
+  >
+    <div class="flex flex-col w-full space-y-1">
+      <div class="flex flex-col">
+        <h6 class="mat-label-small text-black">
+          {{ "LOGIN.LOGIN_FORM.LABELS.USERNAME" | translate | titlecase }}
+        </h6>
+        <mat-form-field class="form-field-input">
+          <mat-icon matPrefix svgIcon="person"></mat-icon>
+          <input
+            matInput
+            type="text"
+            [placeholder]="'LOGIN.LOGIN_FORM.PLACEHOLDERS.USERNAME' | translate"
+            [formControl]="User_Name"
+          />
+          <mat-error>
+            {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-col">
+        <h6 class="mat-label-small text-black">
+          {{ "LOGIN.LOGIN_FORM.LABELS.PASSWORD" | translate | titlecase }}
+        </h6>
+        <mat-form-field class="form-field-input">
+          <mat-icon matPrefix svgIcon="lock"></mat-icon>
+          <input
+            #passwordInput
+            matInput
+            type="password"
+            [formControl]="Password"
+            [placeholder]="'LOGIN.LOGIN_FORM.PLACEHOLDERS.PASSWORD' | translate"
+          />
+          @if (isCapacitor && Password.value.length > 0) {
+          <button
+            matSuffix
+            mat-icon-button
+            type="button"
+            (click)="
+              passwordInput.type === 'password'
+                ? (passwordInput.type = 'text')
+                : (passwordInput.type = 'password')
+            "
+          >
+            <mat-icon
+              [svgIcon]="
+                passwordInput.type === 'password' ? 'eye' : 'eye-slash'
+              "
+              matPrefix
+            ></mat-icon>
+          </button>
+          }
+          <mat-error>
+            {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="flex flex-row justify-end">
+        <a [routerLink]="'/forgot'" type="button" mat-button>
+          {{ "LOGIN.LOGIN_FORM.LABELS.FORGOT_PASSWORD" | translate }}
+        </a>
+      </div>
+    </div>
+    <ion-button type="submit">{{
+      "LOGIN.LOGIN_FORM.ACTIONS.SUBMIT" | translate
+    }}</ion-button>
+  </form>
+  <div class="flex flex-row items-center justify-center mt-8">
+    <span class="text-black text-xs"
+      >{{ "LOGIN.LOGIN_FORM.LABELS.DONT_HAVE_AN_ACCOUNT" | translate }}
+      <ion-text
+        (click)="onRegisterClicked($event)"
+        color="primary"
+        class="text-xs hover:underline"
+        >{{ "LOGIN.LOGIN_FORM.LABELS.CLICK_HERE" | translate }}</ion-text
+      >
+    </span>
+  </div>
+</div>

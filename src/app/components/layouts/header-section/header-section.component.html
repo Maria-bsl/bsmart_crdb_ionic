@@ -1,0 +1,78 @@
+<mat-toolbar
+  class="!w-full flex flex-row items-center justify-between h-16 !p-2 !shadow-sm"
+>
+  <button
+    [routerLink]="'/tabs/tab-1/dashboard'"
+    *ngIf="!s_showBackButton; else backButtonTemplate"
+    class="flex flex-row items-center btn !p-0 w-fit btn-ghost"
+  >
+    <span
+      class="w-10 h-10 mb-1.5 rounded-full bg-[var(--mat-sys-on-primary-fixed-variant)] relative grid place-items-center"
+    >
+      <img
+        src="assets/images/african (1).png"
+        style="
+          filter: invert(52%) sepia(57%) saturate(472%) hue-rotate(107deg)
+            brightness(93%) contrast(91%);
+        "
+        alt=""
+        srcset=""
+        class="absolute w-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      />
+    </span>
+    <div class="flex flex-col">
+      <h6 class="mat-body-small text-left">
+        {{ "HOME_PAGE.LABELS.JAMBO" | translate }}
+      </h6>
+      <h6 class="mat-body-large text-left">
+        {{ (parentDetails$ | async)?.Parent_Name }}
+      </h6>
+    </div>
+  </button>
+  <ng-template #backButtonTemplate>
+    <button
+      (click)="goBack($event)"
+      class="flex flex-row items-center btn !p-0 w-fit btn-ghost"
+    >
+      <mat-icon svgIcon="chevron-left" matPrefix></mat-icon>
+      <h6 class="mat-body-large text-left pt-2">
+        {{ s_pageTitle }}
+      </h6>
+    </button>
+  </ng-template>
+  <button
+    [matMenuTriggerFor]="menu"
+    mat-icon-button
+    class="!text-[var(--mat-sys-on-primary-fixed)]"
+  >
+    <mat-icon svgIcon="gear" matPrefix></mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button
+      (click)="switchAccountClicked($event)"
+      mat-menu-item
+      class="flex flex-row items-center !text-[var(--mat-sys-on-primary-container)]"
+    >
+      <mat-icon
+        class="!text-[var(--mat-sys-on-primary-container)]"
+        svgIcon="arrow-clockwise"
+      ></mat-icon>
+      <h6 class="mat-body-medium pt-2">
+        {{ "DASHBOARD_PAGE.LABELS.SWITCH_ACCOUNT" | translate }}
+      </h6>
+    </button>
+    <button
+      (click)="logoutClicked($event)"
+      mat-menu-item
+      class="flex flex-row items-center !text-[var(--mat-sys-error)]"
+    >
+      <mat-icon
+        class="!text-[var(--mat-sys-error)]"
+        svgIcon="box-arrow-right"
+      ></mat-icon>
+      <h6 class="mat-body-medium pt-2">
+        {{ "DASHBOARD_PAGE.LABELS.LOGOUT" | translate }}
+      </h6>
+    </button>
+  </mat-menu>
+</mat-toolbar>

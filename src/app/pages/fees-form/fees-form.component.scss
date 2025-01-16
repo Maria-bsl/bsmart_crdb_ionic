@@ -1,0 +1,26 @@
+:host ::ng-deep .mdc-tab {
+  padding: 0 !important;
+}
+
+.nav-group {
+  border: 1px solid #e0dfdf;
+  border-radius: 20px 20px 20px 20px !important;
+}
+
+.nav-link {
+  color: var(--sys-surface) !important;
+}
+
+.nav-link.active {
+  background-color: purple !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-header {
+  border: 1px solid var(--sys-surface-dim) !important;
+  border-radius: 20px 20px 20px 20px !important;
+  background-color: var(--mat-sys-on-secondary) !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-label-container {
+  overflow-x: auto !important;
+}

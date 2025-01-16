@@ -1,0 +1,112 @@
+<ion-content class="w-screen h-screen relative">
+  <div
+    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
+  >
+    <app-header-section></app-header-section>
+    <div class="grow p-4 flex flex-col w-full">
+      <form
+        id="profile-form"
+        [formGroup]="profileFormGroup"
+        class="flex flex-col w-full p-2 rounded bg-[var(--mat-sys-on-secondary)]"
+        (ngSubmit)="submitProfileForm($event)"
+      >
+        <div class="flex flex-col w-full">
+          <ion-text class="mat-body-small !font-semibold">{{
+            "EDIT_PROFILE_PAGE.FORM.LABELS.PARENT_NAME" | translate
+          }}</ion-text>
+          <mat-form-field class="form-field-input">
+            <input
+              [formControl]="Parent_Name"
+              matInput
+              [placeholder]="
+                'EDIT_PROFILE_PAGE.FORM.PLACEHOLDERS.PARENT_NAME' | translate
+              "
+            />
+            @if (Parent_Name | hasFormControlError: 'required') {
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col w-full">
+          <ion-text class="mat-body-small !font-semibold">{{
+            "EDIT_PROFILE_PAGE.FORM.LABELS.EMAIL_ADDRESS" | translate
+          }}</ion-text>
+          <mat-form-field>
+            <input
+              [formControl]="Email_Address"
+              matInput
+              [placeholder]="
+                'EDIT_PROFILE_PAGE.FORM.PLACEHOLDERS.EMAIL_ADDRESS' | translate
+              "
+              class="form-field-input"
+            />
+            @if (Email_Address | hasFormControlError: 'required') {
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+            } @else if (Email_Address | hasFormControlError: 'email') {
+            <mat-error>
+              {{ "REGISTER.REGISTER_FORM.ERRORS.INVALID_EMAIL" | translate }}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flex flex-col w-full">
+          <ion-text class="mat-body-small !font-semibold" ccc>{{
+            "REGISTER.REGISTER_FORM.LABELS.PHONE_NUMBER" | translate
+          }}</ion-text>
+          <mat-form-field>
+            <span matTextPrefix>+255 &nbsp;</span>
+            <input
+              [formControl]="Mobile_No"
+              matInput
+              [placeholder]="
+                'REGISTER.REGISTER_FORM.PLACEHOLDERS.PHONE_NUMBER' | translate
+              "
+              class="form-field-input"
+            />
+            @if (Mobile_No | hasFormControlError: 'required') {
+            <mat-error>
+              {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+            </mat-error>
+            } @else if (Mobile_No | hasFormControlError: 'pattern') {
+            <mat-error>
+              {{
+                "REGISTER.REGISTER_FORM.ERRORS.INVAID_PHONE_NUMBER" | translate
+              }}
+            </mat-error>
+            }
+          </mat-form-field>
+        </div>
+        <div class="flex flex-row justify-end w-full space-x-2">
+          <button
+            type="button"
+            class="w-26 my-4 !text-red-500 !border-red-500"
+            mat-button
+            (click)="resetClicked($event)"
+          >
+            {{ "DEFAULTS.RESET" | translate }}
+          </button>
+          <ng-container *ngIf="parentDetails$ | async as parentDetails">
+            <button
+              form="profile-form"
+              type="submit"
+              class="w-26 my-4"
+              mat-flat-button
+              [disabled]="
+                parentDetails.Parent_Name === Parent_Name.value &&
+                parentDetails.Email_Address === Email_Address.value &&
+                getMobileNumber(parentDetails.Mobile_No ?? '') ===
+                  getMobileNumber(Mobile_No.value)
+              "
+            >
+              {{ "LOGIN.LOGIN_FORM.ACTIONS.SUBMIT" | translate }}
+            </button>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

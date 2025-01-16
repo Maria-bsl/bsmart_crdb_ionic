@@ -1,0 +1,93 @@
+<ion-content class="w-screen h-screen relative">
+  <div
+    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
+  >
+    <app-header-section></app-header-section>
+    <div class="grow p-4 flex flex-col">
+      <ng-container
+        *ngIf="
+          (attendanceScore$ | async) && (attendanceScore$ | async)!.length > 0;
+          else notFoundTemplate
+        "
+      >
+        <div *ngIf="" class="flex flex-row items-center w-full justify-between">
+          <button
+            (click)="prevScore($event)"
+            [disabled]="currentIndex === 0"
+            mat-icon-button
+          >
+            <mat-icon svgIcon="chevron-left"></mat-icon>
+          </button>
+          <h2 class="mat-title-medium !font-semibold capitalize pt-2.5">
+            {{ "ATTENDANCE_PAGE.LABELS.ATTENDANCE_RECORD" | translate }}
+          </h2>
+          <button
+            (click)="nextScore($event)"
+            [disabled]="currentIndex === (attendanceScore$ | async)!.length - 1"
+            mat-icon-button
+          >
+            <mat-icon svgIcon="chevron-right"></mat-icon>
+          </button>
+        </div>
+        <div class="carousel w-full">
+          <ng-container
+            *ngFor="
+              let attendanceScore of attendanceScore$ | async;
+              index as ind
+            "
+          >
+            <div [id]="'slide-' + ind" class="carousel-item relative w-full">
+              <div
+                class="flex flex-col w-full bg-[var(--mat-sys-on-secondary)] py-3"
+              >
+                <mat-calendar
+                  [minDate]="attendanceScore.StartDate"
+                  [maxDate]="attendanceScore.EndDate"
+                >
+                  <mat-calendar-header></mat-calendar-header>
+                </mat-calendar>
+                <div class="flex flex-col w-full space-y-2 px-5">
+                  <div
+                    class="flex flex-row items-center justify-between border-l-8 border-t border-b border-r rounded border-red-600 py-2 px-2"
+                  >
+                    <a class="mat-body-large">{{
+                      "ATTENDANCE_PAGE.LABELS.ABSENT" | translate
+                    }}</a>
+                    <div
+                      class="w-8 h-8 bg-red-100 rounded-full grid place-items-center"
+                    >
+                      <a class="text-[var(--mat-sys-error)] mat-body-small">{{
+                        attendanceScore.Absent_Days
+                      }}</a>
+                    </div>
+                  </div>
+                  <div
+                    class="flex flex-row items-center justify-between border-l-8 border-t border-b border-r rounded border-green-600 py-2 px-2"
+                  >
+                    <a class="mat-body-large">{{
+                      "ATTENDANCE_PAGE.LABELS.PRESENT" | translate
+                    }}</a>
+                    <div
+                      class="w-8 h-8 bg-green-100 rounded-full grid place-items-center"
+                    >
+                      <a class="text-green-600 mat-body-small">{{
+                        attendanceScore.Present_Days
+                      }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template #notFoundTemplate>
+      <div class="w-full h-full grid place-items-center">
+        <span class="mat-body-large w-full text-center">{{
+          "ATTENDANCE_PAGE.LABELS.NOT_AVAILABLE" | translate
+        }}</span>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>

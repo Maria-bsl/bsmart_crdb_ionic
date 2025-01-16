@@ -1,0 +1,78 @@
+<div
+  class="px-4 py-4 flex flex-col space-y-8 w-full h-full overflow-y-auto overflow-x-hidden"
+>
+  <div #resultsList class="flex flex-col w-full">
+    <div
+      *ngIf="studentMarks$ | async as studentMarks"
+      class="w-full grid place-items-center"
+    >
+      <ion-text class="mat-body-large text-center">
+        @if (studentMarks | isBelowAverage) {
+        {{ "RESULTS_PAGE.LABELS.BETTER_LUCK_TEXT" | translate }}
+        } @if (studentMarks | isAboveAverage) {
+        {{ "RESULTS_PAGE.LABELS.GOOD_WORK_TEXT" | translate }}
+        } @if (studentMarks | isGreatAverage) {
+        {{ "RESULTS_PAGE.LABELS.YOU_ARE_EXCELLENT_TEXT" | translate }}
+        }
+      </ion-text>
+      <ion-text class="mat-headline-medium !font-semibold text-center">{{
+        (selectedStudent$ | async)?.SFullName
+      }}</ion-text>
+    </div>
+    <ng-container
+      *ngIf="
+        (studentMarksDetails$ | async) && (studentMarks$ | async);
+        else NoStudentMarkTemplate
+      "
+    >
+      <mat-card
+        class="w-full !bg-white p-2 flex flex-col space-y-2"
+        appearance="outlined"
+      >
+        <ng-container
+          *ngFor="let detail of studentMarksDetails$ | async; index as ind"
+        >
+          <div class="w-full flex flex-row items-center justify-between py-1.5">
+            <mat-card-title
+              class="mat-body-large !font-semibold capitalize text-black"
+            >
+              {{ detail.Subject.toLocaleLowerCase() }}
+            </mat-card-title>
+            <div class="flex flex-row items-center">
+              <ion-text class="w-fit px-4">
+                {{ detail.Result }}
+              </ion-text>
+              <ion-text class="w-fit px-4 font-semibold">
+                {{ detail.Grade }}
+              </ion-text>
+            </div>
+          </div>
+        </ng-container>
+      </mat-card>
+      <ion-button
+        #ionButton
+        size="large"
+        class="w-full text-white relative my-6"
+        expand="block"
+        type="button"
+        (click)="downloadStudentMarks($event, ionButton)"
+        >{{ "DEFAULTS.DOWNLOAD" | translate }}
+        <ion-icon slot="end" name="download-outline"></ion-icon
+      ></ion-button>
+    </ng-container>
+    <ng-template #NoStudentMarkTemplate>
+      <h6 class="mat-body-small w-full text-center">
+        {{ "RESULTS_PAGE.ERRORS.RESULTS_NOT_FOUND" | translate }}
+      </h6>
+      <ion-button
+        size="large"
+        class="w-full text-white relative my-6"
+        expand="block"
+        type="button"
+        [disabled]="true"
+        >{{ "DEFAULTS.DOWNLOAD" | translate }}
+        <ion-icon slot="end" name="download-outline"></ion-icon
+      ></ion-button>
+    </ng-template>
+  </div>
+</div>

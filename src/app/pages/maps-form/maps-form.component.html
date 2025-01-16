@@ -1,0 +1,186 @@
+<div class="relative w-full h-full">
+  <div class="absolute top-0 left-0 right-0 flex flex-row items-center h-24">
+    <mat-toolbar
+      class="flex flex-row items-center justify-between !bg-transparent w-full"
+    >
+      <div class="flex flex-row items-center w-full my-4">
+        <ion-buttons slot="start">
+          <ion-back-button
+            class="text-black bg-white rounded-full"
+            defaultHref="/tabs/tab-1"
+          ></ion-back-button>
+        </ion-buttons>
+      </div>
+    </mat-toolbar>
+  </div>
+  <capacitor-google-map
+    class="inline-block w-full h-full"
+    #capacitorGoogleMap
+    id="google-map"
+  ></capacitor-google-map>
+  <div
+    [class]="
+      swipeContainer.classList.contains('h-[340px]')
+        ? 'opacity-0'
+        : 'opacity-100'
+    "
+    class="absolute left-0 right-0 bottom-20 w-full h-fit duration-200 carousel p-2"
+  >
+    <div class="w-fit h-full flex flex-row items-center space-x-2">
+      <div
+        class="flex flex-col bg-white px-2 w-40 h-fit rounded-lg shadow"
+        *ngFor="let routeDetail of routeDetail$ | async; index: ind"
+      >
+        <div class="flex flex-row items-center space-x-1">
+          <ion-text class="mat-body-small">{{ routeDetail.Area }}</ion-text>
+        </div>
+        <div class="flex flex-row items-center space-x-1">
+          <ion-text class="mat-body-small">{{ routeDetail.Arrival }}</ion-text>
+        </div>
+        <div class="flex flex-row items-center space-x-1">
+          <ion-text class="mat-body-small">{{
+            routeDetail.Departure
+          }}</ion-text>
+        </div>
+        <div class="flex flex-row items-center space-x-1">
+          <ion-text class="mat-body-small">{{ routeDetail.Landmark }}</ion-text>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    #swipeContainer
+    class="px-3 py-3 h-20 duration-200 transition-[height] absolute left-0 right-0 bottom-0 w-full bg-white rounded-tl-3xl rounded-tr-3xl"
+  >
+    <ng-template #loading>
+      <div class="w-full h-[320px] grid place-items-center">
+        <span class="loading loading-ring loading-lg"></span>
+      </div>
+    </ng-template>
+    <div class="flex flex-col">
+      <div #swipeDiv class="flex flex-col w-full">
+        <div class="w-full grid place-items-center">
+          <div class="w-16 h-1 bg-gray-300 rounded-full"></div>
+        </div>
+        <h6
+          class="mat-body-small !font-normal uppercase text-[var(--md-sys-color-on-surface-variant)]"
+        >
+          {{ "mapsPage.labels.yourLocationText" | translate }}
+        </h6>
+        <h4 class="mat-title-medium !font-semibold">Biz-Logic Solutions</h4>
+        <mat-divider
+          class="w-full !h-0.5 !border-t-[var(--md-sys-color-on-surface-variant)]"
+        ></mat-divider>
+      </div>
+      <div
+        [@inOutAnimation]
+        *ngIf="
+          swipeContainer.classList.contains('h-[340px]') &&
+            (vehicleDetails$ | async) as vehicleDetails;
+          else loading
+        "
+        class="flex flex-col py-2"
+      >
+        <div class="flex flex-col w-full">
+          <div class="flex flex-row items-center justify-between">
+            <h6 class="mat-title-medium !font-light opacity-100">
+              {{ "mapsPage.labels.routeDetails" | translate }}
+            </h6>
+          </div>
+          <div class="flex flex-col w-full">
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.routeName" | translate }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ vehicleDetails[0].Route_Name }}
+              </p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.dropOffTime" | translate }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ vehicleDetails[0].Arrival }}
+              </p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.pickUpTime" | translate }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ vehicleDetails[0].Departure }}
+              </p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.landmarkArea" | translate }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ vehicleDetails[0].Landmark }}
+              </p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.vehicleRegistrationNo" | translate }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ vehicleDetails[0].Vehicle_Registration_No }}
+              </p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.driverMobile" | translate }}
+                {{ "(" + vehicleDetails[0].Driver_Name + ")" }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ "+255" + vehicleDetails[0].Driver_Mobile }}
+              </p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+              <p
+                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+              >
+                {{ "mapsPage.labels.attendantMobile" | translate }}
+                {{ "(" + vehicleDetails[0].Attendant_Name + ")" }}
+              </p>
+              <p class="mat-body-small !font-normal capitalize">
+                {{ "+255" + vehicleDetails[0].Attendant_Mobile }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="w-full grid grid-cols-2 gap-x-2">
+          <button
+            (click)="openTelephone(vehicleDetails[0].Driver_Mobile)"
+            mat-flat-button
+            class="w-full !rounded-none"
+          >
+            <mat-icon svgIcon="telephone-fill"></mat-icon>
+            {{ "mapsPage.labels.callDriver" | translate }}
+          </button>
+          <button
+            (click)="openTelephone(vehicleDetails[0].Attendant_Mobile)"
+            mat-flat-button
+            class="w-full !rounded-none"
+          >
+            <mat-icon svgIcon="telephone-fill"></mat-icon>
+            {{ "mapsPage.labels.callAttendant" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

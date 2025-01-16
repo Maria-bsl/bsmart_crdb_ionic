@@ -1,0 +1,111 @@
+<ion-content class="w-screen h-screen relative">
+  <div
+    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
+  >
+    <app-header-section></app-header-section>
+    <mat-tab-group
+      #tabGroup
+      dynamicHeight
+      fitInkBarToContent
+      disablePagination
+      mat-stretch-tabs="true"
+      mat-align-tabs="start"
+      class="custom-tab-density p-4"
+      [selectedIndex]="tabCurrentIndex$ | async"
+    >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span
+            [class]="
+              tabGroup.selectedIndex === 0
+                ? '!text-[var(--mat-sys-primary)]'
+                : 'text-gray-500'
+            "
+            class="text-center mat-body-small"
+          >
+            {{ "FEES_PAGE.LABELS.INVOICE" | translate }}
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          @if (!(studentInvoices$ | async) || (studentInvoices$ | async)?.length
+          === 0) {
+          <div class="w-full grid place-items-center">
+            <span class="!py-4 w-full text-center mat-body-large !font-light">{{
+              "FEES_PAGE.LABELS.NO_FEES_AVAILABLE" | translate
+            }}</span>
+          </div>
+          } @else {
+          <app-invoice-receipt
+            [identifier]="'invoice-receipt-' + ind + 1"
+            *ngFor="
+              let pendingInvoices of studentInvoices$ | async;
+              index as ind
+            "
+            [invoice]="pendingInvoices"
+          >
+          </app-invoice-receipt>
+          }
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span
+            [class]="
+              tabGroup.selectedIndex === 1
+                ? '!text-[var(--sys-primary)]'
+                : 'text-gray-500'
+            "
+            class="text-center mat-body-small"
+          >
+            {{ "FEES_PAGE.LABELS.PENDING" | translate }}
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          @if (!(studentPendingInvoices$ | async) || (studentPendingInvoices$ |
+          async)?.length === 0) {
+          <div class="w-full grid place-items-center">
+            <span class="!py-4 w-full text-center mat-body-large !font-light">{{
+              "FEES_PAGE.LABELS.NO_FEES_AVAILABLE" | translate
+            }}</span>
+          </div>
+          } @else {@for (pendingInvoices of studentPendingInvoices$ | async;
+          track pendingInvoices) {
+          <app-invoice-receipt
+            [canDownload]="false"
+            [invoice]="pendingInvoices"
+          >
+          </app-invoice-receipt>
+          }}
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span
+            [class]="
+              tabGroup.selectedIndex === 2
+                ? '!text-[var(--sys-primary)]'
+                : 'text-gray-500'
+            "
+            class="text-center mat-body-small"
+          >
+            {{ "FEES_PAGE.LABELS.PAID" | translate }}
+          </span>
+        </ng-template>
+        <ng-template matTabContent>
+          @if (!(studentPaidInvoice$ | async) || (studentPaidInvoice$ |
+          async)?.length === 0) {
+          <div class="w-full grid place-items-center">
+            <span class="!py-4 w-full text-center mat-body-large !font-light">{{
+              "FEES_PAGE.LABELS.NO_FEES_AVAILABLE" | translate
+            }}</span>
+          </div>
+          } @else {@for (pendingInvoices of studentPaidInvoice$ | async; track
+          pendingInvoices) {
+          <app-invoice-receipt [canDownload]="true" [invoice]="pendingInvoices">
+          </app-invoice-receipt>
+          }}
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</ion-content>
