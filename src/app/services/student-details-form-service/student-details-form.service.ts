@@ -20,6 +20,7 @@ import { UnsubscribeService } from '../unsubscriber/unsubscriber.service';
 import { ApiService } from '../api-service/api.service';
 import { FParentReg } from 'src/app/models/forms/parent-reg.model';
 import { RGetFacilities } from 'src/app/models/responses/RGetFacilities';
+import { EventEmitter } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +42,8 @@ export class StudentDetailsFormService {
       []
     ),
   });
+  private addedStudent = new EventEmitter<void>();
+  addedStudent$ = this.addedStudent.asObservable();
   constructor(
     private fb: FormBuilder,
     private unsubscribe: UnsubscribeService,
@@ -49,7 +52,8 @@ export class StudentDetailsFormService {
     private apiService: ApiService,
     private tr: TranslateService,
     private loadingService: LoadingService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) {}
   private isInvalidFacultyName(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -85,7 +89,10 @@ export class StudentDetailsFormService {
                 next: (msg) => {
                   toast.success(msg);
                   this.studentForm.reset();
+                  //this.router.navigate(['/home']);
+                  //this.navCtrl.navigateRoot('/home', { replaceUrl: true });
                   this.navCtrl.navigateBack('/home');
+                  this.addedStudent.emit();
                   //this.router.navigate(['/home']);
                 },
               });

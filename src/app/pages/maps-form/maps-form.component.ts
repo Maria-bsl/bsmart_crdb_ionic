@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -34,6 +34,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { environment } from 'src/environments/environment';
 import { FTimeTableForm as StudentDetailsForm } from 'src/app/models/forms/f-time-table-form';
 import { google } from 'google-maps';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-maps-form',
@@ -41,7 +42,6 @@ import { google } from 'google-maps';
   styleUrls: ['./maps-form.component.scss'],
   standalone: true,
   imports: [
-    IonContent,
     CommonModule,
     IonButtons,
     IonBackButton,
@@ -68,7 +68,9 @@ export class MapsFormComponent implements AfterViewInit, OnDestroy {
     private _appConfig: AppConfigService,
     private apiService: ApiService,
     private _unsubscribe: UnsubscribeService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private _location: Location,
+    private router: Router
   ) {
     this.registerIcons();
     this.init();
@@ -79,7 +81,8 @@ export class MapsFormComponent implements AfterViewInit, OnDestroy {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     const createSelectedStudent = () => {

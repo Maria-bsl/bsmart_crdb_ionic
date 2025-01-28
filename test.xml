@@ -1,0 +1,345 @@
+<resources>
+    <string name="app_name">B-Smart Academia Exim</string>
+    <string name="user_name">Mtumiaji</string>
+    <string name="password">Neno la Siri</string>
+    <string name="Home">Nyumbani</string>
+    <string name="academics">Taaluma</string>
+    <string name="transport">Usafiri</string>
+    <string name="events">Matukio</string>
+    <string name="logout">Toka nje</string>
+    <string name="Timetable">Ratiba</string>
+    <string name="attendance">Mahudhurio</string>
+    <string name="notification">Taarifa</string>
+    <string name="fees">Ada</string>
+    <string name="library">Maktaba</string>
+    <string name="biz_copy">Biz-logic Solutions Ltd</string>
+    <string name="register">Jiandikishe</string>
+    <string name="exam">Mitihani</string>
+    <string name="midterm_exa">Mitihani ya Muhula wa Kati</string>
+    <string name="mathematics">Hisabati</string>
+    <string name="time_minutes">09:30 AM  - 1:00 PM</string>
+    <string name="invoice">Ankara</string>
+    <string name="admission">Kujiunga</string>
+    <string name="user_email">Barua Pepe</string>
+    <string name="call_attendant">Pigia Mhudumu</string>
+    <string name="call_driver">Pigia Dereva</string>
+    <string name="select_date_range">Chagua tarehe</string>
+<!--    <string name="students">Students</string>-->
+    <string name="a_absent">A = Yupo</string>
+    <string name="p_present">P = Hayupo</string>
+    <string name="parent_name">Jina la Mzazi</string>
+    <string name="user_mobile">Namba ya Simu</string>
+    <string name="login">Ingia</string>
+    <string name="parent_registration">Usajili wa Mzazi</string>
+    <string name="log_out">Toka Nje</string>
+    <string name="biz_logic_solutions_ltd">Biz-Logic Solutions Ltd</string>
+    <string name="add_student">Ongeza Mwanafunzi</string>
+    <string name="Edit">Hariri</string>
+    <string name="save">Hifadhi</string>
+    <string name="parent_change_pwd">Badili Nywira</string>
+    <string name="new_pass">Neno siri Mpya</string>
+    <string name="confirm_pass">Thibitisha Neno la Siri</string>
+    <string name="security">Usalama</string>
+    <string name="admission_no">Nambari ya Kuingia</string>
+    <string name="school">Shule</string>
+    <string name="old_password">namba ya siri ya zamani</string>
+    <string name="student_registration">Usajiri wa Mwanafunzi</string>
+    <string name="name">Jina :</string>
+    <string name="phone_num">+255 753 688 867</string>
+    <string name="phone">Simu :</string>
+    <string name="email_biz">info@bizlogicsolutions.co.tz</string>
+    <string name="parent_change_otp_pwd">Tengeneza nenosiri mpya</string>
+    <string name="send_otp">TUMA OTP</string>
+    <string
+    name="otp_reset_content"
+  >Tafadhali! Weka barua pepe yako kisha msimbo wa OTP utatumwa kwa barua pepe yako kama ilivyotolewa kwenye uwanja kwa uthibitishaji zaidi.</string>
+    <string name="verify_otp">THIBITISHA</string>
+    <string name="otp_verification">Nambari ya Uthibitishaji</string>
+    <string
+    name="otp_verify_content"
+  >OTP zimetumwa kwenye barua pepe yako, Tafadhari hakiki kwenye hatua inayofuata.</string>
+    <string name="otp_codes">Misimbo ya OTP</string>
+    <string name="payment">lipa kifurushi</string>
+    <string name="payment_details">Jinsi ya Kulipa</string>
+
+
+    <!--    String School ArrayList    School List -->
+
+    <!-- Custom dialog layout -->
+    <!-- ***************Start************* -->
+    <string name="reason_txt">Sababu</string>
+    <string name="parent_update_profile">Hariri Wasifu</string>
+    <string name="powered_by">Inasimamiwa na</string>
+    <string name="subscribe">Lipia Kifurushi</string>
+    <string name="for_exim_bank">B-Smart Academia kwa Benki ya Exim</string>
+    <string name="confirm_pin">Thibitisha</string>
+    <string
+    name="confirm_pin_sms"
+  >Thibitisha PIN na Nambari ya siri kutoka kwa SMS iliyotumwa kwako</string>
+    <string name="confirm_passcode">Thibitisha Neno la siri</string>
+    <string name="confirm_pincode">Thibitisha PIN</string>
+    <string name="change_password">Badili Neno la Siri</string>
+    <string name="edit_profile">Hariri Wasifu</string>
+    <string name="email_info">Barua Pepe :</string>
+    <string name="username_info">Mtumiaji :</string>
+    <string name="contact_information">Taarifa za mawasiliano</string>
+    <string name="students">Wanafunzi</string>
+    <string name="for_biz">B-Smart Academia kwa Biz-Logic Solutions</string>
+    <string name="for_crdb">B-Smart Academia kwa Benki ya CRDB </string>
+    <string name="for_equity">B-Smart Academia kwa Benki ya Equity</string>
+    <string name="language_setting">Lugha</string>
+    <string name="Change_language">Chagua Lugha</string>
+    <string
+    name="helperuser"
+  >Maandishi au Alphanumeric, Mfano: John, user123</string>
+    <string
+    name="helperphone"
+  >Anza na 754— au 687—,Hakuna 0 mwanzoni ni herufi 9 pekee zinazoruhusiwa. Mfano: 7XXXXXXXX</string>
+    <string name="donthaveacc">Je, huna akaunti?</string>
+    <string name="remember_me">Nikumbuke</string>
+    <string name="forget_password">Umesahau neno siri</string>
+    <string name="reset">Weka upya</string>
+    <string name="exam_code">Msimbo wa mtihani:</string>
+    <string name="exam_type">Aina ya Mtihani:</string>
+    <string name="attendance_details">Maelezo ya Mahudhurio</string>
+    <string name="book_details">Maelezo ya Kitabu</string>
+    <!-- ***************FINISH************* -->
+
+
+    <string name="loading">tafadhali subiri</string>
+    <string name="nodata">Hakuna data inayopatikana.</string>
+    <string
+    name="tryagainlater"
+  >Imeshindwa kupakia data, Tafadhali jaribu tena baadae.</string>
+    <string name="student_attendance">Mahudhurio ya Wanafunzi</string>
+    <string name="nodataavailable">Hakuna data kwa sasa.</string>
+    <string name="student_fee">Ada ya Mwanafunzi</string>
+    <string name="pending">Inasubiri</string>
+    <string name="paid">Imelipwa</string>
+    <string name="notimetable">Hakuna ratiba inayopatikana kwa sasa.</string>
+    <string name="dashboard">Dashibodi</string>
+    <string name="nonotification">Hakuna taarifa kwa sasa.</string>
+    <string name="profile">Wasifu</string>
+    <string name="student_results">Matokeo ya Mwanafunzi</string>
+    <string name="subject">MASOMO</string>
+    <string name="grades">MADARAJA</string>
+    <string name="marks">ALAMA</string>
+    <string name="results">MATOKEO</string>
+    <string name="subjectth">Masomo</string>
+    <string name="gradesth">Daraja</string>
+    <string name="marksth">Alama</string>
+    <string name="resultth">Matokeo</string>
+    <string name="routebus">Kituo cha basi</string>
+    <string name="timetable">Ratiba</string>
+    <string name="selectdate">Chagua tarehe</string>
+    <string name="from">Kutoka</string>
+    <string name="to">Mpaka</string>
+    <string name="monday">Jumatatu</string>
+    <string name="tuesday">Jumanne</string>
+    <string name="wednesday">Jumatano</string>
+    <string name="thursday">Alhamisi</string>
+    <string name="friday">Ijumaa</string>
+    <string name="sartuday">Jumamosi</string>
+    <string name="transport_details">Maelezo ya Usafiri</string>
+    <string name="tel">Simu:</string>
+    <string name="noattendantphone">Hakuna Simu ya mhudumu</string>
+    <string name="nodriverphone">Hakuna Simu ya Dereva</string>
+    <string
+    name="notransporterdetails"
+  >Maelezo ya usafiri hayapatikani.</string>
+    <string name="tzcode">+255</string>
+    <string name="permission_granted">Ruhusa imetolewa</string>
+    <string name="present">Kuwepo</string>
+    <string name="absent">Kutokuwepo</string>
+    <string name="book_title">Jina la Kitabu :</string>
+    <string name="author">Mwandishi :</string>
+    <string name="invoice_no">Ankara Na :</string>
+    <string name="pending_amount"> Kiasi Kilichobaki:</string>
+    <string name="academic_year">"Mwaka wa Masomo : "</string>
+    <string name="invoice_amount">Kiasi Cha Ankara :</string>
+    <string name="receipt_no">"Risiti Na: "</string>
+    <string name="break_time">Muda wa Mapumziko</string>
+    <string
+    name="schoolunavailable"
+  >Hakuna Shule inayopatikana kwa sasa.</string>
+    <string name="processing_info">Inachakata Taarifa</string>
+    <string name="admission_error">Kiingilio Kinahitajika</string>
+    <string name="successful_added">Imefanikiwa kuongezwa</string>
+    <string
+    name="alertconfirmpassword"
+  >Tafadhari! Hakiki upya neno la siri</string>
+    <string name="alertnewpassword">Tafadhari! Weka neno siri</string>
+    <string
+    name="alertoldpassword"
+  >Tafadhari!, Weka neno siri la zamani</string>
+    <string name="doesnotmatcherror">Hailingani</string>
+    <string
+    name="nostudents"
+  >Hakuna Wanafunzi Wanaopatikana, Tafadhali Jisajili kwanza!</string>
+    <string name="alertlogout">Je, kweli unataka kutoka nje\?</string>
+    <string name="No">Hapana</string>
+    <string name="Yes">Ndiyo</string>
+    <string name="alertdeletestudent">Je, wataka kumfuta mwanafunzi</string>
+    <string name="alertdeletereason">\?, Tafadhari ainisha sababu.</string>
+    <string name="cancel">Ghairi</string>
+    <string name="delete">Futa</string>
+    <string
+    name="getdeletedalert"
+  >Samahani Mwanafunzi hakufutwa, Tafadhali! Toa sababu ya kufutwa.</string>
+    <string name="successlogin">Umefanikiwa Kuingia.</string>
+    <string
+    name="incorrectlogininfo"
+  >Jina la mtumiaji au Nenosiri si Sahihi!</string>
+    <string name="alertusername">Andika jina la mtumiaji</string>
+    <string name="alertpassword">Andika neno siri</string>
+    <string name="paid_amount">Kiasi kilicholipwa :</string>
+    <string name="connect">Unganisha</string>
+    <string name="greeting">"Habari, "</string>
+    <string name="done">Imefanyika</string>
+    <string name="choose_country">Chagua Nchi</string>
+    <string
+    name="alertinternetconnection"
+  >Tafadhali! Unganisha kwenye intaneti ili kuendelea zaidi.</string>
+    <string name="otpcode_error">Hakuna msimbo wa OTP uliotolewa!</string>
+    <string name="erroralert">Tafadhali! ingiza misimbo halali ya OTP</string>
+    <string
+    name="confirmnewpassword"
+  >Tafadhali! Thibitisha nenosiri lako jipya</string>
+    <string
+    name="newpassvalidationerror"
+  >Tafadhali! Weka nenosiri lako jipya</string>
+    <string name="passwordsuccesschanged">Nenosiri limebadilishwa</string>
+    <string name="sendingotp">Inatuma Msimbo wa OTP.....</string>
+    <string name="erroremailalert">Tafadhari! Weka barua pepe yako</string>
+    <string name="emailerroralert">Tafadhari! Weka barua pepe sahihi</string>
+    <string
+    name="emailerroralertvalidate"
+  >Tafadhali! Weka barua pepe yako</string>
+    <string name="fullnameerroralert">Tafadhali weka majina yako kamili</string>
+    <string
+    name="mobileerroralert"
+  >Tafadhali! Weka nambari yako ya simu</string>
+    <string name="successful_updated">Imefanikiwa kusasishwa</string>
+    <string name="regprocessing">Inachakata usajili…</string>
+    <string name="erroretusername">Tafadhari!, Weka jina la Mtumiaji</string>
+    <string
+    name="phonenumbervalidate"
+  >Tafadhali! Weka nambari sahihi ya simu</string>
+    <string
+    name="phonenumberalerterror"
+  >Tafadhali! Weka nambari yako ya simu</string>
+    <string
+    name="admissionerroralert"
+  >Tafadhali! Weka namba ya kujiunga</string>
+    <string name="selectoneschool">Chagua angalau Shule moja</string>
+    <string
+    name="success_reg"
+  >Jina la mtumiaji na Nenosiri zilizosajiliwa zimetumwa kupitia Anwani ya Barua pepe.</string>
+    <string name="subscription_loading">Inachakata Usajili…</string>
+    <string name="student">Mwanafunzi :</string>
+    <string name="view_txt">Tazama</string>
+    <string name="days">Siku :</string>
+    <string name="day"> Siku </string>
+    <string name="searchpora">Tafuta kwa neno P au A</string>
+    <string name="date">Tarehe :</string>
+    <string name="attendancwlbl">Mahudhurio :</string>
+    <string name="science_books">Sayansi</string>
+    <string name="invoice_namelbl">Jina la Ankara :</string>
+    <string name="exam_llb">Mtihani :</string>
+    <string name="marks_llb">Alama :</string>
+    <string name="average_llb">Wastani :</string>
+    <string name="grade_llb">Daraja :</string>
+    <string name="results_llb">Matokeo :</string>
+    <string name="areallb">Eneo : </string>
+    <string name="arrivalllb">Kuwasili :</string>
+    <string name="departurellb">Kuondoka : </string>
+    <string name="landmarkllb">Alama :</string>
+    <string
+    name="select_date_range_timetable"
+  >Chagua Kiteua Masafa ya tarehe</string>
+    <string name="route_details">Maelezo ya njia</string>
+    <string name="route_name">Jina la Njia</string>
+    <string name="arrival_time_llb">Muda wa Kushuka :</string>
+    <string name="deaprture_time">Muda wa Kuchukuliwa :</string>
+    <string name="landmark_Areallb">Eneo la alama :</string>
+    <string name="vehicleregno_llb">Namba ya Usajili wa Gari:</string>
+    <string name="Attendantllb">Mhudumu :</string>
+    <string name="driver_llb">Dereva :</string>
+    <string name="payment_subscription_txt">Usajili wa Malipo</string>
+    <string name="package_subscription">Usajili wa Vifurushi</string>
+    <string name="payment_packages">Vifurushi</string>
+    <string name="english">ENGLISH</string>
+    <string name="swahili">SWAHILI</string>
+    <string
+    name="welcome_to_b_smart_academia_app"
+  >Karibu katika program ya B-Smart Academia</string>
+    <string name="select_payment_channel">Chagua njia ya malipo</string>
+    <string name="modules">Moduli</string>
+    <string name="tzs">TZS</string>
+
+    <string name="title_activity_subscribe_screen">Subscribe_screen</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Ijayo</string>
+    <string name="previous">iliopita</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string
+    name="hello_second_fragment"
+  >Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="payment_channel">Njia za malipo</string>
+    <string name="generatectrlno">Inatengeneza namba ya malipo ....</string>
+    <string name="payment_method">Njia ya malipo</string>
+    <string name="package_name">Jina la Kifurushi :</string>
+    <string name="package_amount">Kiasi cha Kifurushi :</string>
+    <string
+    name="package_control_number"
+  >Namba ya Malipo ya Kifurushi :</string>
+    <string name="done_pay">Hitimisha</string>
+    <string
+    name="sms_pay_channels"
+  >Tafadhali, Lipa kwa chaguo linalopatikana, ukimaliza unaweza kuingia kwenye B-Smart Academia, Asante</string>
+    <string name="skip">ruka</string>
+    <string name="choose_language">Chagua Lugha</string>
+    <string name="package_history">Vifurushi vilivyopita</string>
+    <string name="payment_packages_history">Vifurushi vilivyopita</string>
+    <string name="SubscriptionHistory">Malipo ya vifurushi vilivyopita</string>
+    <string name="payment_process_airtel">
+        Airtel Money \n
+        Hatua
+        \n 1. Piga *150*60#
+        \n 2. Huduma za Kifedha
+        \n 3. Tuma kwenda Benki
+       \n 4. CRDB Bank
+       \n  5. Ingiza namba ya akaunti(Kumbukumbu namba)
+      \n   6. Weka Kiasi
+       \n  7. Kamilisha Malipo
+    </string>
+    <string
+    name="payment_process_vodacom"
+  >M-PESA \n Hatua \n  1.Piga *150*00#  \n 2. Chagua Huduma za  kifedha \n 3. Mpesa kwenda benki \n 4. Chagua CRDB \n 5. Chagua weka namba  ya akaunti \n 6. Weka namba ya  malipo(Kumbukumbu  namba) \n 7. Ingiza Kiasi \n 8. Kamilisha Malipo</string>
+    <string
+    name="payment_process_tigo"
+  >Tigo Pesa \n Hatua \n 1. Piga *150*01# \n 2. Chagua Huduma za Kifedha. \n 3. TigoPesa kwenda Benki. \n 4. Chagua CRDB \n 5. Chagua Kuingiza namba ya  Kumbukumbu  \n 6. Weka Namba ya kumbukumbu ya  malipo. \n 7. Ingiza Kiasi \n 8. Kamilisha Malipo.</string>
+    <string
+    name="payment_process_simbanking"
+  >SimuBanking \n Hatua \n 1.Ingia kwenye  Simbanking app \n 2. Chagua “Services” \n 3. Chagua “Education” \n 4. Enter “Invoice no” \n 5. Enter Amount \n 6. Confirm details and  proceed with payment</string>
+    <string
+    name="payment_process_crdbussd"
+  >USSD CRDB \n Hatua \n 1. Piga *150*03# \n 2. Weka PIN \n 3. Lipa Bili \n 4. Ada za Shule \n 5. Lipa \n 6. Chagua akaunti ya  kutumika \n 7. Ingiza namba ya  malipo(kumbukumbu  namba) \n 8. Hakiki taarifa \n 9. Ingiza Kiasi \n 10.Kamilisha malipo</string>
+    <string
+    name="payment_process_halotel"
+  >HaloPesa \n Hatua \n 1. Piga *150*88# \n 2. Tuma kwenda Benki \n 3.Chagua CRDB \n 4. Ingiza Namba ya kumbukumbu \n 5. Ingiza kiasi \n 6. Kamilisha Malipo.</string>
+    <string
+    name="expire_message"
+  >Kifurushi chako kimekwisha Muda wake, Tafadhari nunua kingine.</string>
+    <string name="have_an_account">Je, una akaunti?</string>
+    <string name="switch_theme">Badili Mandhari</string>
+    <string name="reset_pass">Weka upya nenosiri</string>
+    <string name="logo">B-smart-academia</string>
+    <string name="todo">ImageDesc</string>
+
+</resources>

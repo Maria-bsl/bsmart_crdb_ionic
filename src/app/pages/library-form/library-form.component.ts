@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -46,7 +46,8 @@ export class LibraryFormComponent {
     private _appConfig: AppConfigService,
     private _unsubscribe: UnsubscribeService,
     private loadingService: LoadingService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private _location: Location
   ) {
     this.init();
     this.registerIcons();
@@ -54,7 +55,8 @@ export class LibraryFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     const createSelectedStudent = () => {

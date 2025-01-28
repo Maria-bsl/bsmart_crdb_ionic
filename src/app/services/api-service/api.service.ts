@@ -40,6 +40,7 @@ import { FExamType } from 'src/app/models/forms/ExamType';
 import { FStudentMarksForm } from 'src/app/models/forms/f-add-student';
 import { ISubject, ISubjectBook } from 'src/app/models/forms/isubjects';
 import { RouteDetail, VehicleDetail } from 'src/app/models/forms/transports';
+import { IPackage } from 'src/app/models/forms/package.model';
 
 @Injectable({
   providedIn: 'root',
@@ -208,6 +209,14 @@ export class ApiService {
   }
   changePassword(body: { Email_Address: string; New_Password: string }) {
     const url = `/SchoolDetails/ChangePassword_E`;
+    return this.performPost(url, body, new Map());
+  }
+  getPackagePriceList(body: {}): Observable<IPackage[]> {
+    const url = `/SchoolDetails/GetPackagePrice`;
+    return this.performPost(url, body, new Map());
+  }
+  getPackageHistoryList(body: { User_Name: string }): Observable<IPackage[]> {
+    const url = `/SchoolDetails/GetPackageHistory`;
     return this.performPost(url, body, new Map());
   }
   GetToken(): Observable<RGetToken> {

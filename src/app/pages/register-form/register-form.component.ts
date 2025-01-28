@@ -29,12 +29,13 @@ import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import anime from 'animejs/lib/anime.es.js';
 import { transition, trigger } from '@angular/animations';
-import { slideTo } from 'src/app/shared/fade-in-out-animation';
+import { inOutAnimation, slideTo } from 'src/app/shared/fade-in-out-animation';
 import { AppConst } from 'src/app/utils/app-const';
 import { ApiService } from 'src/app/services/api-service/api.service';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import {
+  BehaviorSubject,
   catchError,
   finalize,
   firstValueFrom,
@@ -42,6 +43,7 @@ import {
   Observable,
   of,
   startWith,
+  Subject,
   zip,
 } from 'rxjs';
 import { RGetFacilities } from 'src/app/models/responses/RGetFacilities';
@@ -73,13 +75,10 @@ import { NavController } from '@ionic/angular/standalone';
     CommonModule,
     RouterLink,
   ],
+  animations: [inOutAnimation],
 })
 export class RegisterFormComponent implements OnInit, AfterViewInit {
-  isFirstPartRegister: WritableSignal<boolean> = signal<boolean>(true);
-  @ViewChild('firstPartRegister')
-  firstPartRegister!: ElementRef<HTMLDivElement>;
-  @ViewChild('secondPartRegister')
-  secondPartRegister!: ElementRef<HTMLDivElement>;
+  formCurrentIndex$: BehaviorSubject<number> = new BehaviorSubject(0);
   constructor(
     public parentRegService: RegisterAccountInfoService,
     public studentRegService: StudentDetailsFormService,
@@ -155,41 +154,6 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {}
   ngAfterViewInit(): void {}
-  submitRegisterFormGroup(event: MouseEvent) {
-    if (this.isFirstPartRegister()) {
-      let t = anime({
-        autoplay: false,
-        targets: this.firstPartRegister.nativeElement,
-        translateX: '-100%',
-        duration: 500,
-      });
-      let y = anime({
-        autoplay: false,
-        targets: this.secondPartRegister.nativeElement,
-        translateX: '0%',
-        duration: 500,
-      });
-      t.play();
-      y.play();
-      this.isFirstPartRegister.set(false);
-    } else {
-      let t = anime({
-        autoplay: false,
-        targets: this.firstPartRegister.nativeElement,
-        translateX: '0',
-        duration: 500,
-      });
-      let y = anime({
-        autoplay: false,
-        targets: this.secondPartRegister.nativeElement,
-        translateX: '100%',
-        duration: 500,
-      });
-      t.play();
-      y.play();
-      this.isFirstPartRegister.set(true);
-    }
-  }
   private requestRegisterParent(body: FParentReg) {
     this.loadingService.startLoading().then((loading) => {
       this.apiService
@@ -253,5 +217,22 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
       this.parentRegService.parentForm.markAllAsTouched();
       this.studentRegService.studentForm.markAllAsTouched();
     }
+  }
+  nextForm(event: MouseEvent) {
+    const currentIndex = this.formCurrentIndex$.value;
+    if (currentIndex === 0) {
+      const target = document.getElementById(
+        `register-form-${currentIndex + 1}`
+      );
+      target && target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.formCurrentIndex$.next(1);
+    } else {
+      this.submitRegisterForm(event);
+    }
+  }
+  prevForm(event: MouseEvent) {
+    const target = document.getElementById(`register-form-0`);
+    target && target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.formCurrentIndex$.next(0);
   }
 }

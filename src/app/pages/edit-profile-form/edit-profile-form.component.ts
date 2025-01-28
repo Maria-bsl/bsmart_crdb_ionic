@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -52,7 +52,8 @@ export class EditProfileFormComponent {
     private apiService: ApiService,
     private _unsubscribe: UnsubscribeService,
     private _appConfig: AppConfigService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private _location: Location
   ) {
     this.init();
     this.createProfileGroup();
@@ -60,7 +61,7 @@ export class EditProfileFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () => this.navCtrl.navigateRoot('/tabs/profile');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     backButton();

@@ -2,6 +2,7 @@
 // http://ionicframework.com/docs/theming/
 
 @use "@angular/material" as mat;
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 
 $light-theme: mat.define-theme(
   (

@@ -15,7 +15,7 @@ export class HasFormControlErrorPipe implements PipeTransform {
       return false;
     }
     if (control.errors[errorName]) {
-      return control && control.invalid && control.touched && true;
+      return control && control.invalid && control.touched;
     }
     return false;
   }

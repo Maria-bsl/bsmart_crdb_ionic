@@ -119,33 +119,19 @@ export class InvoiceReceiptComponent implements OnInit, AfterViewInit {
                   let merged = zip(downloadedMessage, viewMessage);
                   merged.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
                     next: (messages) => {
-                      let [msg1, msg2] = messages;
-                      let snackbar = this._snackBar.open(msg1, msg2, {
-                        duration: 5000,
+                      const [msg1, msg2] = messages;
+                      const uri$ = this.jsPdfService.getFileUri(filename);
+                      uri$.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
+                        next: (file) => {
+                          const fileOpenerOptions: FileOpenerOptions = {
+                            filePath: file.uri,
+                            contentType: 'application/pdf',
+                            openWithDefault: true,
+                          };
+                          FileOpener.open(fileOpenerOptions);
+                        },
+                        error: (e) => console.error(e),
                       });
-                      snackbar
-                        .onAction()
-                        .pipe(this._unsubscribe.takeUntilDestroy)
-                        .subscribe({
-                          next: (res) => {
-                            let uri$ = this.jsPdfService.getFileUri(filename);
-                            uri$
-                              .pipe(this._unsubscribe.takeUntilDestroy)
-                              .subscribe({
-                                next: (file) => {
-                                  const fileOpenerOptions: FileOpenerOptions = {
-                                    filePath: file.uri,
-                                    contentType: 'application/pdf',
-                                    openWithDefault: true,
-                                  };
-                                  FileOpener.open(fileOpenerOptions);
-                                },
-                                error: (err) =>
-                                  console.error(`Failed to get file uri`, err),
-                              });
-                          },
-                          error: (err) => console.error(err),
-                        });
                     },
                     error: (err) => console.error(err),
                   });

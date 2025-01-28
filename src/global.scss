@@ -2,28 +2,8 @@
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
 
-// html {
-//   @include mat.theme((
-//     color: (
-//       //theme-type: light,
-//       primary: mat.$azure-palette,
-//       tertiary: mat.$blue-palette,
-//       use-system-variables: true,
-//     ),
-//     typography: (
-//       use-system-variables: true,
-//       brand-family: "Sora",
-//       plain-family: "Sora",
-//       regular-weight: "440",
-//     ),
-//     density: (
-//       scale: 0,
-//     ),
-//   ));
-// }
-
 //Spora font
-@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
 
 // /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
@@ -39,25 +19,34 @@
 @tailwind components;
 @tailwind utilities;
 
-button,
+// button,
+// p,
+// a,
+// h1,
+// h2,
+// h3,
+// h4,
+// h5,
+// h6,
+// span,
+// small,
+// th,
+// td,
+// mark,
+// textarea,
+// select,
+// select > option,
+// input {
+// }
+
 p,
-a,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-span,
-small,
-th,
-td,
-mark,
-textarea,
-select,
-select > option,
-input {
-  font-family: "Sora", serif;
+h6 {
+  margin: 0 !important;
 }
 
 input::placeholder {

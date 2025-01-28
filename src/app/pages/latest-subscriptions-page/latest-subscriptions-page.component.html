@@ -1,0 +1,181 @@
+<ion-content class="w-screen h-screen relative">
+  <div
+    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
+  >
+    <app-header-section></app-header-section>
+    <div class="flex flex-col w-full p-4 space-y-4">
+      <mat-card
+        [class]="
+          studentDetails.Package_Name === 'Gold'
+            ? '!bg-[#F7EF6A]'
+            : studentDetails.Package_Name === 'Trail'
+            ? '!bg-[#EBDAB0]'
+            : '!bg-[#EAEAEA]'
+        "
+        appearance="raised"
+        class="relative"
+      >
+        <div class="flex flex-col w-full h-full">
+          <div class="flex flex-row items-center justify-between px-2">
+            <img
+              class="w-16"
+              [src]="studentDetails.Package_Name | switchPackageName"
+              alt=""
+              srcset=""
+            />
+            <mat-chip>{{
+              "LATEST_SUBSCRIPTIONS_PAGE.LABELS.CURRENT" | translate
+            }}</mat-chip>
+          </div>
+          <div class="flex flex-col w-full px-4">
+            <h6 class="mat-headline-small !tracking-widest">
+              {{ studentDetails.Package_Name }}
+            </h6>
+            <ng-container *ngIf="package$ && package$ | async as packages">
+              <div class="flex flex-row items-center justify-between">
+                <button class="mat-body-small !font-semibold text-gray-500">
+                  {{
+                    ((packages | findPackage : studentDetails.Package_Mas_Sno)
+                      ?.Package_Amount | currency : "TZS") +
+                      "/" +
+                      (packages | findPackage : studentDetails.Package_Mas_Sno)
+                        ?.Package_Days +
+                      ("LATEST_SUBSCRIPTIONS_PAGE.LABELS.DAYS" | translate)
+                  }}
+                </button>
+                <button
+                  (click)="
+                    openSubscriptionPage($event, studentDetails.Package_Mas_Sno)
+                  "
+                  mat-button
+                  class="flex flex-row-reverse space-x-1 items-center"
+                >
+                  <mat-icon svgIcon="chevron-right" matPrefix></mat-icon>
+                  <a>
+                    {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.RENEW" | translate }}
+                  </a>
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </mat-card>
+      <div class="flex flex-col w-full">
+        <h4 class="mat-title-large">
+          {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.AVAILABLE_PLANS" | translate }}
+        </h4>
+        <ng-container *ngIf="package$ && package$ | async as packages">
+          <div class="flex flex-col w-full space-y-2">
+            @for (package of packages; track package) {
+            <mat-card
+              class="relative"
+              matRipple
+              *ngIf="package.Package_Mas_Sno !== studentDetails.Package_Mas_Sno"
+              appearance="outlined"
+              (click)="openSubscriptionPage($event, package.Package_Mas_Sno)"
+            >
+              <mat-card-content>
+                <div class="flex flex-row items-center space-x-1 relative">
+                  <mat-icon
+                    class="absolute right-2 top-1/2 -translate-y-1/2"
+                    svgIcon="chevron-right"
+                    matPrefix
+                  ></mat-icon>
+                  <img
+                    class="w-14"
+                    mat-card-image
+                    [src]="package.Package_Name | switchPackageName"
+                    alt="Photo of a Shiba Inu"
+                  />
+                  <div class="flex flex-col">
+                    <mat-card-title class="uppercase !font-semibold">{{
+                      package.Package_Name
+                    }}</mat-card-title>
+                    <mat-card-subtitle
+                      class="!text-[var(--md-sys-color-neutral)]"
+                      >{{
+                        (package.Package_Amount | currency : "TZS") +
+                          "/" +
+                          package.Package_Days +
+                          ("LATEST_SUBSCRIPTIONS_PAGE.LABELS.DAYS" | translate)
+                      }}</mat-card-subtitle
+                    >
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+            }
+          </div>
+        </ng-container>
+      </div>
+      <div class="flex flex-col w-full">
+        <h4 class="mat-title-large">
+          {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.PACKAGE_HISTORY" | translate }}
+        </h4>
+        <div class="carousel carousel-center rounded-box py-2 space-x-1">
+          <ng-container
+            *ngIf="
+              packageHistory$ && packageHistory$ | async as packageHistoryList
+            "
+          >
+            @for (packageHistory of packageHistoryList; track packageHistory) {
+            <mat-card
+              appearance="raised"
+              [class]="
+                packageHistory.Package_Name === 'Gold'
+                  ? '!bg-[#F7EF6A]'
+                  : packageHistory.Package_Name === 'Trail'
+                  ? '!bg-[#EBDAB0]'
+                  : '!bg-[#EAEAEA]'
+              "
+              class="!carousel-item !w-96"
+            >
+              <div class="flex flex-col w-full">
+                <div class="flex flex-row items-center justify-between px-2">
+                  <img
+                    class="w-16 h-16"
+                    [src]="packageHistory.Package_Name | switchPackageName"
+                    alt=""
+                    srcset=""
+                  />
+                  <div class="flex flex-row items-center space-x-1 p-1">
+                    <button class="mat-label-small">
+                      {{ packageHistory.Submit_Date }}
+                    </button>
+                  </div>
+                </div>
+                <ion-title class="mat-headline-small !tracking-widest">{{
+                  packageHistory.Package_Name
+                }}</ion-title>
+                <ng-container *ngIf="package$ && package$ | async as packages">
+                  <div class="flex flex-row items-center flex-wrap ml-6 mr-6">
+                    <ng-container
+                      *ngFor="
+                        let packageName of packageHistory?.M_Name?.split(',');
+                        index as ind
+                      "
+                    >
+                      <div class="flex flex-row items-center">
+                        <button class="mat-label-large">
+                          {{ packageName.replace(",", "") }}
+                        </button>
+                        <div
+                          *ngIf="
+                            ind !==
+                            packageHistory?.M_Name?.split(',')?.length! - 1
+                          "
+                          class="w-2 h-2 bg-black mx-2 rounded-full"
+                        ></div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </ng-container>
+              </div>
+            </mat-card>
+            }
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

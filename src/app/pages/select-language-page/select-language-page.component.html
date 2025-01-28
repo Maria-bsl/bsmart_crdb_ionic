@@ -1,6 +1,6 @@
-<ion-content
+<!-- <ion-content
   class="w-screen h-screen relative flex flex-col overflow-hidden"
-  color="tertiary"
+  color="primary"
 >
   <div class="w-full h-3/4 relative">
     <img
@@ -9,25 +9,31 @@
       alt=""
       srcset=""
     />
-    <img
-      src="assets/images/pexels-lagosfoodbank-9090820.jpg"
-      alt=""
-      class="w-full h-full object-cover rounded-bl-[10rem]"
-      srcset=""
-    />
+    <div class="w-full h-full rounded-bl-[10rem] relative">
+      <img
+        src="assets/images/pexels-lagosfoodbank-9090820.jpg"
+        alt=""
+        class="object-cover w-full h-full rounded-bl-[10rem]"
+        srcset=""
+      />
+      <div
+        class="w-full h-full bg-[#327E63] opacity-20 absolute top-0 left-0 right-0 bottom-0 rounded-bl-[10rem]"
+      ></div>
+    </div>
     <div
-      class="absolute w-full h-full rounded-bl-[10rem] bg-[#327E63] opacity-20 top-0 bottom-0 left-0 right-0"
+      class="absolute w-full h-full rounded-bl-[10rem] opacity-20 top-0 bottom-0 left-0 right-0"
     ></div>
-    <ion-text class="absolute bottom-8 pl-8 left-0 mat-display-medium w-full">{{
-      "SELECT_LANGUAGE_PAGE.WELCOME_TEXT" | translate
-    }}</ion-text>
+    <ion-text
+      class="absolute bottom-8 text-[var(--mat-sys-on-primary)] pl-8 left-0 mat-display-medium w-full"
+      >{{ "SELECT_LANGUAGE_PAGE.WELCOME_TEXT" | translate }}</ion-text
+    >
   </div>
   <div class="grid place-items-center gap-y-2 w-full px-12 mt-11">
     <button
       (click)="acceptLanguage($event, 'en')"
       id="english-button"
       mat-stroked-button
-      class="flex flex-row items-center w-full"
+      class="flex flex-row items-center w-full !border-[var(--mat-sys-on-primary)]"
     >
       <mat-icon svgIcon="gb" matPrefix></mat-icon>
       <ion-text
@@ -40,7 +46,7 @@
       id="kiswahili-button"
       (click)="acceptLanguage($event, 'sw')"
       mat-stroked-button
-      class="flex flex-row items-center w-full"
+      class="flex flex-row items-center w-full !border-[var(--mat-sys-on-primary)]"
     >
       <mat-icon svgIcon="tz" matPrefix></mat-icon>
       <ion-text class="text-sm text-white"
@@ -51,5 +57,50 @@
         ></ion-text
       >
     </button>
+  </div>
+</ion-content> -->
+
+<ion-content class="w-screen h-screen relative flex flex-col overflow-hidden">
+  <div class="w-full h-full grid place-items-center">
+    <img
+      src="assets/images/B-Smart_Academia_transparent.png"
+      class="w-[80%]"
+      alt=""
+    />
+    <div class="flex flex-col w-full items-center">
+      <h6 class="mat-title-small">
+        {{ "SELECT_LANGUAGE_PAGE.SELECT_LANGUAGE" | translate }}
+      </h6>
+      <div class="grid place-items-center gap-y-2 w-full px-12 mt-11">
+        <button
+          (click)="acceptLanguage($event, 'en')"
+          id="english-button"
+          mat-stroked-button
+          class="flex flex-row items-center w-full !border-none !bg-[var(--mat-sys-primary)]"
+        >
+          <mat-icon svgIcon="gb" matPrefix></mat-icon>
+          <ion-text
+            [textContent]="'SELECT_LANGUAGE_PAGE.ENGLISH' | translate"
+            class="text-sm text-white"
+            >{{ "SELECT_LANGUAGE_PAGE.ENGLISH" | translate }}</ion-text
+          >
+        </button>
+        <button
+          id="kiswahili-button"
+          (click)="acceptLanguage($event, 'sw')"
+          mat-stroked-button
+          class="flex flex-row items-center w-full !border-none !bg-[var(--mat-sys-primary)]"
+        >
+          <mat-icon svgIcon="tz" matPrefix></mat-icon>
+          <ion-text class="text-sm text-white"
+            ><ion-text
+              [textContent]="'SELECT_LANGUAGE_PAGE.KISWAHILI' | translate"
+              class="text-sm text-white"
+              >{{ "SELECT_LANGUAGE_PAGE.KISWAHILI" | translate }}</ion-text
+            ></ion-text
+          >
+        </button>
+      </div>
+    </div>
   </div>
 </ion-content>

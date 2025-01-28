@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -62,7 +63,8 @@ export class ChangePasswordFormComponent {
     private loadingService: LoadingService,
     private apiService: ApiService,
     private _unsubscribe: UnsubscribeService,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) {
     this.init();
     this.createChangePasswordFormGroup();
@@ -85,7 +87,7 @@ export class ChangePasswordFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () => this.navCtrl.navigateRoot('/tabs/profile');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     backButton();

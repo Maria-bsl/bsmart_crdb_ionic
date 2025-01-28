@@ -1,0 +1,180 @@
+// $bgcolor: #f2ecd3;
+// $transparent: rgba(255, 255, 255, 0);
+
+// $color-1: #f2f2f2;
+// $color-2: #c6e070;
+// $color-3: #91c46c;
+// $color-4: #287d7d;
+// $color-5: #1c344d;
+
+// $size: 2em;
+// $big-size: $size * 2;
+// $min: $size * 0.2;
+// $max: $size * 0.51;
+
+// $diff: $max - $min;
+
+// .yake {
+//   background: linear-gradient(
+//         to left bottom,
+//         $transparent $min,
+//         $color-5 $min,
+//         $color-5 $max,
+//         $transparent $max
+//       )
+//       0 0,
+//     linear-gradient(
+//         to right top,
+//         $transparent $min,
+//         $color-5 $min,
+//         $color-5 $max,
+//         $transparent $max
+//       )
+//       $size 0,
+//     linear-gradient(
+//         to left bottom,
+//         $transparent $min,
+//         $color-3 $min,
+//         $color-3 $max,
+//         $transparent $min
+//       )
+//       0 $max,
+//     linear-gradient(
+//         to right top,
+//         $transparent $min,
+//         $color-3 $min,
+//         $color-3 $max,
+//         $transparent $min
+//       )
+//       $size $max,
+//     linear-gradient(
+//         to left bottom,
+//         $transparent $min,
+//         $color-4 $min,
+//         $color-4 $max,
+//         $transparent $min
+//       )
+//       0 $max * 2,
+//     linear-gradient(
+//         to right top,
+//         $transparent $min,
+//         $color-4 $min,
+//         $color-4 $max,
+//         $transparent $min
+//       )
+//       $size $max * 2,
+//     linear-gradient(
+//         to left bottom,
+//         $transparent $min,
+//         $color-2 $min,
+//         $color-2 $max,
+//         $transparent $min
+//       )
+//       0 $max * 3,
+//     linear-gradient(
+//         to right top,
+//         $transparent $min,
+//         $color-2 $min,
+//         $color-2 $max,
+//         $transparent $min
+//       )
+//       $size $max * 3,
+//     /* - - - - - */
+//       linear-gradient(
+//         to right bottom,
+//         $transparent $min,
+//         $color-2 $min,
+//         $color-2 $max,
+//         $transparent $max
+//       )
+//       0 0,
+//     linear-gradient(
+//         to left top,
+//         $transparent $min,
+//         $color-2 $min,
+//         $color-2 $max,
+//         $transparent $max
+//       )
+//       $size 0,
+//     linear-gradient(
+//         to right bottom,
+//         $transparent $min,
+//         $color-5 $min,
+//         $color-5 $max,
+//         $transparent $min
+//       )
+//       0 $max,
+//     linear-gradient(
+//         to left top,
+//         $transparent $min,
+//         $color-5 $min,
+//         $color-5 $max,
+//         $transparent $min
+//       )
+//       $size $max,
+//     linear-gradient(
+//         to right bottom,
+//         $transparent $min,
+//         $color-3 $min,
+//         $color-3 $max,
+//         $transparent $min
+//       )
+//       0 $max * 2,
+//     linear-gradient(
+//         to left top,
+//         $transparent $min,
+//         $color-3 $min,
+//         $color-3 $max,
+//         $transparent $min
+//       )
+//       $size $max * 2,
+//     linear-gradient(
+//         to right bottom,
+//         $transparent $min,
+//         $color-4 $min,
+//         $color-4 $max,
+//         $transparent $min
+//       )
+//       0 $max * 3,
+//     linear-gradient(
+//         to left top,
+//         $transparent $min,
+//         $color-4 $min,
+//         $color-4 $max,
+//         $transparent $min
+//       )
+//       $size $max * 3;
+//   background-size: $big-size $big-size;
+//   //background-color: $bgcolor;
+//   background-repeat: repeat;
+//   font: 16px/2 "Trebuchet MS", Verdana, sans-serif;
+// }
+
+// .yake {
+//   --s: 120px; /* control the size*/
+//   --c1: #72e21f;
+//   --c2: #044012;
+
+//   --_c: var(--c1) 25%, #0000 0;
+//   --_g1: conic-gradient(at 62.5% 12.5%, var(--_c));
+//   --_g2: conic-gradient(at 87.5% 62.5%, var(--_c));
+//   --_g3: conic-gradient(at 25% 12.5%, var(--_c));
+//   background: var(--_g1) calc(var(--s) / -8) calc(var(--s) / 2),
+//     var(--_g1) calc(-3 * var(--s) / 8) calc(var(--s) / 4),
+//     var(--_g2) calc(3 * var(--s) / 8) calc(var(--s) / 4),
+//     var(--_g2) calc(var(--s) / -8) 0, var(--_g3) 0 calc(var(--s) / -4),
+//     var(--_g3) calc(var(--s) / -4) 0,
+//     conic-gradient(at 87.5% 87.5%, var(--_c)) calc(var(--s) / 8) 0 var(--c2);
+//   background-size: var(--s) var(--s);
+// }
+
+.yake {
+  --s: 50px; /* control the size*/
+  --c1: #0b2e59;
+  --c2: #0d6759;
+
+  background: conic-gradient(at 25% 25%, #0000 75%, var(--c1) 0) var(--s)
+      var(--s),
+    repeating-conic-gradient(at 25% 25%, var(--c1) 0 25%, var(--c2) 0 50%);
+  background-size: calc(2 * var(--s)) calc(2 * var(--s));
+}

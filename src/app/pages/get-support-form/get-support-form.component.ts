@@ -40,7 +40,8 @@ export class GetSupportFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     const createSelectedStudent = () => {

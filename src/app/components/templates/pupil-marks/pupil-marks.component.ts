@@ -1,6 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -47,12 +49,14 @@ import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.s
     IonButton,
     IonIcon,
     MatCardModule,
+    MatButtonModule,
     AboveAveragePipe,
     BelowAveragePipe,
     GreatAveragePipe,
     TranslateModule,
     CommonModule,
     MatSnackBarModule,
+    MatIconModule,
   ],
 })
 export class PupilMarksComponent {
@@ -71,11 +75,17 @@ export class PupilMarksComponent {
     private jsPdfService: JspdfUtilsService,
     private _snackBar: MatSnackBar,
     private _appConfig: AppConfigService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private _location: Location
   ) {
     addIcons({ downloadOutline });
     this.init();
+    this.registerIcons();
     this.readExamTypeFromActivatedRoute();
+  }
+  private registerIcons() {
+    let icons = ['download'];
+    this._appConfig.addIcons(icons, '/assets/bootstrap-icons');
   }
   private init() {
     const createSelectedStudent = () => {
@@ -85,7 +95,8 @@ export class PupilMarksComponent {
       });
     };
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/results');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     backButton();
@@ -149,31 +160,22 @@ export class PupilMarksComponent {
       let merged = zip(downloadedMessage, viewMessage);
       merged.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
         next: (messages) => {
-          let [msg1, msg2] = messages;
-          let snackbar = this._snackBar.open(msg1, msg2, { duration: 5000 });
-          snackbar
-            .onAction()
-            .pipe(this._unsubscribe.takeUntilDestroy)
-            .subscribe({
-              next: (res) => {
-                let uri$ = this.jsPdfService.getFileUri(
-                  `${studentName}_marks`.concat('-')
-                );
-                uri$.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
-                  next: (file) => {
-                    const fileOpenerOptions: FileOpenerOptions = {
-                      filePath: file.uri,
-                      contentType: 'application/pdf',
-                      openWithDefault: true,
-                    };
-                    FileOpener.open(fileOpenerOptions);
-                  },
-                  error: (err) => console.error(`Failed to get file uri`, err),
-                });
-              },
-              error: (err) => console.error(err),
-              complete: () => this.loadingService.dismiss(),
-            });
+          const [msg1, msg2] = messages;
+          const uri$ = this.jsPdfService.getFileUri(
+            `${studentName}_marks`.concat('-')
+          );
+          uri$.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
+            next: (file) => {
+              const fileOpenerOptions: FileOpenerOptions = {
+                filePath: file.uri,
+                contentType: 'application/pdf',
+                openWithDefault: true,
+              };
+              FileOpener.open(fileOpenerOptions);
+            },
+            error: (e) => console.error(e),
+            complete: () => this.loadingService.dismiss(),
+          });
         },
         error: (err) => console.error(err),
       });

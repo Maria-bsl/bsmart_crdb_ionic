@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { AccumulateStudentInvoicePipe } from 'src/app/pipes/accumulate-student-invoice/accumulate-student-invoice.pipe';
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import { ApiService } from 'src/app/services/api-service/api.service';
+import { Platform } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-dashboard-form',
@@ -49,7 +50,8 @@ export class DashboardFormComponent {
     private unsubscribe: UnsubscribeService,
     private dashboardService: DashboardService,
     private loadingService: LoadingService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private platform: Platform
   ) {
     this.registerIcons();
     this.dashboardService.initDashboard();
@@ -205,10 +207,17 @@ export class DashboardFormComponent {
           )
           .subscribe({
             next: (res) => {
-              this._appConfig.openAlertMessageBox(
-                'DEFAULTS.INFO',
-                res[0].Status
-              );
+              if (res && res[0] && res[0].Status === 'No events available') {
+                this._appConfig.openAlertMessageBox(
+                  'DEFAULTS.INFO',
+                  'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
+                );
+              } else {
+                this._appConfig.openAlertMessageBox(
+                  'DEFAULTS.WARNING',
+                  'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
+                );
+              }
             },
             error: (err) => console.error('Failed to fetch event details', err),
           });

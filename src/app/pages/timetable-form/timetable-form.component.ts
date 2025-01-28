@@ -23,7 +23,7 @@ import {
   BreakScheduleTypePipe,
   SwahiliDayOfWeek,
 } from 'src/app/pipes/time-table/time-table.pipe';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { GetSDetailStudents } from 'src/app/models/responses/RGetSDetails';
 import { AppConfigService } from 'src/app/services/app-config/app-config.service';
@@ -65,7 +65,8 @@ export class TimetableFormComponent {
     private navCtrl: NavController,
     private studentsService: StudentsManagementService,
     private _unsubscribe: UnsubscribeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _location: Location
   ) {
     this.init();
     this.createTimeTaleFormGroup();
@@ -79,7 +80,8 @@ export class TimetableFormComponent {
       });
     };
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     createSelectedStudent();

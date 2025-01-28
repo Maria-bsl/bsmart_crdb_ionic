@@ -109,4 +109,12 @@ export class HeaderSectionComponent {
       error: (e) => console.error(e),
     });
   }
+  navigateHome(event: MouseEvent) {
+    const url = location.pathname;
+    if (url.includes('package')) {
+      this.goBack(event);
+    } else {
+      this.router.navigate(['/tabs/tab-1/dashboard']);
+    }
+  }
 }

@@ -16,6 +16,7 @@
     "WARNING": "Onyo",
     "INFO": "Taarifa",
     "RESET": "Weka upya",
+    "SUCCESS": "Mafanikio",
     "ERRORS": {
       "CANNOT_BE_BLANK": "Haiwezi kuwa tupu",
       "UNEXPECTED_ERROR_OCCURED": "An unexpected error occurred, please try again or contact support."
@@ -33,23 +34,28 @@
   "SELECT_LANGUAGE_PAGE": {
     "WELCOME_TEXT": "Karibu kwenye B-smart Academia",
     "KISWAHILI": "Kiswahili",
-    "ENGLISH": "Kiingereza"
+    "ENGLISH": "Kiingereza",
+    "SELECT_LANGUAGE": "Chagua lugha"
   },
   "LOGIN": {
     "WELCOME_TEXT": "Karibu tena",
+    "LOGIN_TEXT": "Ingia ndani",
+    "LOGIN_DESCRIPTION": "Ili kuwa na uhusiano na sisi, tafadhali ingiza taarifa zako binafsi.",
     "LOGIN_FORM": {
       "LABELS": {
         "USERNAME": "jina la mtumiaji",
-        "PASSWORD": "Nenotambulishi",
+        "PASSWORD": "Neno la siri",
         "FORGOT_PASSWORD": "Umesahau neno wa siri?",
         "DONT_HAVE_AN_ACCOUNT": "Uko mpia kwenye B-Smart?",
         "CLICK_HERE": "Bonyeza hapa!"
       },
       "PLACEHOLDERS": {
         "USERNAME": "Ingiza jina la mtumiaji",
-        "PASSWORD": "Ingiza neno lako wa siri"
+        "PASSWORD": "Ingiza neno lako la siri"
       },
       "ERRORS": {
+        "USERNAME": "Tafadhali, weka jina la mtumiaji",
+        "PASSWORD": "Tafadhali, ingiza neno la siri",
         "USERNAME_OR_PASSWORD_INCORRECT": "Jina la mtumiaji au nenosiri uliloingiza sio sahihi."
       },
       "ACTIONS": {
@@ -58,9 +64,11 @@
     }
   },
   "REGISTER": {
-    "TITLE_TEXT": "Jisajili",
+    "TITLE_TEXT": "Jiandikishe",
     "ALREADY_SIGNED_UP": "Tayari umeshaweka saini?",
-    "LOGIN_HERE": "Ingia ndani",
+    "LOGIN_HERE": "Ingia",
+    "REGISTER_NOW": "Jiandikishe saa hii",
+    "REGISTER_DESCRIPTION": "Tafadhali jaza fomu hapa chini ili kuendelea.",
     "REGISTER_FORM": {
       "LABELS": {
         "FULL_NAME": "Jina kamili",
@@ -68,7 +76,7 @@
         "USERNAME": "Jina la mtumiaji",
         "EMAIL_ADDRESS": "Barua pepe",
         "PREV": "Nyuma",
-        "NEXT": "Ajayo",
+        "NEXT": "Inayofuata",
         "CONTINUE": "Endelea",
         "SCHOOL": "Shule",
         "ADMISSION_NO": "Nambari ya kuingia"
@@ -101,7 +109,11 @@
   },
   "FORGOT_PASSWORD": {
     "TITLE_TEXT": "Umesahawu neno siri",
-    "SEND": "Tuma"
+    "FORGOT_PASSWORD_TEXT": "Neno la siri",
+    "SEND": "Tuma",
+    "MESSAGE_SENT_TO": "Ujumbe ulitumwa kwa",
+    "EMAIL_ADDRESS_DOES_NOT_EXIST": "Anwani ya barua pepe haipo. Tafadhali jisajili kwanza",
+    "DESCRIPTION": "Ingiza barua pepe lako ili tukutumie ujumbe."
   },
   "ADD_STUDENT_PAGE": {
     "TITLE": "Ongeza Mwanafunzi",
@@ -123,7 +135,9 @@
       "ADD_STUDENT": "Ongeza Mwanafunzi",
       "HOME": "Nyumbani",
       "TRANSPORT": "Usafiri",
-      "PROFILE": "Umbo"
+      "PROFILE": "Umbo",
+      "ACTIVE": "Amilifu",
+      "ACTIVE_PACKAGE_TEXT": "Package yeno ya __ ni amilifu."
     }
   },
   "DASHBOARD_PAGE": {
@@ -140,9 +154,12 @@
       "NOTIFICATIONS": "Taarifa",
       "GET_SUPPORT": "Msaada",
       "SWITCH_ACCOUNT": "Badilisha akaunti",
-      "LOGOUT": "Ingia nje",
+      "LOGOUT": "Toka nje",
       "ATTENDANCE_RECORD_TEXT": "Rekodi ya kuhudhuria ni",
       "FEES_RECORD_TEXT": "Bado una deni la"
+    },
+    "ERRORS": {
+      "NO_EVENTS_AVAILABLE": "Hakuna matukio yanayopatikana"
     }
   },
   "FEES_PAGE": {
@@ -236,7 +253,7 @@
   "GET_SUPPORT_PAGE": {
     "LABELS": {
       "GET_SUPPORT_LABEL": "Pata Msaada",
-      "SUPPORT_TEXT": "Kwa ombi lolote la msaada kuhusu mtoto wako, taasisi yao au suala lingine lolote linalohusiana. Tafadhali wasiliana nasi kupitia njia zilizo hapa chini.",
+      "SUPPORT_TEXT": "Kwa ombi lolote la msaada kuhusu mtoto wako, taasisi yao au suala lingine lolote linalohusiana. Tafadhali wasiliana nasi kupitia njia zilizo hapo ju.",
       "CALL_US": "Tupigie simu",
       "MAIL_US": "Tutumie barua"
     }
@@ -268,8 +285,8 @@
       "PICK_UP_TIME": "Muda wa Kuchukua",
       "LANDMARK_AREA": "Eneo la alama ya ardhi",
       "VEHICLE_REGISTRATION_NO": "Usajili wa gari No.",
-      "DRIVR_MOBILE": "Simu ya Mkononi ya Dereva",
-      "ATTENDANT_MOBILE": "Mhudhuriaji Simu ya Mkononi",
+      "DRIVR_MOBILE": "Simu Dereva",
+      "ATTENDANT_MOBILE": "Simu ya Mkononi",
       "CALL_DRIVER": "Dereva wa simu",
       "CALL_ATTENDANT": "Mhudumu wa simu",
       "C": "Eneo"
@@ -293,6 +310,51 @@
         "PARENT_NAME": "Ingiza jina la mzazi",
         "EMAIL_ADDRESS": "Ingiza barua pepe"
       }
+    }
+  },
+  "LATEST_SUBSCRIPTIONS_PAGE": {
+    "LABELS": {
+      "SUBSCRIPTION_PLANS": "Mipango ya Usajili",
+      "CURRENT": "Sasa",
+      "RENEW": "Upya",
+      "AVAILABLE_PLANS": "Mipango inayopatikana",
+      "DAYS": "Siku",
+      "PACKAGE_HISTORY": "Historia ya Kifurushi"
+    }
+  },
+  "SUBSCRIPTION_PAGE": {
+    "LABELS": {
+      "SUBSCRIBE": "Kujiunga",
+      "HOW_WOULD_YOU_LIKE_TO_PAY": "Ungependa kulipa vipi?",
+      "PAY_WITH_MPESA_TEXT": "Lipa kwa M-PESA",
+      "PAY_WITH_CARD": "Lipa kwa kadi",
+      "SUBSCRIPTION": "Michango",
+      "TRANSACTION_COMPLETED": "Shughuli imekamilika kwa mafanikio!"
+    },
+    "SUBSCRIBE_FORM": {
+      "LABELS": {
+        "AMOUNT": "Kiasi",
+        "PAYMENT_REQUEST": "Utapokea ombi la malipo. Tafadhali, hakikisha simu yako imewashwa, kadi yako ya sim inafanya kazi. Ingiza PIN yako ili kukamilisha.",
+        "PAY": "Lipa",
+        "CANCEL_TRANSACTION": "Katisha muamala"
+      },
+      "ERRORS": {
+        "MISSING_PHONE_NUMBER": "Tafadhali fafanua.",
+        "INVALID_PHONE_NUMBER": "Nambari ya simu batili."
+      }
+    },
+    "ERRORS": {
+      "FAILED_TRANSACTION": "Muamala umeshindwa",
+      "FAILED_TO_OPEN_PAYMENT_METHOD": "Imeshindwa kufungua njia ya malipo.",
+      "TRANSACTION_CANCELLED": "Shughuli yako imefutwa.",
+      "TRANSACTION_FAILED_CHECK_PIN": "Samahani, shughuli yako imeshindwa kukamilisha.",
+      "INVALID_AMOUNT_USED": "Muamala umeshindwa. Kiasi batili kilichotumika.",
+      "INSUFFICIENT_FUNDS": "Muamala umeshindwa. Una fedha za kutosha.",
+      "INVALID_REFERENCE_NUMBER": "Samahani, nambari ya kumbukumbu uliyoingiza ni batili.",
+      "DUPLICATE_TRANSACTION": "Samahani, kosa lilitokea wakati wa kufanya shughuli. Tafadhali wasiliana na msaada au jaribu tena.",
+      "INVALID_SHORT_CODE": "Samahani mpaka namba uliyoingiza haipo.",
+      "CUSTOMER_TRANSACTION_LIMIT_REACHED": "Samahani, umefikia kikomo chako cha manunuzi.",
+      "PROCESSING_FAILED": "Imeshindwa kufanya mchakato wa shughuli. Tafadhali jaribu tena au wasiliana na msaada."
     }
   }
 }

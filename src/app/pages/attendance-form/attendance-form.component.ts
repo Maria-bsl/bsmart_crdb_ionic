@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, Location } from '@angular/common';
 import { Component, model, OnInit } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
@@ -76,7 +76,8 @@ export class AttendanceFormComponent {
     private _appConfig: AppConfigService,
     private navCtrl: NavController,
     private datePipe: DatePipe,
-    private _unsubscribe: UnsubscribeService
+    private _unsubscribe: UnsubscribeService,
+    private _location: Location
   ) {
     this.init();
     this.registerIcons();
@@ -84,7 +85,8 @@ export class AttendanceFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     backButton();

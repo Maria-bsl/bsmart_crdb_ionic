@@ -172,13 +172,13 @@ export class PayWithMpesaService {
     }
   }
   private async switchC2BResponse(res: C2BMpesaResponse) {
-    let title = 'subscriptionPage.errors.failedTransaction';
-    let message = 'subscriptionPage.errors.processingFailed';
+    let title = 'SUBSCRIPTION_PAGE.ERRORS.FAILED_TRANSACTION';
+    let message = 'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED';
     switch (res.output_ResponseCode) {
       case 'INS-2051': //MSISDN invalid
         break;
       case 'INS-2006': //Insufficient balance
-        message = 'subscriptionPage.errors.insufficientFunds';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.INSUFFICIENT_FUNDS';
         break;
       case 'INS-998': //Invalid Market
         break;
@@ -197,7 +197,7 @@ export class PayWithMpesaService {
       case 'INS-991': //Customer Transaction Count Limit Breached
         break;
       case 'INS-990': //Customer Transaction Value Limit Breached
-        message = 'subscriptionPage.errors.customerTransactionLimitReached';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.CUSTOMER_TRANSACTION_LIMIT_REACHED';
         break;
       case 'INS-30': //Invalid Purchased Items Description Used
         break;
@@ -210,29 +210,29 @@ export class PayWithMpesaService {
       case 'INS-20': //Not All Parameters Provided. Please try again.
         break;
       case 'INS-17': //Invalid Transaction Reference. Length Should Be Between 1 and 20.
-        message = 'subscriptionPage.errors.invalidReferenceNumber';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.INVALID_REFERENCE_NUMBER';
         break;
       case 'INS-15': //Invalid Amount Used
-        message = 'subscriptionPage.errors.invalidAmountUsed';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.INVALID_AMOUNT_USED';
         break;
       case 'INS-13': //Invalid Shortcode Used
-        message = 'subscriptionPage.errors.invalidShortCode';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.INVALID_SHORT_CODE';
         break;
       case 'INS-10': //Duplicate Transaction
-        message = 'subscriptionPage.errors.duplicateTransaction';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.DUPLICATE_TRANSACTION';
         break;
       case 'INS-9': //Request timeout
-        message = 'subscriptionPage.errors.transactionCancelled';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.TRANSACTION_CANCELLED';
         break;
       case 'INS-6': //Transaction Failed
-        message = 'subscriptionPage.errors.transactionFailedCheckPin';
+        message = 'SUBSCRIPTION_PAGE.ERRORS.TRANSACTION_FAILED_CHECK_PIN';
         break;
       case 'INS-1': //Internal Error
         break;
       case 'INS-0': //Request processed successfully
-        let successText = await firstValueFrom(this.tr.get('defaults.success'));
+        let successText = await firstValueFrom(this.tr.get('DEFAULTS.SUCCESS'));
         let text = await firstValueFrom(
-          this.tr.get('subscriptionPage.labels.transactionCompleted')
+          this.tr.get('SUBSCRIPTION_PAGE.LABELS.TRANSACTION_COMPLETED')
         );
         Swal.fire({
           title: successText,
@@ -242,9 +242,14 @@ export class PayWithMpesaService {
           allowOutsideClick: false,
         }).then((dialog) => {
           if (dialog.isConfirmed) {
-            this.router.navigateByUrl('/tabs/tab-1/dashboard', {
-              replaceUrl: true,
-            });
+            const navigate = (route: string) => {
+              this.router.navigateByUrl(route, {
+                replaceUrl: true,
+              });
+            };
+            location.pathname.includes('package')
+              ? navigate('/home')
+              : navigate('/tabs/tab-1/dashboard');
           }
         });
         this.transactionCompleted.emit(true);
@@ -261,8 +266,8 @@ export class PayWithMpesaService {
         this.switchC2BResponse(res);
       },
       error: (err) => {
-        let title = 'subscriptionPage.errors.failedTransaction';
-        let message = 'subscriptionPage.errors.processingFailed';
+        let title = 'SUBSCRIPTION_PAGE.ERRORS.FAILED_TRANSACTION';
+        let message = 'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED';
         this.appConfig.openAlertMessageBox(title, message);
         this.isLoading.set(false);
       },
@@ -277,7 +282,7 @@ export class PayWithMpesaService {
         next: (response) => {
           if (response.output_ResponseCode === 'INS-0') {
             response.at = new Date().toISOString();
-            let stringifySessionKey = JSON.stringify(response);
+            const stringifySessionKey = JSON.stringify(response);
             localStorage.setItem('sessionKey', stringifySessionKey);
             const res$ = this.sendC2BRequest(payment, response);
             this.parseSendC2BResponse(res$);
@@ -287,8 +292,8 @@ export class PayWithMpesaService {
         },
         error: (err) => {
           console.error(err);
-          let title = 'subscriptionPage.errors.failedTransaction';
-          let message = 'subscriptionPage.errors.processingFailed';
+          const title = 'SUBSCRIPTION_PAGE.ERRORS.FAILED_TRANSACTION';
+          const message = 'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED';
           this.appConfig.openAlertMessageBox(title, message);
           this.isLoading.set(false);
         },

@@ -16,7 +16,7 @@ import { FeesPageService } from 'src/app/services/fees-page-service/fees-page.se
 import { MatCard } from '@angular/material/card';
 import { map, Observable } from 'rxjs';
 import { AppUtilities } from 'src/app/utils/AppUtilities';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { InvoiceReceiptComponent } from 'src/app/components/templates/invoice-receipt/invoice-receipt.component';
 import { ActivatedRoute } from '@angular/router';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
@@ -83,7 +83,8 @@ export class FeesFormComponent {
     private navCtrl: NavController,
     private feesService: FeesPageService,
     private activatedRoute: ActivatedRoute,
-    private _unsubscribe: UnsubscribeService
+    private _unsubscribe: UnsubscribeService,
+    private _location: Location
   ) {
     this.init();
     this.registerIcons();
@@ -91,7 +92,9 @@ export class FeesFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
+
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     backButton();

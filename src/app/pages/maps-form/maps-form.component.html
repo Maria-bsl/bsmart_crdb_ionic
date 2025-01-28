@@ -65,7 +65,7 @@
         <h6
           class="mat-body-small !font-normal uppercase text-[var(--md-sys-color-on-surface-variant)]"
         >
-          {{ "mapsPage.labels.yourLocationText" | translate }}
+          {{ "MAPS_PAGE.LABELS.YOUR_LOCATION_TEXT" | translate }}
         </h6>
         <h4 class="mat-title-medium !font-semibold">Biz-Logic Solutions</h4>
         <mat-divider
@@ -84,7 +84,7 @@
         <div class="flex flex-col w-full">
           <div class="flex flex-row items-center justify-between">
             <h6 class="mat-title-medium !font-light opacity-100">
-              {{ "mapsPage.labels.routeDetails" | translate }}
+              {{ "MAPS_PAGE.LABELS.ROUTE_DETAILS" | translate }}
             </h6>
           </div>
           <div class="flex flex-col w-full">
@@ -92,7 +92,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.routeName" | translate }}
+                {{ "MAPS_PAGE.LABELS.ROUTE_NNAME" | translate }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
                 {{ vehicleDetails[0].Route_Name }}
@@ -102,7 +102,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.dropOffTime" | translate }}
+                {{ "MAPS_PAGE.LABELS.DROP_OFF_TIME" | translate }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
                 {{ vehicleDetails[0].Arrival }}
@@ -112,7 +112,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.pickUpTime" | translate }}
+                {{ "MAPS_PAGE.LABELS.PICK_UP_TIME" | translate }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
                 {{ vehicleDetails[0].Departure }}
@@ -122,7 +122,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.landmarkArea" | translate }}
+                {{ "MAPS_PAGE.LABELS.LANDMARK_AREA" | translate }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
                 {{ vehicleDetails[0].Landmark }}
@@ -132,7 +132,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.vehicleRegistrationNo" | translate }}
+                {{ "MAPS_PAGE.LABELS.VEHICLE_REGISTRATION_NO" | translate }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
                 {{ vehicleDetails[0].Vehicle_Registration_No }}
@@ -142,7 +142,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.driverMobile" | translate }}
+                {{ "MAPS_PAGE.LABELS.DRIVR_MOBILE" | translate }}
                 {{ "(" + vehicleDetails[0].Driver_Name + ")" }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
@@ -153,7 +153,7 @@
               <p
                 class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
               >
-                {{ "mapsPage.labels.attendantMobile" | translate }}
+                {{ "MAPS_PAGE.LABELS.ATTENDANT_MOBILE" | translate }}
                 {{ "(" + vehicleDetails[0].Attendant_Name + ")" }}
               </p>
               <p class="mat-body-small !font-normal capitalize">
@@ -169,7 +169,7 @@
             class="w-full !rounded-none"
           >
             <mat-icon svgIcon="telephone-fill"></mat-icon>
-            {{ "mapsPage.labels.callDriver" | translate }}
+            {{ "MAPS_PAGE.LABELS.CALL_DRIVER" | translate }}
           </button>
           <button
             (click)="openTelephone(vehicleDetails[0].Attendant_Mobile)"
@@ -177,7 +177,7 @@
             class="w-full !rounded-none"
           >
             <mat-icon svgIcon="telephone-fill"></mat-icon>
-            {{ "mapsPage.labels.callAttendant" | translate }}
+            {{ "MAPS_PAGE.LABELS.CALL_ATTENDANT" | translate }}
           </button>
         </div>
       </div>

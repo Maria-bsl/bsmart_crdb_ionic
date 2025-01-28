@@ -1,0 +1,358 @@
+{
+  "DEFAULTS": {
+    "LOADING": "Loading",
+    "CONFIRM": "Confirm",
+    "INVALID_FORM": "Invalid form",
+    "FAILED": "Failed",
+    "OK": "OK",
+    "YES": "Yes",
+    "NO": "No",
+    "VIEW": "View",
+    "THIS_CANT_BE_UNDONE": "This can't be undone.",
+    "FILE_DOWNLOADED_SUCCESSFULLY": "Your file was downloaded successfully!",
+    "SUBMIT": "Submit",
+    "DOWNLOAD": "Download",
+    "NOT_AVAILABLE_TEXT": "Not available",
+    "WARNING": "Warning",
+    "INFO": "Info",
+    "RESET": "Reset",
+    "SUCCESS": "Success",
+    "ERRORS": {
+      "CANNOT_BE_BLANK": "Cannot be blank",
+      "UNEXPECTED_ERROR_OCCURED": "An unexpected error occurred, please try again or contact support."
+    },
+    "ADS": [
+      {
+        "TITLE": "CRDB Pay Here",
+        "DESCRIPTION": "Complete payments easily for all merchants from banks and mobile networks."
+      }
+    ],
+    "DIALOGS": {
+      "SURE_LOGOUT_TEXT": "Are you sure you want to log out?"
+    }
+  },
+  "SELECT_LANGUAGE_PAGE": {
+    "WELCOME_TEXT": "Welcome to B-smart Academia",
+    "KISWAHILI": "Swahili",
+    "ENGLISH": "English",
+    "SELECT_LANGUAGE": "Select language"
+  },
+  "LOGIN": {
+    "WELCOME_TEXT": "Welcome back",
+    "LOGIN_TEXT": "Sign in",
+    "LOGIN_DESCRIPTION": "To stay connected with us, please enter your Personal Information.",
+    "LOGIN_FORM": {
+      "LABELS": {
+        "USERNAME": "Username",
+        "PASSWORD": "Password",
+        "FORGOT_PASSWORD": "Forgot password?",
+        "DONT_HAVE_AN_ACCOUNT": "New to B-Smart?",
+        "CLICK_HERE": "Click here!"
+      },
+      "PLACEHOLDERS": {
+        "USERNAME": "Enter username",
+        "PASSWORD": "Enter your password"
+      },
+      "ERRORS": {
+        "USERNAME_OR_PASSWORD_INCORRECT": "The username or password you entered is incorrect."
+      },
+      "ACTIONS": {
+        "SUBMIT": "Submit"
+      }
+    }
+  },
+  "REGISTER": {
+    "TITLE_TEXT": "Sign up",
+    "ALREADY_SIGNED_UP": "Already signed up?",
+    "LOGIN_HERE": "Login here",
+    "REGISTER_NOW": "Sign up now",
+    "REGISTER_DESCRIPTION": "Please, complete the form below to continue.",
+    "REGISTER_FORM": {
+      "LABELS": {
+        "FULL_NAME": "Full Name",
+        "PHONE_NUMBER": "Phone Number",
+        "USERNAME": "Username",
+        "EMAIL_ADDRESS": "Email Address",
+        "PREV": "Previous",
+        "NEXT": "Next",
+        "CONTINUE": "Continue",
+        "SCHOOL": "School",
+        "ADMISSION_NO": "Admission Number"
+      },
+      "PLACEHOLDERS": {
+        "FULL_NAME": "Enter full name",
+        "PHONE_NUMBER": "xxx-xxx-xxx",
+        "USERNAME": "Enter username",
+        "EMAIL_ADDRESS": "Ex. example@example.com",
+        "SCHOOL": "Search for school name",
+        "ADMISSION_NO": "Enter admission number"
+      },
+      "ERRORS": {
+        "INVAID_PHONE_NUMBER": "Invalid phone number.",
+        "SCHOOL_NAME_DOES_NOT_EXIST": "This school name does not exist.",
+        "MISSING_FULL_NAME": "You forgot to enter a full name.",
+        "MISSING_PHONE_NUMBER": "You forgot to enter a phone number.",
+        "MISSING_USERNAME": "You forgot to enter a username.",
+        "MISSING_EMAIL_ADDRESS": "You forgot to enter an email address.",
+        "INVALID_EMAIL": "The email address you entered is invalid.",
+        "MISSING_SCHOOL": "You forgot to select a school.",
+        "MISSING_ADMISSION_NO": "You forgot to enter an admission number."
+      },
+      "SUCCESS": {
+        "SUCCESSFULLY_REGISTERED_TEXT": "Successfully registered!",
+        "EMAIL_SENT_TEXT": "An email was sent to {{}} with your login credentials.",
+        "OPEN_MAIL_APP": "Open your mail app."
+      }
+    }
+  },
+  "FORGOT_PASSWORD": {
+    "TITLE_TEXT": "Forgot Password",
+    "FORGOT_PASSWORD_TEXT": "Password forgotten",
+    "SEND": "Send",
+    "MESSAGE_SENT_TO": "Message sent to",
+    "EMAIL_ADDRESS_DOES_NOT_EXIST": "Email address does not exist. Please register first.",
+    "DESCRIPTION": "A reset password email will be sent to this address."
+  },
+  "ADD_STUDENT_PAGE": {
+    "TITLE": "Add Student",
+    "SUCCESS": {
+      "SUCCESS_ADD_STUDENT": "Student added successfully!"
+    },
+    "ERRORS": {
+      "FAILED_TO_FIND_FACULTIES_TEXT": "Failed to fetch faculties."
+    }
+  },
+  "HOME_PAGE": {
+    "LABELS": {
+      "TITLE": "Welcome",
+      "SUBTITLE": "Please select a student",
+      "JAMBO": "Hello",
+      "DELETE_STUDENT": "Delete Student",
+      "DELETED_STUDENT_SUCCESSFULLY": "Student successfully deleted!",
+      "FAILED_TO_DELETE_STUDENT": "Failed to delete the student.",
+      "ADD_STUDENT": "Add Student",
+      "HOME": "Home",
+      "TRANSPORT": "Transport",
+      "PROFILE": "Profile",
+      "ACTIVE": "Active",
+      "ACTIVE_PACKAGE_TEXT": "Your __ package is active."
+    }
+  },
+  "DASHBOARD_PAGE": {
+    "CATEGORIES_TEXT": "Categories",
+    "STATISTICS_TEXT": "Statistics",
+    "LABELS": {
+      "SCHOOL_FEES": "School Fees",
+      "FEES": "FEES",
+      "TIME_TABLE": "Timetable",
+      "RESULTS": "Results",
+      "ATTENDANCE": "Attendance",
+      "LIBRARY": "Library",
+      "BOOKS": "Books",
+      "NOTIFICATIONS": "Notifications",
+      "GET_SUPPORT": "Support",
+      "SWITCH_ACCOUNT": "Switch Account",
+      "LOGOUT": "Logout",
+      "ATTENDANCE_RECORD_TEXT": "Attendance record is",
+      "FEES_RECORD_TEXT": "You still owe"
+    },
+    "ERRORS": {
+      "NO_EVENTS_AVAILABLE": "No events available"
+    }
+  },
+  "FEES_PAGE": {
+    "LABELS": {
+      "INVOICE": "Invoice",
+      "NO_FEES_AVAILABLE": "No fees available",
+      "PENDING": "Pending",
+      "PAID": "Paid",
+      "INVOICE_NUMBER": "Invoice Number",
+      "SCHOOL": "School",
+      "DATE_DUE": "Due Date",
+      "AMOUNT": "Amount",
+      "PAY_WITH_MPESA": "Pay with M-PESA",
+      "PHONE_NUMBER": "Phone Number",
+      "PAYMENT_REQUEST": "You will receive a payment request. Please ensure your phone is on, your SIM card is working, and enter your PIN to complete the transaction."
+    },
+    "ERRORS": {
+      "MISSING_PHONE_NUMBER": "Please provide a phone number",
+      "INVALID_PHONE_NUMBER": "Invalid phone number"
+    },
+    "ACTIONS": {
+      "PAY_NOW": "Pay Now",
+      "PAY": "PAY"
+    }
+  },
+  "TIME_TABLE_PAGE": {
+    "LABELS": {
+      "TIME_TABLE_TEXT": "Time Table"
+    },
+    "DAYS_OF_WEEK": {
+      "monday": "Monday",
+      "tuesday": "Tuesday",
+      "wednesday": "Wednesday",
+      "thursday": "Thursday",
+      "friday": "Friday",
+      "saturday": "Saturday"
+    },
+    "ERRORS": {
+      "FAILED_TO_FETCH_TIME_TABLE": "Failed to fetch the time table."
+    }
+  },
+  "RESULTS_PAGE": {
+    "LABELS": {
+      "WELCOME_TEXT": "Your child's results",
+      "EXAMS_TEXT": "Exams",
+      "YOU_ARE_EXCELLENT_TEXT": "You are excellent.",
+      "GOOD_WORK_TEXT": "Good job! Keep aiming high.",
+      "BETTER_LUCK_TEXT": "Nice try, better luck next time."
+    },
+    "STUDENT_MARK_DETAIL_REPORT": {
+      "STUDENT_NAME": "Student Name",
+      "FINAL_GRADE": "Final Grade",
+      "OVERALL": "Overall"
+    },
+    "ERRORS": {
+      "NO_EXAM_RESULTS_FOUND": "No exam results are available at this time.",
+      "FAILED_TO_FIND_STUDENT_MARK": "Failed to retrieve student marks.",
+      "FAILED_TO_FETCH_EXAM_TYPE": "Failed to fetch exam types.",
+      "RESULTS_NOT_FOUND": "No exam results found."
+    }
+  },
+  "ATTENDANCE_PAGE": {
+    "LABELS": {
+      "NOT_AVAILABLE": "No record(s) available.",
+      "ATTENDANCE": "Attendance",
+      "ABSENT": "Absent",
+      "PRESENT": "Present",
+      "ATTENDANCE_RECORD": "Attendance record"
+    }
+  },
+  "LIBRARY_PAGE": {
+    "LABELS": {
+      "LIBRARY": "Library",
+      "BOOKS_RETURNED": "Books returned",
+      "BOOKS_BORROWED": "Books borrowed",
+      "LEFT_IN_STOCK": "Books left in stock."
+    },
+    "ERRORS": {
+      "NO_BOOKS_AVAILABLE": "No books available."
+    }
+  },
+  "BOOKS_PAGE": {
+    "LABELS": {
+      "TITLE": "Books",
+      "AVAILABLE_SUBJECTS": "All subjects"
+    },
+    "ERRORS": {
+      "NO_BOOKS_FOUND": "No books found"
+    }
+  },
+  "GET_SUPPORT_PAGE": {
+    "LABELS": {
+      "GET_SUPPORT_LABEL": "Get Support",
+      "SUPPORT_TEXT": "For any support requests regarding your child, their institution, or any other related issue, please contact us using the methods above.",
+      "CALL_US": "Call us",
+      "MAIL_US": "Email us"
+    }
+  },
+  "CHANGE_PASSWORD_FORM": {
+    "FORM": {
+      "LABELS": {
+        "CURRENT_PASSWORD": "Current Password",
+        "NEW_PASSWORD": "New Password",
+        "CONFIRM_PASSWORD": "Confirm Password"
+      },
+      "PLACEHOLDER": {
+        "CURRENT_PASSWORD": "Enter current password",
+        "NEW_PASSWORD": "Create a new password"
+      }
+    },
+    "ERRORS": {
+      "FAILED_TO_GET_PARENT_DETAILS": "Failed to retrieve parent details.",
+      "FAILED_TO_UPDATE_PASSWORD_TEXT": "Failed to update the password. Please try again or contact support.",
+      "PASSWORD_DO_NOT_MATCH": "Passwords do not match"
+    }
+  },
+  "MAPS_PAGE": {
+    "LABELS": {
+      "YOUR_LOCATION_TEXT": "Your Location",
+      "ROUTE_DETAILS": "Route Details",
+      "ROUTE_NNAME": "Route Name",
+      "DROP_OFF_TIME": "Drop Off Time",
+      "PICK_UP_TIME": "Pick Up Time",
+      "LANDMARK_AREA": "Landmark Area",
+      "VEHICLE_REGISTRATION_NO": "Vehicle Registration No.",
+      "DRIVR_MOBILE": "Driver's Mobile",
+      "ATTENDANT_MOBILE": "Attendant's Mobile",
+      "CALL_DRIVER": "Call Driver",
+      "CALL_ATTENDANT": "Call Attendant",
+      "C": "Area"
+    }
+  },
+  "PROFILE_PAGE": {
+    "LABELS": {
+      "PROFILE": "Your Profile",
+      "SECURITY": "Security",
+      "PROFILE_PROMPT_TEXT": "Update details",
+      "CHANGE_PASSWORD_TEXT": "Change password"
+    }
+  },
+  "EDIT_PROFILE_PAGE": {
+    "FORM": {
+      "LABELS": {
+        "PARENT_NAME": "Parent's Name",
+        "EMAIL_ADDRESS": "Email Address"
+      },
+      "PLACEHOLDERS": {
+        "PARENT_NAME": "Enter parent's name",
+        "EMAIL_ADDRESS": "Enter email address"
+      }
+    }
+  },
+  "LATEST_SUBSCRIPTIONS_PAGE": {
+    "LABELS": {
+      "SUBSCRIPTION_PLANS": "Subscription Plans",
+      "CURRENT": "Current",
+      "RENEW": "Renew",
+      "AVAILABLE_PLANS": "Available Plans",
+      "DAYS": "Days",
+      "PACKAGE_HISTORY": "Package History"
+    }
+  },
+  "SUBSCRIPTION_PAGE": {
+    "LABELS": {
+      "SUBSCRIBE": "Subscribe",
+      "HOW_WOULD_YOU_LIKE_TO_PAY": "How would you like to pay?",
+      "PAY_WITH_MPESA_TEXT": "Pay with M-PESA",
+      "PAY_WITH_CARD": "Pay with card",
+      "SUBSCRIPTION": "Subscription",
+      "TRANSACTION_COMPLETED": "Transaction completed successfully!"
+    },
+    "SUBSCRIBE_FORM": {
+      "LABELS": {
+        "AMOUNT": "Amount",
+        "PAYMENT_REQUEST": "You will receive a payment request. Please make sure your phone is on, and your SIM card is working. Enter your PIN to complete.",
+        "PAY": "Pay",
+        "CANCEL_TRANSACTION": "Cancel transaction"
+      },
+      "ERRORS": {
+        "MISSING_PHONE_NUMBER": "Please specify.",
+        "INVALID_PHONE_NUMBER": "Invalid phone number."
+      }
+    },
+    "ERRORS": {
+      "FAILED_TRANSACTION": "Transaction failed",
+      "FAILED_TO_OPEN_PAYMENT_METHOD": "Failed to open payment method.",
+      "TRANSACTION_CANCELLED": "Your transaction has been cancelled.",
+      "TRANSACTION_FAILED_CHECK_PIN": "Sorry, your transaction could not be completed.",
+      "INVALID_AMOUNT_USED": "Transaction failed. Invalid amount used.",
+      "INSUFFICIENT_FUNDS": "Transaction failed. Insufficient funds.",
+      "INVALID_REFERENCE_NUMBER": "Sorry, the reference number you entered is invalid.",
+      "DUPLICATE_TRANSACTION": "Sorry, an error occurred during the transaction. Please contact support or try again.",
+      "INVALID_SHORT_CODE": "Sorry, the number you entered does not exist.",
+      "CUSTOMER_TRANSACTION_LIMIT_REACHED": "Sorry, you have reached your purchase limit.",
+      "PROCESSING_FAILED": "Failed to process the transaction. Please try again or contact support."
+    }
+  }
+}

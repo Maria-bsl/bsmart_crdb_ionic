@@ -1,9 +1,10 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { Router } from '@angular/router';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent, NavController } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HeaderSectionComponent } from 'src/app/components/layouts/header-section/header-section.component';
 import { AppConfigService } from 'src/app/services/app-config/app-config.service';
@@ -28,9 +29,17 @@ export class SelectProfileFormComponent {
     private _appConfig: AppConfigService,
     private _tr: TranslateService,
     private _unsubscribe: UnsubscribeService,
-    private router: Router
+    private router: Router,
+    private _location: Location,
+    private navCtrl: NavController
   ) {
     this.registerIcons();
+    const backButton = () => {
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
+      this._appConfig.backButtonEventHandler(backToLogin);
+    };
+    backButton();
   }
   private registerIcons() {
     this._appConfig.addIcons(

@@ -11,9 +11,11 @@
       {{ "FEES_PAGE.LABELS.PAY_WITH_MPESA" | translate }}
     </ion-title>
     <form
+      (ngSubmit)="submitPayWithMpesaForm($event)"
       *ngIf="!mpesaService.isLoading(); else processingTransaction"
       [formGroup]="payFormGroup"
       class="my-2"
+      id="pay-with-mpesa-form"
     >
       <div class="flex flex-col w-full">
         <ion-text class="mat-body-small !font-semibold placeholer-text">
@@ -63,8 +65,8 @@
         </h6>
       </div>
       <button
-        (click)="submitPayWithMpesaForm($event)"
-        type="button"
+        type="submit"
+        form="pay-with-mpesa-form"
         class="w-full my-4"
         mat-flat-button
       >

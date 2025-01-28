@@ -4,7 +4,7 @@ import { HeaderSectionComponent } from 'src/app/components/layouts/header-sectio
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { MatRippleModule } from '@angular/material/core';
 import { finalize, Observable } from 'rxjs';
 import { GetSDetailStudents } from 'src/app/models/responses/RGetSDetails';
@@ -47,7 +47,8 @@ export class BooksFormComponent {
     private loadingService: LoadingService,
     private _unsubscribe: UnsubscribeService,
     private navCtrl: NavController,
-    private _appConfig: AppConfigService
+    private _appConfig: AppConfigService,
+    private _location: Location
   ) {
     this.registerIcons();
     this.init();
@@ -58,7 +59,8 @@ export class BooksFormComponent {
   }
   private init() {
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     const createSelectedStudent = () => {

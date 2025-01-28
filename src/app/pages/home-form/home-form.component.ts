@@ -40,6 +40,9 @@ import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.s
 import { toast } from 'ngx-sonner';
 import { IonButton } from '@ionic/angular/standalone';
 import { HeaderSectionComponent } from 'src/app/components/layouts/header-section/header-section.component';
+import { Platform } from '@ionic/angular/standalone';
+import { StudentDetailsFormService } from 'src/app/services/student-details-form-service/student-details-form.service';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-home-form',
@@ -71,20 +74,38 @@ export class HomeFormComponent {
     private unsubscribe: UnsubscribeService,
     private navCtrl: NavController,
     private router: Router,
-    private tr: TranslateService
+    private tr: TranslateService,
+    private platform: Platform,
+    private studentsService: StudentDetailsFormService
   ) {
     this.init();
   }
   private init() {
     this.registerIcons();
+    const backButton = () => {
+      const backToLogin = () => new Promise((r, j) => r(console.log));
+      this._appConfig.backButtonEventHandler(backToLogin);
+    };
+    backButton();
     this.getDetails({
       User_Name: localStorage.getItem('User_Name')!,
       Password: localStorage.getItem('Password')!,
     });
-    this.carouselAtStudent$ = new BehaviorSubject<number>(0);
+    this.studentsService.addedStudent$
+      .pipe(this.unsubscribe.takeUntilDestroy)
+      .subscribe({
+        next: (res) => {
+          this.getDetails({
+            User_Name: localStorage.getItem('User_Name')!,
+            Password: localStorage.getItem('Password')!,
+          });
+        },
+        error: (e) => console.error(e),
+      });
+    //backButton();
   }
   private registerIcons() {
-    const icons = ['box-arrow-right', 'trash'];
+    const icons = ['box-arrow-right', 'trash', 'plus-lg', 'eye'];
     this._appConfig.addIcons(icons, '/assets/bootstrap-icons');
   }
   private getDetails(body: FLoginForm) {
@@ -93,7 +114,7 @@ export class HomeFormComponent {
       const parentDetails$ = this.apiService.getParentDetails({
         User_Name: body.User_Name,
       });
-      const parseSignIn = (data: any) => {
+      const parseSignIn = (data: GetSDetails) => {
         if (Object.prototype.hasOwnProperty.call(data, 'status')) {
           let failedMessageObs = 'DEFAULTS.FAILED';
           let incorrectUsernamePasswordMessageObs =
@@ -105,7 +126,11 @@ export class HomeFormComponent {
         } else {
           localStorage.setItem('GetSDetails', JSON.stringify(data));
           this.studentDetails$ = new Observable((subs) => {
+            data.Students = data.Students.sort((a, b) =>
+              a.SFullName > b.SFullName ? 1 : -1
+            );
             subs.next(data);
+            subs.complete();
           });
         }
       };
@@ -115,15 +140,12 @@ export class HomeFormComponent {
           subscribe.next(parentDetail);
           subscribe.complete();
         });
-        setTimeout(() => {
-          this.carouselScrollTo();
-        }, 500);
       };
       const merged = zip(signIn$, parentDetails$);
       merged.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
         next: (results) => {
           const [signIn, parentDetails] = results;
-          parseSignIn(signIn[0]);
+          parseSignIn(signIn[0] as GetSDetails);
           parseParentDetails(parentDetails[0]);
         },
         error: (err) => {
@@ -133,25 +155,6 @@ export class HomeFormComponent {
         complete: () => this.loadingService.dismiss(),
       });
     });
-  }
-  private carouselScrollTo() {
-    const carousel = this.carouselRef.nativeElement;
-    if (carousel) {
-      const items = document.querySelectorAll('.carousel-item');
-      carousel.addEventListener('scrollend', () => {
-        items.forEach((item) => {
-          const rect = item.getBoundingClientRect();
-          const carouselRect = carousel.getBoundingClientRect();
-          if (
-            rect.left >= carouselRect.left &&
-            rect.right <= carouselRect.right
-          ) {
-            const currentIndex = Number(item.id.substring('item-'.length));
-            this.carouselAtStudent$.next(currentIndex);
-          }
-        });
-      });
-    }
   }
   private requestRemoveStudent(body: FDeleteStudent) {
     this.loadingService.startLoading().then((loading) => {
@@ -225,6 +228,22 @@ export class HomeFormComponent {
       .subscribe({
         next: (message) => {
           this.navCtrl.navigateForward('/add-student', {
+            queryParams: {
+              'show-back-button': true,
+              'page-title': message,
+            },
+          });
+        },
+        error: (err) => console.error(err),
+      });
+  }
+  openPackagePage(event: MouseEvent) {
+    this.tr
+      .get('LATEST_SUBSCRIPTIONS_PAGE.LABELS.SUBSCRIPTION_PLANS')
+      .pipe(this.unsubscribe.takeUntilDestroy)
+      .subscribe({
+        next: (message) => {
+          this.navCtrl.navigateForward('/package', {
             queryParams: {
               'show-back-button': true,
               'page-title': message,

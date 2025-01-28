@@ -1,0 +1,108 @@
+<ion-content class="w-screen h-screen relative">
+  <div
+    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
+  >
+    <app-header-section></app-header-section>
+    <div class="flex flex-col w-full p-4 space-y-4">
+      <ng-container *ngIf="package$ && package$ | async as package">
+        <mat-card
+          [class]="
+            package.Package_Name === 'Gold'
+              ? '!bg-[#F7EF6A]'
+              : package.Package_Name === 'Trail'
+              ? '!bg-[#EBDAB0]'
+              : '!bg-[#EAEAEA]'
+          "
+          appearance="raised"
+          class="mx-4 relative"
+        >
+          <div class="flex flex-col w-full">
+            <div class="flex flex-row items-center justify-between px-2">
+              <img
+                class="w-16"
+                [src]="package.Package_Name | switchPackageName"
+                alt=""
+                srcset=""
+              />
+              <mat-chip>
+                {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.RENEW" | translate }}
+              </mat-chip>
+            </div>
+            <ion-title class="mat-headline-small !tracking-widest">{{
+              package.Package_Name
+            }}</ion-title>
+            <ng-container *ngIf="package$ && package$ | async as packages">
+              <div class="flex flex-row items-center flex-wrap ml-6 mr-2">
+                <ng-container
+                  *ngFor="
+                    let packageName of package.M_Name?.split(',');
+                    index as ind
+                  "
+                >
+                  <div class="flex flex-row items-center">
+                    <button class="mat-body-large">
+                      {{ packageName.replace(",", "") }}
+                    </button>
+                    <div
+                      *ngIf="ind !== package.M_Name?.split(',')?.length! - 1"
+                      class="w-2 h-2 bg-black mx-2 rounded-full"
+                    ></div>
+                  </div>
+                </ng-container>
+              </div>
+              <div class="flex flex-row items-center justify-between my-3">
+                <button
+                  class="ml-6 mat-body-small !font-semibold text-gray-500"
+                >
+                  {{
+                    (package.Package_Amount | currency : "TZS") +
+                      "/" +
+                      package.Package_Days +
+                      ("LATEST_SUBSCRIPTIONS_PAGE.LABELS.DAYS" | translate)
+                  }}
+                </button>
+              </div>
+            </ng-container>
+          </div>
+        </mat-card>
+      </ng-container>
+      <div class="flex flex-col w-full px-5 mt-8">
+        <h6 class="mat-title-large">
+          {{ "SUBSCRIPTION_PAGE.LABELS.HOW_WOULD_YOU_LIKE_TO_PAY" | translate }}
+        </h6>
+        <div class="flex flex-col w-full space-y-2">
+          <button
+            (click)="openPayWithMpesa()"
+            type="button"
+            matRipple
+            class="flex flex-row items-center justify-between bg-[var(--mat-sys-on-primary)] p-2 rounded h-20"
+          >
+            <ion-text class="mat-body-large">
+              {{ "SUBSCRIPTION_PAGE.LABELS.PAY_WITH_MPESA_TEXT" | translate }}
+            </ion-text>
+            <img
+              class="w-24"
+              src="assets/images/mpesa-vodacom.png"
+              alt=""
+              srcset=""
+            />
+          </button>
+          <button
+            matRipple
+            class="flex flex-row items-center justify-between bg-[var(--mat-sys-color-on-surface)] p-2 rounded h-20"
+          >
+            <ion-text class="mat-body-large">
+              {{ "SUBSCRIPTION_PAGE.LABELS.PAY_WITH_CARD" | translate }}
+            </ion-text>
+            <img
+              class="w-28"
+              src="assets/images/visa-and-mastercard-logo-26.png"
+              alt=""
+              srcset=""
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

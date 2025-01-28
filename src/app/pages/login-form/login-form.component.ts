@@ -28,6 +28,11 @@ import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.s
 import { FLoginForm } from 'src/app/models/forms/login.model';
 import { finalize } from 'rxjs';
 import { NavController } from '@ionic/angular/standalone';
+import {
+  GetSDetails,
+  GetSDetailsErrorStatus,
+} from 'src/app/models/responses/RGetSDetails';
+import { HasFormControlErrorPipe } from 'src/app/pipes/has-form-control-error/has-form-control-error.pipe';
 
 @Component({
   selector: 'app-login-form',
@@ -45,6 +50,7 @@ import { NavController } from '@ionic/angular/standalone';
     ReactiveFormsModule,
     IonButton,
     RouterLink,
+    HasFormControlErrorPipe,
   ],
 })
 export class LoginFormComponent {
@@ -68,50 +74,44 @@ export class LoginFormComponent {
     });
   }
   private displayFailedToLoginError() {
-    let failedMessageObs = 'DEFAULTS.FAILED';
-    let errorOccuredMessageObs = 'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED';
-    this._appConfig.openAlertMessageBox(
-      failedMessageObs,
-      errorOccuredMessageObs
-    );
+    const title = 'DEFAULTS.FAILED';
+    const message = 'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED';
+    this._appConfig.openAlertMessageBox(title, message);
   }
   private registerIcons() {
-    let icons = ['person', 'lock'];
-    this._appConfig.addIcons(icons, '/assets/google-icons');
-
-    icons = ['eye', 'eye-slash'];
+    const icons = ['eye', 'eye-slash', 'person-fill', 'lock-fill'];
     this._appConfig.addIcons(icons, '/assets/bootstrap-icons');
   }
   private loginUser(body: FLoginForm) {
+    const login = (res: GetSDetails[] | GetSDetailsErrorStatus[]) => {
+      if (Object.prototype.hasOwnProperty.call(res[0], 'status')) {
+        let failedMessageObs = 'DEFAULTS.FAILED';
+        let incorrectUsernamePasswordMessageObs =
+          'LOGIN.LOGIN_FORM.ERRORS.USERNAME_OR_PASSWORD_INCORRECT';
+
+        this._appConfig.openAlertMessageBox(
+          failedMessageObs,
+          incorrectUsernamePasswordMessageObs
+        );
+      } else {
+        let GetSDetails = JSON.stringify(res[0]);
+        localStorage.setItem('GetSDetails', GetSDetails);
+        localStorage.setItem('User_Name', body.User_Name);
+        localStorage.setItem('Password', body.Password);
+        this.navCtrl.navigateForward(['/home']);
+      }
+    };
     this.loadingService.startLoading().then((loading) => {
       this._apiService
         .signIn(body)
-        .pipe(
-          this._unsubscribe.takeUntilDestroy,
-          finalize(() => this.loadingService.dismiss())
-        )
+        .pipe(this._unsubscribe.takeUntilDestroy)
         .subscribe({
-          next: (res: any) => {
-            if (Object.prototype.hasOwnProperty.call(res[0], 'status')) {
-              let failedMessageObs = 'DEFAULTS.FAILED';
-              let incorrectUsernamePasswordMessageObs =
-                'LOGIN.LOGIN_FORM.ERRORS.USERNAME_OR_PASSWORD_INCORRECT';
-
-              this._appConfig.openAlertMessageBox(
-                failedMessageObs,
-                incorrectUsernamePasswordMessageObs
-              );
-            } else {
-              let GetSDetails = JSON.stringify(res[0]);
-              localStorage.setItem('GetSDetails', GetSDetails);
-              localStorage.setItem('User_Name', body.User_Name);
-              localStorage.setItem('Password', body.Password);
-              this.navCtrl.navigateForward(['/home']);
-            }
-          },
+          next: (res) => login(res),
           error: (err) => {
+            console.error(err);
             this.displayFailedToLoginError();
           },
+          complete: () => this.loadingService.dismiss(),
         });
     });
   }

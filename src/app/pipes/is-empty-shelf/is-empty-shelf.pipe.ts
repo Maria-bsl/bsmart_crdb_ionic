@@ -36,13 +36,13 @@ export class SwitchPackageNamePipe implements PipeTransform {
   transform(packageName: string, ...args: any[]) {
     switch (packageName) {
       case 'Gold':
-        return 'assets/components/coin.png';
+        return 'assets/images/coin.png';
       case 'Silver':
-        return 'assets/components/silver-badge.png';
+        return 'assets/images/silver-badge.png';
       case 'Trail':
-        return 'assets/components/box.png';
+        return 'assets/images/box.png';
       default:
-        return 'assets/components/coin.png';
+        return 'assets/images/coin.png';
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { NgxSonnerToaster } from 'ngx-sonner';
+import { TranslateConfigService } from './utils/translate-config.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,5 @@ import { NgxSonnerToaster } from 'ngx-sonner';
   imports: [IonApp, IonRouterOutlet, NgxSonnerToaster],
 })
 export class AppComponent {
-  constructor() {}
+  constructor(private _trConfig: TranslateConfigService) {}
 }

@@ -6,7 +6,7 @@ import { StudentsManagementService } from 'src/app/services/students-management/
 import { Observable } from 'rxjs';
 import { GetSDetailStudents } from 'src/app/models/responses/RGetSDetails';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatRippleModule } from '@angular/material/core';
 import { Router, RouterLink } from '@angular/router';
@@ -37,7 +37,8 @@ export class ExamTypesComponent {
     private _unsubscribe: UnsubscribeService,
     private navCtrl: NavController,
     private _tr: TranslateService,
-    private router: Router
+    private router: Router,
+    private _location: Location
   ) {
     this.init();
     this.registerIcons();
@@ -56,7 +57,8 @@ export class ExamTypesComponent {
       });
     };
     const backButton = () => {
-      const backToLogin = () => this.navCtrl.navigateRoot('/home');
+      const backToLogin = () =>
+        this.navCtrl.navigateRoot('/tabs/tab-1/dashboard');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
     this.selectedStudent$.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
