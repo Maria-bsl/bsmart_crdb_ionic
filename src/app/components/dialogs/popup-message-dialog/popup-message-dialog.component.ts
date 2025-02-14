@@ -20,6 +20,8 @@ import anime from 'animejs';
 import { UnsubscribeService } from '../../../services/unsubscriber/unsubscriber.service';
 import { AppConfigService } from 'src/app/services/app-config/app-config.service';
 
+export type PopupState = 'success' | 'error' | 'warning' | 'info';
+
 @Component({
   selector: 'app-popup-message-dialog',
   imports: [TranslateModule, MatIconModule, MatButtonModule, MatDialogModule],
@@ -33,13 +35,16 @@ export class PopupMessageDialogComponent implements AfterViewInit {
     private _ref: MatDialogRef<PopupMessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      state: 'success' | 'error' | 'warning' | 'info';
+      state: PopupState;
       message: string;
     },
     private unsubscribe: UnsubscribeService,
     private _appConfig: AppConfigService
   ) {
-    this._appConfig.addIcons(['check-circle'], '/assets/bootstrap-icons');
+    this._appConfig.addIcons(
+      ['check-circle', 'x-circle-fill'],
+      '/assets/bootstrap-icons'
+    );
   }
   closePopup(event: MouseEvent) {
     anime({

@@ -150,51 +150,44 @@ export class HomeFormComponent implements AfterViewInit, AfterViewChecked {
       );
   }
   private requestRemoveStudent(body: FDeleteStudent) {
-    this.loadingService.startLoading().then((loading) => {
-      this.apiService
-        .deleteStudent(body)
-        .pipe(this.unsubscribe.takeUntilDestroy)
-        .subscribe({
-          next: (result) => {
-            let keys = Object.keys(result[0]);
-            if (keys.includes('Status') && result[0]['Status'] === 'Deleted') {
-              // let text = await firstValueFrom(
-              //   this.tr.get('HOME_PAGE.LABELS.DELETED_STUDENT_SUCCESSFULLY')
-              // );
-              // toast.success(text);
-              // this.getDetails({
-              //   User_Name: localStorage.getItem('User_Name')!,
-              //   Password: localStorage.getItem('Password')!,
-              // });
-              const dialogRef = this._appConfig.openStatePanel(
-                'success',
-                'HOME_PAGE.LABELS.DELETED_STUDENT_SUCCESSFULLY'
-              );
-              dialogRef
-                .afterClosed()
-                .pipe(this.unsubscribe.takeUntilDestroy)
-                .subscribe({
-                  next: () => {
-                    this.getDetails({
-                      User_Name: localStorage.getItem('User_Name')!,
-                      Password: localStorage.getItem('Password')!,
-                    });
-                  },
-                });
-            } else {
-              // let text = await firstValueFrom(
-              //   this.tr.get('HOME_PAGE.LABELS.FAILED_TO_DELETE_STUDENT')
-              // );
-              // toast.error(text);
-            }
-            this.loadingService.dismiss();
-          },
-          error: (err) => {
-            this.loadingService.dismiss();
-          },
-          complete: () => this.loadingService.dismiss(),
-        });
-    });
+    this.loadingService
+      .open()
+      .pipe(
+        this.unsubscribe.takeUntilDestroy,
+        switchMap((loading) =>
+          this.apiService
+            .deleteStudent(body)
+            .pipe(finalize(() => loading && loading.close()))
+        )
+      )
+      .subscribe({
+        next: (result) => {
+          const keys = Object.keys(result[0]);
+          if (keys.includes('Status') && result[0]['Status'] === 'Deleted') {
+            const dialogRef = this._appConfig.openStatePanel(
+              'success',
+              'HOME_PAGE.LABELS.DELETED_STUDENT_SUCCESSFULLY'
+            );
+            dialogRef
+              .afterClosed()
+              .pipe(this.unsubscribe.takeUntilDestroy)
+              .subscribe({
+                next: () => {
+                  this.getDetails({
+                    User_Name: localStorage.getItem('User_Name')!,
+                    Password: localStorage.getItem('Password')!,
+                  });
+                },
+              });
+          } else {
+            const dialogRef = this._appConfig.openStatePanel(
+              'error',
+              'HOME_PAGE.LABELS.FAILED_TO_DELETE_STUDENT'
+            );
+          }
+        },
+        error: (err) => console.error(err),
+      });
   }
   private animateItems() {
     anime({

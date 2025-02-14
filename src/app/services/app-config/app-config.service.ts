@@ -11,7 +11,10 @@ import { AppLauncher } from '@capacitor/app-launcher';
 import { Platform } from '@ionic/angular/standalone';
 import { ConfirmMessageBoxComponent } from 'src/app/components/dialogs/confirm-message-box/confirm-message-box.component';
 import { Location } from '@angular/common';
-import { PopupMessageDialogComponent } from 'src/app/components/dialogs/popup-message-dialog/popup-message-dialog.component';
+import {
+  PopupMessageDialogComponent,
+  PopupState,
+} from 'src/app/components/dialogs/popup-message-dialog/popup-message-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -90,7 +93,7 @@ export class AppConfigService {
     this.loc.back();
   }
   openStatePanel(
-    state: 'success',
+    state: PopupState,
     message: string,
     disableClose: boolean = false,
     exitAnimationDuration: string = '150ms'

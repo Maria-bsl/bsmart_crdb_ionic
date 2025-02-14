@@ -1,4 +1,24 @@
-<div id="root-element">
+<!-- <div id="success-element">
+  <div class="container">
+    <div>
+      <mat-icon svgIcon="check-circle" matPrefix></mat-icon>
+      <h6 class="mat-title-large">
+        {{ "DEFAULTS.SUCCESS" | translate }}
+      </h6>
+    </div>
+    <div>
+      <h6 class="mat-body-large">
+        {{ data.message }}
+      </h6>
+      <button (click)="closePopup($event)" mat-flat-button>
+        {{ "DEFAULTS.OK" | translate }}
+      </button>
+    </div>
+  </div>
+</div> -->
+
+@if (data.state === 'success') {
+<div id="success-element">
   <div class="container">
     <div>
       <mat-icon svgIcon="check-circle" matPrefix></mat-icon>
@@ -16,3 +36,23 @@
     </div>
   </div>
 </div>
+} @else if (data.state === 'error') {
+<div id="error-element">
+  <div class="container">
+    <div>
+      <mat-icon svgIcon="x-circle-fill" matPrefix></mat-icon>
+      <h6 class="mat-title-large">
+        {{ "DEFAULTS.FAILED" | translate }}
+      </h6>
+    </div>
+    <div>
+      <h6 class="mat-body-large">
+        {{ data.message }}
+      </h6>
+      <button (click)="closePopup($event)" mat-flat-button>
+        {{ "DEFAULTS.OK" | translate }}
+      </button>
+    </div>
+  </div>
+</div>
+}
