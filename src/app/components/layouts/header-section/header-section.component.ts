@@ -12,12 +12,26 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import {
+  catchError,
+  delay,
+  finalize,
+  map,
+  Observable,
+  shareReplay,
+  switchMap,
+} from 'rxjs';
 import { RParentDetail } from 'src/app/models/responses/RParentDetails';
 import { AppConfigService } from 'src/app/services/app-config/app-config.service';
 import { NavController } from '@ionic/angular/standalone';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
-import { LoadingService } from 'src/app/services/loading-service/loading.service';
+import {
+  filterNotNull,
+  LoadingService,
+} from 'src/app/services/loading-service/loading.service';
+import { ApiService } from 'src/app/services/api-service/api.service';
+import { load } from 'google-maps';
+import { SharedService } from 'src/app/services/shared-service/shared.service';
 
 @Component({
   selector: 'app-header-section',
@@ -35,7 +49,6 @@ import { LoadingService } from 'src/app/services/loading-service/loading.service
   ],
 })
 export class HeaderSectionComponent {
-  parentDetails$!: Observable<RParentDetail>;
   @Input() s_showBackButton = false;
   @Input() s_pageTitle = '';
   constructor(
@@ -43,30 +56,26 @@ export class HeaderSectionComponent {
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
     private _unsubscribe: UnsubscribeService,
-    private loadingService: LoadingService,
-    private router: Router
+    private _loading: LoadingService,
+    private router: Router,
+    private _api: ApiService,
+    private _shared: SharedService
   ) {
     this.init();
   }
   private init() {
-    const assignParentDet = () => {
-      this.parentDetails$ = new Observable((subs) => {
-        subs.next(JSON.parse(localStorage.getItem('GetParentDet')!));
-        subs.complete();
-      });
-    };
     this.activatedRoute.queryParams.subscribe((params) => {
       if (params['show-back-button']) {
         this.s_showBackButton = params['show-back-button'] as boolean;
-        //this.s_showBackButton.set(params['show-back-button']);
       }
       if (params['page-title']) {
         this.s_pageTitle = params['page-title'];
-        //this.s_pageTitle.set(params['page-title']);
       }
     });
     this.registerIcons();
-    assignParentDet();
+    // if (!this._shared.parentDetails$) {
+    //   this._shared.requestParentDetails();
+    // }
   }
   private registerIcons() {
     const icons = [
@@ -96,10 +105,10 @@ export class HeaderSectionComponent {
           .pipe(this._unsubscribe.takeUntilDestroy)
           .subscribe({
             next: () => {
-              this.loadingService.startLoading().then((loading) => {
+              this._loading.startLoading().then((loading) => {
                 localStorage.clear();
                 setTimeout(() => {
-                  this.loadingService.dismiss();
+                  this._loading.dismiss();
                   this.router.navigate(['/login']);
                 }, 680);
               });
@@ -116,5 +125,8 @@ export class HeaderSectionComponent {
     } else {
       this.router.navigate(['/tabs/tab-1/dashboard']);
     }
+  }
+  get parentDetails$() {
+    return this._shared.parentDetails$;
   }
 }

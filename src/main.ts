@@ -62,7 +62,6 @@ bootstrapApplication(AppComponent, {
         useDefaultLang: true,
       }),
     ]),
-    provideAnimationsAsync(),
     provideNativeDateAdapter(),
   ],
 });

@@ -30,7 +30,7 @@ export class SelectLanguagePageComponent implements OnInit {
   }
   private registerIcons() {
     const icons: any[] = [['gb', 'tz'], 'assets/custom_svg'];
-    this._appConfig.addIcons(icons[0], icons[1]);
+    this._appConfig.addIcons(['gb', 'tz'], 'assets/custom_svg');
   }
   ngOnInit() {}
   acceptLanguage(event: MouseEvent, code: string) {

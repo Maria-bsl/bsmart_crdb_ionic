@@ -37,7 +37,6 @@ import { IonButton } from '@ionic/angular/standalone';
   ],
 })
 export class AddStudentFormComponent {
-  parentDetails$!: Observable<RParentDetail>;
   constructor(
     private navCtrl: NavController,
     private _appConfig: AppConfigService,
@@ -51,15 +50,8 @@ export class AddStudentFormComponent {
       const backToLogin = () => this.navCtrl.navigateRoot('/home');
       this._appConfig.backButtonEventHandler(backToLogin);
     };
-    const assignParentDet = () => {
-      this.parentDetails$ = new Observable((subs) => {
-        subs.next(JSON.parse(localStorage.getItem('GetParentDet')!));
-        subs.complete();
-      });
-    };
     this.registerIcons();
     backButton();
-    assignParentDet();
   }
   private registerIcons() {
     const icons = ['box-arrow-right', 'trash', 'gear'];

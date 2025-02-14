@@ -11,6 +11,7 @@ import { AppLauncher } from '@capacitor/app-launcher';
 import { Platform } from '@ionic/angular/standalone';
 import { ConfirmMessageBoxComponent } from 'src/app/components/dialogs/confirm-message-box/confirm-message-box.component';
 import { Location } from '@angular/common';
+import { PopupMessageDialogComponent } from 'src/app/components/dialogs/popup-message-dialog/popup-message-dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -88,6 +89,22 @@ export class AppConfigService {
   goBack() {
     this.loc.back();
   }
+  openStatePanel(
+    state: 'success',
+    message: string,
+    disableClose: boolean = false,
+    exitAnimationDuration: string = '150ms'
+  ) {
+    return this._dialog.open(PopupMessageDialogComponent, {
+      panelClass: 'popup-message-panel',
+      disableClose: disableClose,
+      data: {
+        state: state,
+        message: this.tr.instant(message),
+      },
+      exitAnimationDuration,
+    });
+  }
   async launchApp(packageName: string) {
     const { value } = await AppLauncher.canOpenUrl({
       url: packageName,
@@ -109,5 +126,16 @@ export class AppConfigService {
     localStorage.setItem('token', res.token);
     localStorage.setItem('expire_time', res.expire_time);
     localStorage.setItem('expire_timestamp', new Date().toISOString());
+  }
+  setSessionStorage(key: string, value: string) {
+    sessionStorage.setItem(key, value);
+  }
+  getSessionStorage(key: string) {
+    sessionStorage.getItem('key');
+  }
+  clearSessionStorage() {
+    if (sessionStorage.length > 0) {
+      sessionStorage.clear();
+    }
   }
 }

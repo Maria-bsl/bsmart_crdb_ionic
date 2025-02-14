@@ -118,7 +118,7 @@
   "ADD_STUDENT_PAGE": {
     "TITLE": "Ongeza Mwanafunzi",
     "SUCCESS": {
-      "SUCCESS_ADD_STUDENT": "Mwanafunzi aliongeza kwa mafanikio!"
+      "SUCCESS_ADD_STUDENT": "Mwanafunzi ameongezwa kwa mafanikio!"
     },
     "ERRORS": {
       "FAILED_TO_FIND_FACULTIES_TEXT": "Imeshindwa kupata vyuo."

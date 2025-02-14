@@ -1,10 +1,13 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
   OnInit,
+  QueryList,
   signal,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -14,20 +17,31 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import {
   GetSDetails,
+  GetSDetailsErrorStatus,
   GetSDetailStudents,
 } from 'src/app/models/responses/RGetSDetails';
 import {
   BehaviorSubject,
+  catchError,
+  filter,
   finalize,
   firstValueFrom,
   map,
   Observable,
+  of,
+  shareReplay,
+  switchMap,
+  take,
+  tap,
   zip,
 } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { RParentDetail } from 'src/app/models/responses/RParentDetails';
 import { FLoginForm } from 'src/app/models/forms/login.model';
-import { LoadingService } from 'src/app/services/loading-service/loading.service';
+import {
+  filterNotNull,
+  LoadingService,
+} from 'src/app/services/loading-service/loading.service';
 import { ApiService } from 'src/app/services/api-service/api.service';
 import { AppConfigService } from 'src/app/services/app-config/app-config.service';
 import { MatRippleModule } from '@angular/material/core';
@@ -43,6 +57,7 @@ import { HeaderSectionComponent } from 'src/app/components/layouts/header-sectio
 import { Platform } from '@ionic/angular/standalone';
 import { StudentDetailsFormService } from 'src/app/services/student-details-form-service/student-details-form.service';
 import { App } from '@capacitor/app';
+import anime from 'animejs/lib/anime.es.js';
 
 @Component({
   selector: 'app-home-form',
@@ -62,11 +77,12 @@ import { App } from '@capacitor/app';
     HeaderSectionComponent,
   ],
 })
-export class HomeFormComponent {
-  parentDetails$!: Observable<RParentDetail>;
+export class HomeFormComponent implements AfterViewInit, AfterViewChecked {
   studentDetails$!: Observable<GetSDetails>;
   carouselAtStudent$!: BehaviorSubject<number>;
   @ViewChild('carousel') carouselRef!: ElementRef<HTMLDivElement>;
+  @ViewChildren('studentCard') studentCards!: QueryList<ElementRef>;
+  previousCount = 0;
   constructor(
     private loadingService: LoadingService,
     private apiService: ApiService,
@@ -109,52 +125,29 @@ export class HomeFormComponent {
     this._appConfig.addIcons(icons, '/assets/bootstrap-icons');
   }
   private getDetails(body: FLoginForm) {
-    this.loadingService.startLoading().then((loading) => {
-      const signIn$ = this.apiService.signIn(body);
-      const parentDetails$ = this.apiService.getParentDetails({
-        User_Name: body.User_Name,
-      });
-      const parseSignIn = (data: GetSDetails) => {
-        if (Object.prototype.hasOwnProperty.call(data, 'status')) {
-          let failedMessageObs = 'DEFAULTS.FAILED';
-          let incorrectUsernamePasswordMessageObs =
-            'LOGIN.LOGIN_FORM.ERRORS.USERNAME_OR_PASSWORD_INCORRECT';
-          this._appConfig.openAlertMessageBox(
-            failedMessageObs,
-            incorrectUsernamePasswordMessageObs
-          );
-        } else {
-          localStorage.setItem('GetSDetails', JSON.stringify(data));
-          this.studentDetails$ = new Observable((subs) => {
-            data.Students = data.Students.sort((a, b) =>
-              a.SFullName > b.SFullName ? 1 : -1
-            );
-            subs.next(data);
-            subs.complete();
-          });
-        }
-      };
-      const parseParentDetails = (parentDetail: RParentDetail) => {
-        localStorage.setItem('GetParentDet', JSON.stringify(parentDetail));
-        this.parentDetails$ = new Observable((subscribe) => {
-          subscribe.next(parentDetail);
-          subscribe.complete();
-        });
-      };
-      const merged = zip(signIn$, parentDetails$);
-      merged.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
-        next: (results) => {
-          const [signIn, parentDetails] = results;
-          parseSignIn(signIn[0] as GetSDetails);
-          parseParentDetails(parentDetails[0]);
-        },
-        error: (err) => {
-          console.error(err.message);
-          this.loadingService.dismiss();
-        },
-        complete: () => this.loadingService.dismiss(),
-      });
-    });
+    const assignDetails = (details: GetSDetails) => {
+      details.Students.reverse();
+      return details;
+    };
+    this.studentDetails$ = this.loadingService
+      .open()
+      .pipe(
+        this.unsubscribe.takeUntilDestroy,
+        switchMap((loading) =>
+          this.apiService.signIn(body).pipe(
+            finalize(() => loading && loading.close()),
+            catchError(async () => {})
+          )
+        )
+      )
+      .pipe(
+        filterNotNull(),
+        filter(
+          (data) => !Object.prototype.hasOwnProperty.call(data[0], 'status')
+        ),
+        map((data) => assignDetails(data[0] as GetSDetails)),
+        shareReplay({ bufferSize: 1, refCount: true })
+      );
   }
   private requestRemoveStudent(body: FDeleteStudent) {
     this.loadingService.startLoading().then((loading) => {
@@ -162,22 +155,37 @@ export class HomeFormComponent {
         .deleteStudent(body)
         .pipe(this.unsubscribe.takeUntilDestroy)
         .subscribe({
-          next: async (result) => {
+          next: (result) => {
             let keys = Object.keys(result[0]);
             if (keys.includes('Status') && result[0]['Status'] === 'Deleted') {
-              let text = await firstValueFrom(
-                this.tr.get('HOME_PAGE.LABELS.DELETED_STUDENT_SUCCESSFULLY')
+              // let text = await firstValueFrom(
+              //   this.tr.get('HOME_PAGE.LABELS.DELETED_STUDENT_SUCCESSFULLY')
+              // );
+              // toast.success(text);
+              // this.getDetails({
+              //   User_Name: localStorage.getItem('User_Name')!,
+              //   Password: localStorage.getItem('Password')!,
+              // });
+              const dialogRef = this._appConfig.openStatePanel(
+                'success',
+                'HOME_PAGE.LABELS.DELETED_STUDENT_SUCCESSFULLY'
               );
-              toast.success(text);
-              this.getDetails({
-                User_Name: localStorage.getItem('User_Name')!,
-                Password: localStorage.getItem('Password')!,
-              });
+              dialogRef
+                .afterClosed()
+                .pipe(this.unsubscribe.takeUntilDestroy)
+                .subscribe({
+                  next: () => {
+                    this.getDetails({
+                      User_Name: localStorage.getItem('User_Name')!,
+                      Password: localStorage.getItem('Password')!,
+                    });
+                  },
+                });
             } else {
-              let text = await firstValueFrom(
-                this.tr.get('HOME_PAGE.LABELS.FAILED_TO_DELETE_STUDENT')
-              );
-              toast.error(text);
+              // let text = await firstValueFrom(
+              //   this.tr.get('HOME_PAGE.LABELS.FAILED_TO_DELETE_STUDENT')
+              // );
+              // toast.error(text);
             }
             this.loadingService.dismiss();
           },
@@ -187,6 +195,26 @@ export class HomeFormComponent {
           complete: () => this.loadingService.dismiss(),
         });
     });
+  }
+  private animateItems() {
+    anime({
+      targets: this.studentCards.toArray().map((el) => el.nativeElement),
+      opacity: [0, 1],
+      translateY: [-40, 0],
+      easing: 'easeOutQuad',
+      duration: 500,
+      delay: (el, i) => i * 100,
+    });
+  }
+  ngAfterViewInit(): void {
+    this.animateItems();
+    this.previousCount = this.studentCards.length;
+  }
+  ngAfterViewChecked(): void {
+    if (this.studentCards.length > this.previousCount) {
+      this.animateItems();
+      this.previousCount = this.studentCards.length;
+    }
   }
   removeStudent(event: MouseEvent, student: GetSDetailStudents | undefined) {
     if (!student) return;

@@ -1,8 +1,27 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoadingDialogComponent } from '../../components/dialogs/loading-dialog/loading-dialog.component';
-import { BehaviorSubject, firstValueFrom, lastValueFrom, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  concatMap,
+  filter,
+  firstValueFrom,
+  lastValueFrom,
+  Observable,
+  of,
+  OperatorFunction,
+  switchMap,
+  tap,
+  timer,
+} from 'rxjs';
 import { UnsubscribeService } from '../unsubscriber/unsubscriber.service';
+
+export const filterNotNull =
+  <T>(): OperatorFunction<T, Exclude<T, null | undefined | void>> =>
+  (source$) =>
+    source$.pipe(filter((value) => !!value)) as Observable<
+      Exclude<T, null | undefined | void>
+    >;
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +63,21 @@ export class LoadingService {
       }
     }, TIMEOUT);
     return firstValueFrom(this.loading$.asObservable());
+  }
+  open(timeout = 30000): Observable<MatDialogRef<LoadingDialogComponent, any>> {
+    const dialogRef = this._dialog.open(LoadingDialogComponent, {
+      panelClass: 'dialog-loading-panel-class',
+      disableClose: true,
+    });
+    const ref$ = of(dialogRef);
+    ref$
+      .pipe(
+        switchMap((loading) =>
+          timer(timeout).pipe(tap(() => loading && loading.close()))
+        )
+      )
+      .subscribe();
+    return ref$;
   }
   dismiss() {
     this.stopLoading();

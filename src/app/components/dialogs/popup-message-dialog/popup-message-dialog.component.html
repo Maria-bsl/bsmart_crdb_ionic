@@ -1,0 +1,18 @@
+<div id="root-element">
+  <div class="container">
+    <div>
+      <mat-icon svgIcon="check-circle" matPrefix></mat-icon>
+      <h6 class="mat-title-large">
+        {{ "DEFAULTS.SUCCESS" | translate }}
+      </h6>
+    </div>
+    <div>
+      <h6 class="mat-body-large">
+        {{ data.message }}
+      </h6>
+      <button (click)="closePopup($event)" mat-flat-button>
+        {{ "DEFAULTS.OK" | translate }}
+      </button>
+    </div>
+  </div>
+</div>

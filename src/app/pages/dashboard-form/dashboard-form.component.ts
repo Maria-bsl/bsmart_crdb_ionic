@@ -18,6 +18,8 @@ import { AccumulateStudentInvoicePipe } from 'src/app/pipes/accumulate-student-i
 import { LoadingService } from 'src/app/services/loading-service/loading.service';
 import { ApiService } from 'src/app/services/api-service/api.service';
 import { Platform } from '@ionic/angular/standalone';
+import { GetSDetailStudents } from 'src/app/models/responses/RGetSDetails';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-dashboard-form',
@@ -36,6 +38,7 @@ import { Platform } from '@ionic/angular/standalone';
     MatCardModule,
     CommonModule,
     AccumulateStudentInvoicePipe,
+    MatDividerModule,
   ],
 })
 export class DashboardFormComponent {
@@ -43,6 +46,7 @@ export class DashboardFormComponent {
     this.dashboardService.overallAttendance$.asObservable();
   pendingStudentInvoices$: Observable<StudentPendingInvoice[]> =
     this.dashboardService.pendingStudentInvoices$.asObservable();
+  selectedStudent$!: Observable<GetSDetailStudents>;
   constructor(
     private _appConfig: AppConfigService,
     private router: Router,
@@ -55,6 +59,10 @@ export class DashboardFormComponent {
   ) {
     this.registerIcons();
     this.dashboardService.initDashboard();
+    this.selectedStudent$ = new Observable((subs) => {
+      subs.next(JSON.parse(localStorage.getItem('selectedStudent')!));
+      subs.complete();
+    });
   }
   private registerIcons() {
     this._appConfig.addIcons(

@@ -27,8 +27,14 @@ import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.s
 export class GetSupportFormComponent {
   selectedStudent$!: Observable<GetSDetailStudents>;
   parentDetail$!: Observable<GetParentDetail | null>;
-  supportMobileNumber$: Observable<string> = of('0684831846');
-  supportEmail$: Observable<string> = of('info@bsmartacademia.com');
+  supportMobileNumber$: Observable<string[]> = of([
+    '0684 831 846',
+    '0741 831 847',
+  ]);
+  supportEmail$: Observable<string[]> = of([
+    'info@bsmartacademia.com',
+    'support@bizlogicsolutions.com',
+  ]);
   constructor(
     private _appConfig: AppConfigService,
     private navCtrl: NavController,

@@ -32,10 +32,10 @@
   <ng-template #backButtonTemplate>
     <button
       (click)="goBack($event)"
-      class="flex flex-row items-center btn !p-0 w-fit btn-ghost"
+      class="flex flex-row items-center btn w-fit btn-ghost !bg-[var(--mat-sys-tertiary-container)]"
     >
       <mat-icon svgIcon="chevron-left" matPrefix></mat-icon>
-      <h6 class="mat-body-large text-left pt-2">
+      <h6 class="mat-body-large text-left pt-0.5">
         {{ s_pageTitle }}
       </h6>
     </button>

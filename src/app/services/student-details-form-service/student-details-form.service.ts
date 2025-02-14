@@ -76,26 +76,38 @@ export class StudentDetailsFormService {
         )
         .subscribe({
           next: (results: any) => {
-            let keys = Object.keys(results[0]);
+            const keys = Object.keys(results[0]);
             if (
               keys.includes('Status') &&
               results[0]['Status'].toLocaleLowerCase() ===
                 'Successfully added'.toLocaleLowerCase()
             ) {
-              let tr = this.tr.get(
+              // let tr = this.tr.get(
+              //   'ADD_STUDENT_PAGE.SUCCESS.SUCCESS_ADD_STUDENT'
+              // );
+              // tr.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
+              //   next: (msg) => {
+              //     //toast.success(msg);
+              //     const dialogRef = this.appConfig.openStatePanel('success','ADD_STUDENT_PAGE.SUCCESS.SUCCESS_ADD_STUDENT')
+              //     this.studentForm.reset();
+              //     this.navCtrl.navigateBack('/home');
+              //     this.addedStudent.emit();
+              //   },
+              // });
+              const dialogRef = this.appConfig.openStatePanel(
+                'success',
                 'ADD_STUDENT_PAGE.SUCCESS.SUCCESS_ADD_STUDENT'
               );
-              tr.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
-                next: (msg) => {
-                  toast.success(msg);
-                  this.studentForm.reset();
-                  //this.router.navigate(['/home']);
-                  //this.navCtrl.navigateRoot('/home', { replaceUrl: true });
-                  this.navCtrl.navigateBack('/home');
-                  this.addedStudent.emit();
-                  //this.router.navigate(['/home']);
-                },
-              });
+              dialogRef
+                .afterClosed()
+                .pipe(this.unsubscribe.takeUntilDestroy)
+                .subscribe({
+                  next: () => {
+                    this.studentForm.reset();
+                    this.navCtrl.navigateBack('/home');
+                    this.addedStudent.emit();
+                  },
+                });
             } else if (keys.includes('Status')) {
               let failedMessageObs = 'DEFAULTS.FAILED';
               let errorMessage = results[0].Status;
