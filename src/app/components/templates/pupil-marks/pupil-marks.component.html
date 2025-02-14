@@ -49,32 +49,23 @@
           </div>
         </ng-container>
       </mat-card>
-      <button
-        #ionButton
-        (click)="downloadStudentMarks($event, ionButton)"
-        class="w-full py-2 my-2 !rounded-none flex flex-row-reverse space-x-2 items-center"
-        id="download-button"
-        #downloadButton
-        mat-button
-        type="button"
-      >
-        {{ "DEFAULTS.DOWNLOAD" | translate }}
-        <mat-icon svgIcon="download"></mat-icon>
-      </button>
     </ng-container>
-    <ng-template #NoStudentMarkTemplate>
-      <h6 class="mat-body-small w-full text-center">
-        {{ "RESULTS_PAGE.ERRORS.RESULTS_NOT_FOUND" | translate }}
-      </h6>
-      <ion-button
-        size="large"
-        class="w-full text-white relative my-6"
-        expand="block"
-        type="button"
-        [disabled]="true"
-        >{{ "DEFAULTS.DOWNLOAD" | translate }}
-        <ion-icon slot="end" name="download-outline"></ion-icon
-      ></ion-button>
-    </ng-template>
   </div>
+  <button
+    #ionButton
+    (click)="downloadStudentMarks($event, ionButton)"
+    class="w-full py-2 my-2 !rounded-none flex flex-row-reverse space-x-2 items-center"
+    id="download-button"
+    #downloadButton
+    mat-button
+    type="button"
+  >
+    {{ "DEFAULTS.DOWNLOAD" | translate }}
+    <mat-icon svgIcon="download"></mat-icon>
+  </button>
+  <ng-template #NoStudentMarkTemplate>
+    <h6 class="mat-body-small w-full text-center">
+      {{ "RESULTS_PAGE.ERRORS.RESULTS_NOT_FOUND" | translate }}
+    </h6>
+  </ng-template>
 </div>

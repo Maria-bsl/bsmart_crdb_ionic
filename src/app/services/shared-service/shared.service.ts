@@ -26,7 +26,7 @@ export class SharedService {
     private _unsubscribe: UnsubscribeService,
     private _api: ApiService
   ) {
-    //this.requestParentDetails();
+    this.requestParentDetails();
   }
   requestParentDetails() {
     this.parentDetails$ = this._loading

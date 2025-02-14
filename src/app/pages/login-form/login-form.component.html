@@ -61,6 +61,8 @@
               [placeholder]="
                 'LOGIN.LOGIN_FORM.PLACEHOLDERS.PASSWORD' | translate
               "
+              (copy)="$event.preventDefault()"
+              (paste)="$event.preventDefault()"
             />
             @if (isCapacitor && Password.value.length > 0) {
             <button

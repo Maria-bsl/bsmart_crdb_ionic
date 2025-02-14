@@ -1,6 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton, MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -15,12 +15,24 @@ import {
   IonText,
   IonIcon,
   NavController,
+  isPlatform,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { downloadOutline } from 'ionicons/icons';
 import jsPDF from 'jspdf';
-import { firstValueFrom, Observable, switchMap, zip } from 'rxjs';
+import {
+  concatMap,
+  endWith,
+  finalize,
+  firstValueFrom,
+  Observable,
+  of,
+  switchMap,
+  tap,
+  withLatestFrom,
+  zip,
+} from 'rxjs';
 import { FStudentMarksForm } from 'src/app/models/forms/f-add-student';
 import {
   IStudentMarks,
@@ -134,82 +146,39 @@ export class PupilMarksComponent {
         },
       });
   }
-  private async writeAndDownloadReport(
-    studentName: string,
-    labels: string[],
-    element: any,
-    ionButton: any
-  ) {
-    this.loadingService.startLoading().then(async (loading) => {
-      let details = await firstValueFrom(this.studentMarks$);
-      let doc = new jsPDF(
-        element.clientWidth > element.clientHeight ? 'l' : 'p',
-        'mm',
-        [element.clientWidth, element.clientHeight]
-      );
-      await this.jsPdfService.exportJsPdfToPdf(
-        doc,
-        element,
-        `${studentName}_marks`.concat('-')
-      );
-      ionButton.el.classList.remove('hidden');
-      let downloadedMessage = this._tr.get(
-        'DEFAULTS.FILE_DOWNLOADED_SUCCESSFULLY'
-      );
-      let viewMessage = this._tr.get('DEFAULTS.VIEW');
-      let merged = zip(downloadedMessage, viewMessage);
-      merged.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
-        next: (messages) => {
-          const [msg1, msg2] = messages;
-          const uri$ = this.jsPdfService.getFileUri(
-            `${studentName}_marks`.concat('-')
-          );
-          uri$.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
-            next: (file) => {
-              const fileOpenerOptions: FileOpenerOptions = {
-                filePath: file.uri,
-                contentType: 'application/pdf',
-                openWithDefault: true,
-              };
-              FileOpener.open(fileOpenerOptions);
-            },
-            error: (e) => console.error(e),
-            complete: () => this.loadingService.dismiss(),
-          });
-        },
-        error: (err) => console.error(err),
-      });
-    });
-  }
-  downloadStudentMarks(event: MouseEvent, ionButton: any) {
-    ionButton.el.classList.add('hidden');
-    const studentName = this._tr.get(
-      'RESULTS_PAGE.STUDENT_MARK_DETAIL_REPORT.STUDENT_NAME'
-    );
-    const finalGrade = this._tr.get(
-      'RESULTS_PAGE.STUDENT_MARK_DETAIL_REPORT.FINAL_GRADE'
-    );
-    const overall = this._tr.get(
-      'RESULTS_PAGE.STUDENT_MARK_DETAIL_REPORT.OVERALL'
-    );
-    const merged = zip(studentName, finalGrade, overall);
-    merged.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
-      next: (results) => {
-        this.selectedStudent$
-          .pipe(this._unsubscribe.takeUntilDestroy)
-          .subscribe({
-            next: (selectedStudent) => {
-              this.writeAndDownloadReport(
-                selectedStudent.SFullName,
-                results,
-                this.resultsList.nativeElement,
-                ionButton
-              );
-            },
-            error: (e) => console.error(e),
-          });
-      },
-      error: (e) => console.error(e),
-    });
+  downloadStudentMarks(event: MouseEvent, ionButton: MatButton) {
+    this.loadingService
+      .open()
+      .pipe(
+        this._unsubscribe.takeUntilDestroy,
+        switchMap((loading) =>
+          this.selectedStudent$.pipe(withLatestFrom(of(loading)))
+        ),
+        tap(([selectedStudent, loading]) =>
+          this.jsPdfService.exportHtml(
+            this.resultsList.nativeElement,
+            `${selectedStudent.SFullName}_marks`.concat('-')
+          )
+        ),
+        switchMap(([selectedStudent, loading]) =>
+          this.jsPdfService.finished$.pipe(
+            concatMap((isFinished) =>
+              this.jsPdfService
+                .getFileUri(`${selectedStudent.SFullName}_marks`.concat('-'))
+                .pipe(
+                  tap((file) =>
+                    FileOpener.open({
+                      filePath: file.uri,
+                      contentType: 'application/pdf',
+                      openWithDefault: true,
+                    })
+                  ),
+                  finalize(() => loading && loading.close())
+                )
+            )
+          )
+        )
+      )
+      .subscribe();
   }
 }
