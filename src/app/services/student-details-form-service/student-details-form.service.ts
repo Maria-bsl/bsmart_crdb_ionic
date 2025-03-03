@@ -9,7 +9,15 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { finalize, map, Observable, of, startWith, switchMap } from 'rxjs';
+import {
+  finalize,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  startWith,
+  switchMap,
+} from 'rxjs';
 import { AppConfigService } from '../app-config/app-config.service';
 import { toast } from 'ngx-sonner';
 import { TranslateService } from '@ngx-translate/core';
@@ -82,18 +90,6 @@ export class StudentDetailsFormService {
               results[0]['Status'].toLocaleLowerCase() ===
                 'Successfully added'.toLocaleLowerCase()
             ) {
-              // let tr = this.tr.get(
-              //   'ADD_STUDENT_PAGE.SUCCESS.SUCCESS_ADD_STUDENT'
-              // );
-              // tr.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
-              //   next: (msg) => {
-              //     //toast.success(msg);
-              //     const dialogRef = this.appConfig.openStatePanel('success','ADD_STUDENT_PAGE.SUCCESS.SUCCESS_ADD_STUDENT')
-              //     this.studentForm.reset();
-              //     this.navCtrl.navigateBack('/home');
-              //     this.addedStudent.emit();
-              //   },
-              // });
               const dialogRef = this.appConfig.openStatePanel(
                 'success',
                 'ADD_STUDENT_PAGE.SUCCESS.SUCCESS_ADD_STUDENT'

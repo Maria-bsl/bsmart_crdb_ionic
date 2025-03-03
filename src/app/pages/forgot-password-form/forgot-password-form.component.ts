@@ -91,26 +91,32 @@ export class ForgotPasswordFormComponent {
           finalize(() => this.loadingService.dismiss())
         )
         .subscribe({
-          next: (res) => {
-            const messageSendTo = 'FORGOT_PASSWORD.MESSAGE_SENT_TO';
-            const emailNotExist =
-              'FORGOT_PASSWORD.EMAIL_ADDRESS_DOES_NOT_EXIST';
-            const merged = zip(
-              this._tr.get(messageSendTo),
-              this._tr.get(emailNotExist)
-            );
-            merged.pipe(this._unsubscribe.takeUntilDestroy).subscribe({
-              next: (results) => {
-                const [msg1, msg2] = results;
-                if (res && res[0].Status === 'Mobile no not exists') {
-                  this._appConfig.openAlertMessageBox('DEFAULTS.WARNING', msg2);
-                } else {
-                  toast.success(msg1);
-                  this.router.navigate(['/login']);
-                }
-              },
-              error: (e) => console.error(e),
-            });
+          next: (res: { Status: string; OTP_Code: string | null }[]) => {
+            if (!res[0].OTP_Code) {
+              this._appConfig.openAlertMessageBox(
+                'DEFAULTS.WARNING',
+                res[0].Status
+              );
+            } else {
+              let message: string = this._tr.instant(
+                'FORGOT_PASSWORD.IF_AN_EMAIL_EXISTS_MESSAGE_WILL_BE_SENT'
+              );
+              message = message.replace('{{}}', this.Email_Address.value);
+              const dialogRef = this._appConfig.openStatePanel(
+                'success',
+                message,
+                true
+              );
+              dialogRef.componentInstance.buttonClicked
+                .asObservable()
+                .pipe(this.unsubscribe.takeUntilDestroy)
+                .subscribe({
+                  next: () => {
+                    this.formGroup.reset();
+                    this.router.navigate(['/login']);
+                  },
+                });
+            }
           },
           error: (err) => {
             console.error(err.message);

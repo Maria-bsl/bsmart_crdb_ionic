@@ -2,7 +2,7 @@
   class="!w-full flex flex-row items-center justify-between !h-[72px] !p-2 !shadow-sm !bg-[var(--mat-sys-inverse-primary)]"
 >
   <button
-    (click)="navigateHome($event)"
+    (click)="canClickProfile ? navigateHome($event) : {}"
     *ngIf="!s_showBackButton; else backButtonTemplate"
     class="flex flex-row items-center btn !p-0 w-fit btn-ghost"
   >

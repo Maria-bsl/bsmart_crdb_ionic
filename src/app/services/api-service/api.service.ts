@@ -112,7 +112,7 @@ export class ApiService {
     return this.performPost(url, body, new Map());
   }
   sendForgotPasswordLink(body: { Email_Address: string }) {
-    const url = `/SchoolDetails/ForgotPassword`;
+    const url = `/SchoolDetails/ForgotPassword_E`;
     return this.performPost(url, body, new Map());
   }
   signIn(

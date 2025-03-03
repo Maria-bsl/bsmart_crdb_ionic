@@ -113,7 +113,8 @@
     "SEND": "Tuma",
     "MESSAGE_SENT_TO": "Ujumbe ulitumwa kwa",
     "EMAIL_ADDRESS_DOES_NOT_EXIST": "Anwani ya barua pepe haipo. Tafadhali jisajili kwanza",
-    "DESCRIPTION": "Ingiza barua pepe lako ili tukutumie ujumbe."
+    "DESCRIPTION": "Ingiza barua pepe lako ili tukutumie ujumbe.",
+    "IF_AN_EMAIL_EXISTS_MESSAGE_WILL_BE_SENT": "Barua pepe ya kurejesha ilitumwa kwa anwani {{}}"
   },
   "ADD_STUDENT_PAGE": {
     "TITLE": "Ongeza Mwanafunzi",

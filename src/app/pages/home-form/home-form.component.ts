@@ -118,7 +118,6 @@ export class HomeFormComponent implements AfterViewInit, AfterViewChecked {
         },
         error: (e) => console.error(e),
       });
-    //backButton();
   }
   private registerIcons() {
     const icons = ['box-arrow-right', 'trash', 'plus-lg', 'eye'];

@@ -111,7 +111,8 @@
     "SEND": "Send",
     "MESSAGE_SENT_TO": "Message sent to",
     "EMAIL_ADDRESS_DOES_NOT_EXIST": "Email address does not exist. Please register first.",
-    "DESCRIPTION": "A reset password email will be sent to this address."
+    "DESCRIPTION": "A reset password email will be sent to this address.",
+    "IF_AN_EMAIL_EXISTS_MESSAGE_WILL_BE_SENT": "A recovery email was sent to the address {{}}"
   },
   "ADD_STUDENT_PAGE": {
     "TITLE": "Add Student",
@@ -149,7 +150,7 @@
       "ATTENDANCE": "Attendance",
       "LIBRARY": "Library",
       "BOOKS": "Books",
-      "NOTIFICATIONS": "Notifications",
+      "NOTIFICATIONS": "Events",
       "GET_SUPPORT": "Support",
       "SWITCH_ACCOUNT": "Switch Account",
       "LOGOUT": "Logout",

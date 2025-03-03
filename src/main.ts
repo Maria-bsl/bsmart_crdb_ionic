@@ -25,6 +25,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { authsInterceptor } from './app/interceptors/auths/auths.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { AppConst } from './app/utils/app-const';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -58,7 +59,7 @@ bootstrapApplication(AppComponent, {
           useFactory: createTranslateLoader,
           deps: [HttpClient],
         },
-        defaultLanguage: 'sw',
+        defaultLanguage: localStorage.getItem(AppConst.CURRENT_LANG) ?? 'sw',
         useDefaultLang: true,
       }),
     ]),

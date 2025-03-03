@@ -51,6 +51,7 @@ import { SharedService } from 'src/app/services/shared-service/shared.service';
 export class HeaderSectionComponent {
   @Input() s_showBackButton = false;
   @Input() s_pageTitle = '';
+  @Input() canClickProfile: boolean = true;
   constructor(
     private _appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute,

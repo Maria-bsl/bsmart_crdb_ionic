@@ -102,16 +102,7 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
     this.studentRegService.studentForm.reset();
   }
   private registrationSuccessHandler() {
-    const swalIsDismissed = () => {
-      this.loadingService.startLoading().then((loading) => {
-        setTimeout(() => {
-          this.resetForm();
-          this.loadingService.dismiss();
-          this.router.navigate(['/login']);
-        }, 800);
-      });
-    };
-    const swalIsConfirmed = () => {
+    const launchEmailApp = () => {
       this.resetForm();
       this.router.navigate(['/login']);
       if (isPlatform('capacitor')) {
@@ -120,37 +111,24 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
         this._appConfig.openExternalLink(ExternalLinks.GOOGLE_EMAIL_INBOX);
       }
     };
-
-    const titleObs = this.tr.get(
-      'REGISTER.REGISTER_FORM.SUCCESS.SUCCESSFULLY_REGISTERED_TEXT'
-    );
-    const mailSentObs = this.tr.get(
+    let emailText: string = this.tr.instant(
       'REGISTER.REGISTER_FORM.SUCCESS.EMAIL_SENT_TEXT'
     );
-    const openMailObs = this.tr.get(
-      'REGISTER.REGISTER_FORM.SUCCESS.OPEN_MAIL_APP'
+    emailText = emailText.replace(
+      '{{}}',
+      this.parentRegService.Email_Address.value
     );
-    const merged = zip(titleObs, mailSentObs, openMailObs);
-    merged.subscribe({
-      next: (results) => {
-        const [title, mailSent, openMail] = results;
-        const sent = mailSent.replace(
-          '{{}}',
-          this.parentRegService.Email_Address.value
-        );
-        toast.success(mailSent, {
-          action: {
-            label: sent,
-            onClick: () => {
-              swalIsConfirmed();
-            },
-          },
-          onDismiss: (t) => {
-            swalIsDismissed();
-          },
-        });
-      },
-    });
+    const dialogRef = this._appConfig.openStatePanel(
+      'success',
+      emailText,
+      true
+    );
+    dialogRef.componentInstance.buttonClicked
+      .asObservable()
+      .pipe(this.unsubscribe.takeUntilDestroy)
+      .subscribe({
+        next: () => launchEmailApp(),
+      });
   }
   ngOnInit() {}
   ngAfterViewInit(): void {}

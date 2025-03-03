@@ -47,6 +47,7 @@ export class PopupMessageDialogComponent implements AfterViewInit {
     );
   }
   closePopup(event: MouseEvent) {
+    this.buttonClicked.emit();
     anime({
       targets: '.popup-message-panel',
       opacity: [1, 0],

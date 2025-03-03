@@ -90,21 +90,28 @@ export const routes: Routes = [
           },
         ],
       },
+      // {
+      //   path: 'transport',
+      //   loadComponent: () =>
+      //     import('../transport-form/transport-form.component').then(
+      //       (t) => t.TransportFormComponent
+      //     ),
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadComponent: () =>
+      //         import('../maps-form/maps-form.component').then(
+      //           (j) => j.MapsFormComponent
+      //         ),
+      //     },
+      //   ],
+      // },
       {
         path: 'transport',
         loadComponent: () =>
-          import('../transport-form/transport-form.component').then(
-            (t) => t.TransportFormComponent
+          import('../maps-form/maps-form.component').then(
+            (j) => j.MapsFormComponent
           ),
-        children: [
-          {
-            path: '',
-            loadComponent: () =>
-              import('../maps-form/maps-form.component').then(
-                (j) => j.MapsFormComponent
-              ),
-          },
-        ],
       },
       {
         path: 'profile',
