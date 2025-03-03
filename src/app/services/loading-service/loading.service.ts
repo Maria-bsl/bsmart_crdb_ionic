@@ -4,9 +4,11 @@ import { LoadingDialogComponent } from '../../components/dialogs/loading-dialog/
 import {
   BehaviorSubject,
   concatMap,
+  defer,
   filter,
   firstValueFrom,
   lastValueFrom,
+  map,
   Observable,
   of,
   OperatorFunction,
@@ -65,19 +67,17 @@ export class LoadingService {
     return firstValueFrom(this.loading$.asObservable());
   }
   open(timeout = 30000): Observable<MatDialogRef<LoadingDialogComponent, any>> {
-    const dialogRef = this._dialog.open(LoadingDialogComponent, {
-      panelClass: 'dialog-loading-panel-class',
-      disableClose: true,
-    });
-    const ref$ = of(dialogRef);
-    ref$
-      .pipe(
-        switchMap((loading) =>
-          timer(timeout).pipe(tap(() => loading && loading.close()))
-        )
+    const dialogRef = () =>
+      this._dialog.open(LoadingDialogComponent, {
+        panelClass: 'dialog-loading-panel-class',
+        disableClose: true,
+      });
+    return defer(() => of(dialogRef)).pipe(
+      map((ref) => ref()),
+      tap((loading) =>
+        timer(timeout).subscribe((next) => loading && loading.close())
       )
-      .subscribe();
-    return ref$;
+    );
   }
   dismiss() {
     this.stopLoading();

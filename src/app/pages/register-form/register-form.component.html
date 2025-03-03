@@ -100,7 +100,13 @@
                 [formControl]="parentRegService.Email_Address"
               />
               <mat-error>
+                @if (parentRegService.Email_Address | hasFormControlError :
+                'required') {
                 {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+                } @else if (parentRegService.Email_Address | hasFormControlError
+                : 'pattern') {
+                {{ "REGISTER.REGISTER_FORM.ERRORS.INVALID_EMAIL" | translate }}
+                }
               </mat-error>
             </mat-form-field>
           </div>

@@ -301,6 +301,27 @@
       "CHANGE_PASSWORD_TEXT": "Badilisha neno siri"
     }
   },
+  "OTP_PAGE": {
+    "LABELS": {
+      "VERIFICATION": "Uthibitisho",
+      "VERIFY_USER": "Thibitisha Mtumiaji"
+    },
+    "FORM": {
+      "LABELS": {
+        "ENTER_CODE": "Ingiza msimbo hapa chini",
+        "DID_NOT_RECEIVE_CODE": "Haijapokelewa?",
+        "RESEND_HERE": "Rudisha hapa.",
+        "RESEND_CODE_IN": "Tuma tena nambari katika"
+      }
+    },
+    "ACTION": {
+      "CONTINUE": "Kuendelea"
+    },
+    "ERRORS": {
+      "FAILED_TO_SEND_CODE": "Imeshindwa kutuma msimbo",
+      "OTP_CODE_DO_NOT_MATCH": "Nambari uliyoingiza hailingani."
+    }
+  },
   "EDIT_PROFILE_PAGE": {
     "FORM": {
       "LABELS": {

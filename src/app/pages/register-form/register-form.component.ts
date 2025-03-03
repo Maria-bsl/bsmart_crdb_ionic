@@ -58,6 +58,7 @@ import {
 } from 'src/app/models/forms/package-names';
 import { toast } from 'ngx-sonner';
 import { NavController } from '@ionic/angular/standalone';
+import { HasFormControlErrorPipe } from 'src/app/pipes/has-form-control-error/has-form-control-error.pipe';
 
 @Component({
   selector: 'app-register-form',
@@ -74,6 +75,7 @@ import { NavController } from '@ionic/angular/standalone';
     MatAutocompleteModule,
     CommonModule,
     RouterLink,
+    HasFormControlErrorPipe,
   ],
   animations: [inOutAnimation],
 })

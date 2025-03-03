@@ -299,6 +299,27 @@
       "CHANGE_PASSWORD_TEXT": "Change password"
     }
   },
+  "OTP_PAGE": {
+    "LABELS": {
+      "VERIFICATION": "Verification",
+      "VERIFY_USER": "Verify User"
+    },
+    "FORM": {
+      "LABELS": {
+        "ENTER_CODE": "Enter code below",
+        "DID_NOT_RECEIVE_CODE": "Not received?",
+        "RESEND_HERE": "Resend here.",
+        "RESEND_CODE_IN": "Resend code in"
+      }
+    },
+    "ACTION": {
+      "CONTINUE": "Continue"
+    },
+    "ERRORS": {
+      "FAILED_TO_SEND_CODE": "Failed to send code",
+      "OTP_CODE_DO_NOT_MATCH": "The code you entered does not match."
+    }
+  },
   "EDIT_PROFILE_PAGE": {
     "FORM": {
       "LABELS": {

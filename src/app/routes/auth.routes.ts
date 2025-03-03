@@ -39,6 +39,20 @@ export const routes: Routes = [
             '../pages/forgot-password-form/forgot-password-form.component'
           ).then((c) => c.ForgotPasswordFormComponent),
       },
+      {
+        path: 'otp',
+        loadComponent: () =>
+          import('../pages/otp-form-page/otp-form-page.component').then(
+            (e) => e.OtpFormPageComponent
+          ),
+      },
+      {
+        path: 'reset',
+        loadComponent: () =>
+          import(
+            '../pages/reset-password-form/reset-password-form.component'
+          ).then((m) => m.ResetPasswordFormComponent),
+      },
     ],
   },
 ];

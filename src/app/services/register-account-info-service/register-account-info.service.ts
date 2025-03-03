@@ -15,7 +15,8 @@ export class RegisterAccountInfoService {
     User_Name: this.fb.control<string>('', [Validators.required]),
     Email_Address: this.fb.control<string>('', [
       Validators.required,
-      Validators.email,
+      Validators.pattern(/^$|\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/),
+      //Validators.email,
     ]),
     Parent_Name: this.fb.control<string>('', [Validators.required]),
     Mobile_No: this.fb.control<string>('', [

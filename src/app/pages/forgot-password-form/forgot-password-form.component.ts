@@ -20,6 +20,7 @@ import { ApiService } from 'src/app/services/api-service/api.service';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import { finalize, zip } from 'rxjs';
 import { toast } from 'ngx-sonner';
+import { HasFormControlErrorPipe } from 'src/app/pipes/has-form-control-error/has-form-control-error.pipe';
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -34,6 +35,7 @@ import { toast } from 'ngx-sonner';
     MatInputModule,
     RouterLink,
     ReactiveFormsModule,
+    HasFormControlErrorPipe,
   ],
 })
 export class ForgotPasswordFormComponent {
@@ -70,7 +72,8 @@ export class ForgotPasswordFormComponent {
     this.formGroup = this.fb.group({
       Email_Address: this.fb.control('', [
         Validators.required,
-        Validators.email,
+        Validators.pattern(/^$|\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/),
+        //Validators.email,
       ]),
     });
   }
@@ -112,8 +115,15 @@ export class ForgotPasswordFormComponent {
                 .pipe(this.unsubscribe.takeUntilDestroy)
                 .subscribe({
                   next: () => {
-                    this.formGroup.reset();
-                    this.router.navigate(['/login']);
+                    this.router
+                      .navigate(['/otp'], {
+                        replaceUrl: true,
+                        queryParams: {
+                          email: btoa(this.Email_Address.value),
+                          OTP_Code: btoa(res[0].OTP_Code!),
+                        },
+                      })
+                      .then(() => this.formGroup.reset());
                   },
                 });
             }
