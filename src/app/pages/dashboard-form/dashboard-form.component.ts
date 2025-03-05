@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import { DashboardService } from 'src/app/services/dashboard-service/dashboard.service';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, of } from 'rxjs';
 import { OverallAttendance } from 'src/app/models/forms/attendance';
 import { StudentPendingInvoice } from 'src/app/models/forms/invoices.model';
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,14 @@ import { ApiService } from 'src/app/services/api-service/api.service';
 import { Platform } from '@ionic/angular/standalone';
 import { GetSDetailStudents } from 'src/app/models/responses/RGetSDetails';
 import { MatDividerModule } from '@angular/material/divider';
+
+type Module = {
+  name: string;
+  route: string;
+  showBackButton: boolean;
+  pageTitle: string;
+  icon: string;
+};
 
 @Component({
   selector: 'app-dashboard-form',
@@ -47,6 +55,64 @@ export class DashboardFormComponent {
   pendingStudentInvoices$: Observable<StudentPendingInvoice[]> =
     this.dashboardService.pendingStudentInvoices$.asObservable();
   selectedStudent$!: Observable<GetSDetailStudents>;
+  private modules: Module[] = [
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.FEES'),
+      route: '/tabs/tab-1/fees',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.TIME_TABLE'),
+      icon: 'credit-card-2-back-fill',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.TIME_TABLE'),
+      route: '/tabs/tab-1/time-table',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.TIME_TABLE'),
+      icon: 'calendar-date-fill',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.RESULTS'),
+      route: '/tabs/tab-1/results',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.RESULTS'),
+      icon: 'file-earmark-bar-graph-fill',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.ATTENDANCE'),
+      route: '/tabs/tab-1/attendance',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.ATTENDANCE'),
+      icon: 'calendar-check-fill',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.LIBRARY'),
+      route: 'tabs/tab-1/library',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.LIBRARY'),
+      icon: 'book-fill',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.BOOKS'),
+      route: 'tabs/tab-1/books',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.BOOKS'),
+      icon: 'bookshelf',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.NOTIFICATIONS'),
+      route: '',
+      showBackButton: false,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.NOTIFICATIONS'),
+      icon: 'bell-fill',
+    },
+    {
+      name: this._tr.instant('DASHBOARD_PAGE.LABELS.GET_SUPPORT'),
+      route: 'tabs/tab-1/get-support',
+      showBackButton: true,
+      pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.GET_SUPPORT'),
+      icon: 'headset',
+    },
+  ];
   constructor(
     private _appConfig: AppConfigService,
     private router: Router,
@@ -67,19 +133,15 @@ export class DashboardFormComponent {
   private registerIcons() {
     this._appConfig.addIcons(
       [
-        // 'person-fill',
         'chevron-right',
         'book-fill',
         'calendar-date-fill',
         'file-earmark-bar-graph-fill',
         'bell-fill',
         'calendar-check-fill',
-        // 'lock-fill',
         'headset',
-        // 'box-arrow-right',
-        // 'door-open-fill',
         'bookshelf',
-        // 'people-fill',
+        'credit-card-2-back-fill',
       ],
       `/assets/bootstrap-icons`
     );
@@ -216,15 +278,19 @@ export class DashboardFormComponent {
           .subscribe({
             next: (res) => {
               if (res && res[0] && res[0].Status === 'No events available') {
-                this._appConfig.openAlertMessageBox(
-                  'DEFAULTS.INFO',
-                  'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
-                );
+                this._appConfig
+                  .openAlertMessageBox(
+                    'DEFAULTS.INFO',
+                    'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
+                  )
+                  .subscribe();
               } else {
-                this._appConfig.openAlertMessageBox(
-                  'DEFAULTS.WARNING',
-                  'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
-                );
+                this._appConfig
+                  .openAlertMessageBox(
+                    'DEFAULTS.WARNING',
+                    'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
+                  )
+                  .subscribe();
               }
             },
             error: (err) => console.error('Failed to fetch event details', err),
@@ -264,5 +330,8 @@ export class DashboardFormComponent {
         },
         error: (err) => console.error(err),
       });
+  }
+  get modules$() {
+    return of(this.modules);
   }
 }

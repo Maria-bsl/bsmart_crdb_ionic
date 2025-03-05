@@ -26,13 +26,17 @@ import { LoadingService } from 'src/app/services/loading-service/loading.service
 import { ApiService } from 'src/app/services/api-service/api.service';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import { FLoginForm } from 'src/app/models/forms/login.model';
-import { finalize } from 'rxjs';
+import { finalize, switchMap } from 'rxjs';
 import { NavController } from '@ionic/angular/standalone';
 import {
   GetSDetails,
   GetSDetailsErrorStatus,
 } from 'src/app/models/responses/RGetSDetails';
 import { HasFormControlErrorPipe } from 'src/app/pipes/has-form-control-error/has-form-control-error.pipe';
+import {
+  ExternalLinks,
+  PackageNames,
+} from 'src/app/models/forms/package-names';
 
 @Component({
   selector: 'app-login-form',
@@ -58,8 +62,8 @@ export class LoginFormComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private loadingService: LoadingService,
-    private _apiService: ApiService,
+    private _loading: LoadingService,
+    private _api: ApiService,
     private _appConfig: AppConfigService,
     private _unsubscribe: UnsubscribeService,
     private navCtrl: NavController
@@ -73,11 +77,6 @@ export class LoginFormComponent {
       Password: this.fb.control('', [Validators.required]),
     });
   }
-  private displayFailedToLoginError() {
-    const title = 'DEFAULTS.FAILED';
-    const message = 'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED';
-    this._appConfig.openAlertMessageBox(title, message);
-  }
   private registerIcons() {
     const icons = ['eye', 'eye-slash', 'person-fill', 'lock-fill'];
     this._appConfig.addIcons(icons, '/assets/bootstrap-icons');
@@ -85,14 +84,12 @@ export class LoginFormComponent {
   private loginUser(body: FLoginForm) {
     const login = (res: GetSDetails[] | GetSDetailsErrorStatus[]) => {
       if (Object.prototype.hasOwnProperty.call(res[0], 'status')) {
-        let failedMessageObs = 'DEFAULTS.FAILED';
-        let incorrectUsernamePasswordMessageObs =
-          'LOGIN.LOGIN_FORM.ERRORS.USERNAME_OR_PASSWORD_INCORRECT';
-
-        this._appConfig.openAlertMessageBox(
-          failedMessageObs,
-          incorrectUsernamePasswordMessageObs
-        );
+        this._appConfig
+          .openAlertMessageBox(
+            'DEFAULTS.FAILED',
+            'LOGIN.LOGIN_FORM.ERRORS.USERNAME_OR_PASSWORD_INCORRECT'
+          )
+          .subscribe();
       } else {
         let GetSDetails = JSON.stringify(res[0]);
         localStorage.setItem('GetSDetails', GetSDetails);
@@ -101,19 +98,26 @@ export class LoginFormComponent {
         this.navCtrl.navigateForward(['/home']);
       }
     };
-    this.loadingService.startLoading().then((loading) => {
-      this._apiService
-        .signIn(body)
-        .pipe(this._unsubscribe.takeUntilDestroy)
-        .subscribe({
-          next: (res) => login(res),
-          error: (err) => {
-            console.error(err);
-            this.displayFailedToLoginError();
-          },
-          complete: () => this.loadingService.dismiss(),
-        });
-    });
+    this._loading
+      .open()
+      .pipe(
+        switchMap((ref) =>
+          this._api.signIn(body).pipe(
+            this._unsubscribe.takeUntilDestroy,
+            finalize(() => ref && ref.close())
+          )
+        )
+      )
+      .subscribe({
+        next: (res) => login(res),
+        error: (err) =>
+          this._appConfig
+            .openAlertMessageBox(
+              'DEFAULTS.FAILED',
+              'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED'
+            )
+            .subscribe(),
+      });
   }
   onRegisterClicked(event: MouseEvent) {
     this.router.navigate(['/register'], { replaceUrl: true });

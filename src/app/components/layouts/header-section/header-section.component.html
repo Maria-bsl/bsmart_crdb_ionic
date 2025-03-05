@@ -1,5 +1,5 @@
 <mat-toolbar
-  class="!w-full flex flex-row items-center justify-between !h-[72px] !p-2 !shadow-sm !bg-[var(--mat-sys-inverse-primary)]"
+  class="!w-full flex flex-row items-center justify-between !h-[72px] !p-2 !shadow-sm !bg-[var(--mat-sys-primary)]"
 >
   <button
     (click)="canClickProfile ? navigateHome($event) : {}"
@@ -7,7 +7,7 @@
     class="flex flex-row items-center btn !p-0 w-fit btn-ghost"
   >
     <span
-      class="w-10 h-10 mb-1.5 rounded-full bg-[var(--mat-sys-on-primary-fixed-variant)] relative grid place-items-center"
+      class="w-10 h-10 rounded-full bg-[var(--mat-sys-on-primary-fixed-variant)] relative grid place-items-center"
     >
       <img
         src="assets/images/african (1).png"
@@ -21,10 +21,10 @@
       />
     </span>
     <div class="flex flex-col">
-      <h6 class="mat-body-small text-left">
+      <h6 class="mat-body-small text-left text-[var(--mat-sys-on-primary)]">
         {{ "HOME_PAGE.LABELS.JAMBO" | translate }}
       </h6>
-      <h6 class="mat-body-large text-left">
+      <h6 class="mat-body-large text-left text-[var(--mat-sys-on-primary)]">
         {{ (parentDetails$ | async)?.Parent_Name }}
       </h6>
     </div>

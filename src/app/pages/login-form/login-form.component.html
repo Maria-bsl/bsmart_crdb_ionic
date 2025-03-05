@@ -1,6 +1,6 @@
 <div class="w-full h-full flex flex-col">
   <div class="w-full h-24 flex flex-row items-center justify-between px-4 py-2">
-    <h6 class="!text-[var(--mat-sys-on-primary)] mat-title-large">
+    <h6 class="text-[var(--mat-sys-on-primary)] mat-headline-small">
       {{ "LOGIN.LOGIN_TEXT" | translate }}
     </h6>
     <img
@@ -14,10 +14,10 @@
     class="w-full h-full bg-[var(--mat-sys-surface)] px-4 py-4 flex flex-col space-y-4"
   >
     <div class="flex flex-col space-y-1">
-      <h6 class="!text-[var(--mat-sys-on-primary-container)] mat-title-small">
+      <h6 class="mat-title-large">
         {{ "LOGIN.WELCOME_TEXT" | translate }}
       </h6>
-      <h6 class="!text-[var(--mat-sys-on-primary-container)] mat-body-small">
+      <h6 class="mat-body-small">
         {{ "LOGIN.LOGIN_DESCRIPTION" | translate }}
       </h6>
     </div>
@@ -29,7 +29,7 @@
     >
       <div class="flex flex-col w-full space-y-1">
         <div class="flex flex-col">
-          <h6 class="mat-label-small text-black">
+          <h6 class="mat-label-small">
             {{ "LOGIN.LOGIN_FORM.LABELS.USERNAME" | translate | titlecase }}
           </h6>
           <mat-form-field class="form-field-input">
@@ -48,7 +48,7 @@
           </mat-form-field>
         </div>
         <div class="flex flex-col">
-          <h6 class="mat-label-small text-black">
+          <h6 class="mat-label-small">
             {{ "LOGIN.LOGIN_FORM.LABELS.PASSWORD" | translate | titlecase }}
           </h6>
           <mat-form-field class="form-field-input">
@@ -84,7 +84,7 @@
             </button>
             }
             <mat-error *ngIf="Password | hasFormControlError : 'required'">
-              {{ "LOGIN.LOGIN_FORM.ERRORS.USERNAME" | translate }}
+              {{ "LOGIN.LOGIN_FORM.ERRORS.PASSWORD" | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -94,19 +94,19 @@
           </a>
         </div>
       </div>
-      <ion-button type="submit">{{
+      <ion-button color="primary" type="submit">{{
         "LOGIN.LOGIN_FORM.ACTIONS.SUBMIT" | translate
       }}</ion-button>
-      <div class="flex flex-row items-center justify-center py-4">
-        <span class="text-black text-xs"
-          >{{ "LOGIN.LOGIN_FORM.LABELS.DONT_HAVE_AN_ACCOUNT" | translate }}
-          <ion-text
+      <div class="w-full">
+        <h6 class="mat-label-small w-full text-center my-4">
+          {{ "LOGIN.LOGIN_FORM.LABELS.DONT_HAVE_AN_ACCOUNT" | translate }}
+          <span
             (click)="onRegisterClicked($event)"
-            color="primary"
-            class="text-xs hover:underline"
-            >{{ "LOGIN.LOGIN_FORM.LABELS.CLICK_HERE" | translate }}</ion-text
+            class="!text-[var(--mat-sys-primary)] hover:underline"
           >
-        </span>
+            {{ "LOGIN.LOGIN_FORM.LABELS.CLICK_HERE" | translate }}
+          </span>
+        </h6>
       </div>
     </form>
   </div>

@@ -94,7 +94,7 @@ export class ChangePasswordFormComponent {
   }
   private createChangePasswordFormGroup() {
     this.changePasswordForm = this.fb.group({
-      currentPassword: this.fb.control('', [Validators.required]),
+      currentPassword: this.fb.control('12345678', [Validators.required]),
       newPassword: this.fb.control('', [
         Validators.required,
         this.matchValidator('confirmPassword', true),
@@ -104,6 +104,7 @@ export class ChangePasswordFormComponent {
         this.matchValidator('newPassword'),
       ]),
     });
+    this.currentPassword.disable();
   }
   private displayFailedToGetParentDetailsError() {
     let failedMessageObs = 'DEFAULTS.FAILED';

@@ -1,5 +1,5 @@
 <ion-content class="w-screen h-screen relative">
-  <div
+  <!-- <div
     class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
   >
     <app-header-section></app-header-section>
@@ -201,6 +201,157 @@
             ></mat-icon>
           </mat-card-content>
         </mat-card>
+      </div>
+    </div>
+  </div> -->
+  <div class="w-full h-full flex flex-col">
+    <app-header-section></app-header-section>
+    <div
+      class="w-full bg-[var(--mat-sys-surface)] h-full px-4 py-4 flex flex-col space-y-4"
+    >
+      <div class="flex flex-col w-full space-y-1">
+        <h1 class="mat-title-small text-[var(--mat-sys-on-surface)]">
+          {{ "DASHBOARD_PAGE.YOUR_CHILD" | translate }}
+        </h1>
+        <h1 class="mat-headline-small text-[var(--mat-sys-on-surface)]">
+          {{ (selectedStudent$ | async)?.SFullName }}
+        </h1>
+      </div>
+      <div class="flex flex-col w-full space-y-2">
+        <h1 class="mat-title-large text-[var(--mat-sys-on-surface)]">
+          {{ "DASHBOARD_PAGE.CATEGORIES_TEXT" | translate }}
+        </h1>
+        <div class="grid grid-cols-4 w-full gap-2">
+          <ng-container *ngFor="let module of modules$ | async; index as ind">
+            <mat-card
+              matRipple
+              class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+            >
+              <mat-icon
+                matPrefix
+                [svgIcon]="module.icon"
+                class="scale-150 !text-[var(--mat-sys-primary)]"
+              ></mat-icon>
+              <ion-text
+                class="mat-label-small capitalize text-[var(--mat-sys-on-surface)]"
+                >{{ module.name }}</ion-text
+              >
+            </mat-card>
+          </ng-container>
+
+          <!-- <a
+            (click)="openFeesPage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="ic_holiday"
+              class="scale-150"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.FEES" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="openTimetablePage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="calendar-date-fill"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.TIME_TABLE" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="openResultsPage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="file-earmark-bar-graph-fill"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.RESULTS" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="openAttendancePage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="calendar-check-fill"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.ATTENDANCE" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="openLibraryPage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="book-fill"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.LIBRARY" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="openBooksPage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="bookshelf"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.BOOKS" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="requestEventDetails($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="bell-fill"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.NOTIFICATIONS" | translate
+            }}</ion-text>
+          </a>
+          <a
+            (click)="openGetSupportPage($event)"
+            matRipple
+            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+          >
+            <mat-icon
+              matPrefix
+              svgIcon="headset"
+              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
+            ></mat-icon>
+            <ion-text class="mat-label-small capitalize">{{
+              "DASHBOARD_PAGE.LABELS.GET_SUPPORT" | translate
+            }}</ion-text>
+          </a> -->
+        </div>
       </div>
     </div>
   </div>

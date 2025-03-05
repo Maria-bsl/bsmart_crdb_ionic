@@ -1,4 +1,4 @@
-<ion-content class="w-screen h-screen relative">
+<!-- <ion-content class="w-screen h-screen relative">
   <div class="w-full h-full relative">
     <app-header-section></app-header-section>
     <div class="flex flex-col w-full py-4 px-2">
@@ -86,5 +86,103 @@
         </div>
       </div>
     </form>
+  </div>
+</ion-content> -->
+
+<ion-content class="w-screen h-screen relative">
+  <div class="w-full h-full flex flex-col">
+    <app-header-section [isTransparent]="true"></app-header-section>
+    <div
+      class="w-full bg-[var(--mat-sys-surface)] h-full px-4 py-4 flex flex-col space-y-4"
+    >
+      <div class="flex flex-col space-y-1">
+        <h1 class="mat-title-large text-[var(--mat-sys-on-surface)]">
+          {{ "ADD_STUDENT_PAGE.TITLE" | translate }}
+        </h1>
+        <h6 class="mat-body-small text-[var(--mat-sys-on-surface)]">
+          {{ "ADD_STUDENT_PAGE.COMPLETE_FORM_TO_ADD_STUDENT" | translate }}
+        </h6>
+      </div>
+      <form
+        (ngSubmit)="submitStudentForm($event)"
+        [formGroup]="studentRegService.studentForm"
+      >
+        <div
+          formArrayName="SDetails"
+          class="flex flex-col w-full space-y-1 h-fit"
+        >
+          <ng-container
+            *ngFor="
+              let sDetail of studentRegService.SDetails.controls;
+              index as ind
+            "
+            formGroupName="{{ ind }}"
+          >
+            <div class="flex flex-col">
+              <h6 class="mat-label-small text-[var(--mat-sys-on-surface)]">
+                {{ "REGISTER.REGISTER_FORM.LABELS.SCHOOL" | translate }}
+              </h6>
+              <mat-form-field class="form-field-input">
+                <input
+                  matInput
+                  type="text"
+                  [placeholder]="
+                    'REGISTER.REGISTER_FORM.PLACEHOLDERS.SCHOOL' | translate
+                  "
+                  [matAutocomplete]="auto"
+                  formControlName="SearchFacility"
+                />
+                <mat-autocomplete #auto="matAutocomplete">
+                  @for (option of studentRegService.filteredFacultiesOptions$ |
+                  async; track option) {
+                  <mat-option [value]="option.Facility_Name">{{
+                    option.Facility_Name
+                  }}</mat-option>
+                  }
+                </mat-autocomplete>
+                <mat-error>
+                  @if
+                  (studentRegService.SDetails.controls.at(0)?.get('SearchFacility')?.hasError('required'))
+                  {
+                  {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+                  } @else if
+                  (studentRegService.SDetails.controls.at(0)?.get('SearchFacility')?.hasError('invalidFacultyName'))
+                  {
+                  {{
+                    "REGISTER.REGISTER_FORM.ERRORS.SCHOOL_NAME_DOES_NOT_EXIST"
+                      | translate
+                  }}
+                  }
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="flex flex-col">
+              <h6 class="mat-label-small text-[var(--mat-sys-on-surface)]">
+                {{ "REGISTER.REGISTER_FORM.LABELS.ADMISSION_NO" | translate }}
+              </h6>
+              <mat-form-field class="form-field-input">
+                <input
+                  matInput
+                  type="text"
+                  [placeholder]="
+                    'REGISTER.REGISTER_FORM.PLACEHOLDERS.ADMISSION_NO'
+                      | translate
+                  "
+                  formControlName="Admission_No"
+                />
+                <mat-error>
+                  {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </ng-container>
+          <div class="w-full flex flex-col">
+            <ion-button class="mx-auto w-full my-4" type="submit">{{
+              "DEFAULTS.SUBMIT" | translate
+            }}</ion-button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </ion-content>

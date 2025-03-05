@@ -12,7 +12,10 @@ import { AppConst } from 'src/app/utils/app-const';
 })
 export class RegisterAccountInfoService {
   parentForm: FormGroup = this.fb.group({
-    User_Name: this.fb.control<string>('', [Validators.required]),
+    User_Name: this.fb.control<string>('', [
+      Validators.required,
+      Validators.pattern(/^(\S+\s?)$/),
+    ]),
     Email_Address: this.fb.control<string>('', [
       Validators.required,
       Validators.pattern(/^$|\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/),

@@ -11,4 +11,7 @@ export class AppUtilities {
     }
     return new Date(year, month - 1, day);
   }
+  static hasOwnProperty(obj: {}, key: string) {
+    return Object.prototype.hasOwnProperty.call(obj, key);
+  }
 }

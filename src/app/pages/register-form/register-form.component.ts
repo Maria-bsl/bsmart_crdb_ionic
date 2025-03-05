@@ -37,6 +37,11 @@ import { LoadingService } from 'src/app/services/loading-service/loading.service
 import {
   BehaviorSubject,
   catchError,
+  concat,
+  defer,
+  EMPTY,
+  endWith,
+  filter,
   finalize,
   firstValueFrom,
   map,
@@ -44,6 +49,8 @@ import {
   of,
   startWith,
   Subject,
+  switchMap,
+  tap,
   zip,
 } from 'rxjs';
 import { RGetFacilities } from 'src/app/models/responses/RGetFacilities';
@@ -59,6 +66,7 @@ import {
 import { toast } from 'ngx-sonner';
 import { NavController } from '@ionic/angular/standalone';
 import { HasFormControlErrorPipe } from 'src/app/pipes/has-form-control-error/has-form-control-error.pipe';
+import { AppUtilities } from 'src/app/utils/AppUtilities';
 
 @Component({
   selector: 'app-register-form',
@@ -84,8 +92,8 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
   constructor(
     public parentRegService: RegisterAccountInfoService,
     public studentRegService: StudentDetailsFormService,
-    private loadingService: LoadingService,
-    private apiService: ApiService,
+    private _loading: LoadingService,
+    private _api: ApiService,
     private unsubscribe: UnsubscribeService,
     private _appConfig: AppConfigService,
     private router: Router,
@@ -106,12 +114,14 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
   private registrationSuccessHandler() {
     const launchEmailApp = () => {
       this.resetForm();
-      this.router.navigate(['/login']);
-      if (isPlatform('capacitor')) {
-        this._appConfig.launchApp(PackageNames.GOOGLE_EMAIL);
-      } else {
-        this._appConfig.openExternalLink(ExternalLinks.GOOGLE_EMAIL_INBOX);
-      }
+      defer(() => this.router.navigate(['/login']))
+        .pipe(
+          filter((val) => val && isPlatform('capacitor')),
+          tap((val) => this.resetForm())
+        )
+        .subscribe(
+          (val) => val && this._appConfig.launchApp(PackageNames.GOOGLE_EMAIL)
+        );
     };
     let emailText: string = this.tr.instant(
       'REGISTER.REGISTER_FORM.SUCCESS.EMAIL_SENT_TEXT'
@@ -135,44 +145,52 @@ export class RegisterFormComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
   ngAfterViewInit(): void {}
   private requestRegisterParent(body: FParentReg) {
-    this.loadingService.startLoading().then((loading) => {
-      this.apiService
-        .registerParent(body)
-        .pipe(
-          this.unsubscribe.takeUntilDestroy,
-          finalize(() => this.loadingService.dismiss())
+    const isSuccessResultMessage = (message: string) =>
+      message.toLocaleLowerCase() ===
+      'Successfully registered'.toLocaleLowerCase();
+    this._loading
+      .open()
+      .pipe(
+        switchMap((ref) =>
+          this._api.registerParent(body).pipe(
+            this.unsubscribe.takeUntilDestroy,
+            map((results) => results[0]),
+            finalize(() => ref && ref.close())
+          )
+        ),
+        tap(
+          (res) =>
+            AppUtilities.hasOwnProperty(res, 'Status') &&
+            !isSuccessResultMessage(res['Status']) &&
+            this._appConfig
+              .openAlertMessageBox('DEFAULTS.FAILED', res['Status'])
+              .subscribe()
+        ),
+        tap(
+          (res) =>
+            AppUtilities.hasOwnProperty(res, 'Status') &&
+            isSuccessResultMessage(res['Status']) &&
+            this.registrationSuccessHandler()
         )
-        .subscribe({
-          next: (results: any) => {
-            let keys = Object.keys(results[0]);
-            if (
-              keys.includes('Status') &&
-              results[0]['Status'].toLocaleLowerCase() ===
-                'Successfully registered'.toLocaleLowerCase()
-            ) {
-              this.registrationSuccessHandler();
-            } else if (keys.includes('Status')) {
-              let title = 'DEFAULTS.FAILED';
-              this._appConfig.openAlertMessageBox(title, results[0]['Status']);
-            } else {
-              throw Error('Unexpected response parsed.');
-            }
-          },
-          error: (err) => {
-            let title = 'DEFAULTS.FAILED';
-            let message = 'defaults.errors.somethingWentWrongTryAgain';
-            this._appConfig.openAlertMessageBox(title, message);
-          },
-        });
-    });
+      )
+      .subscribe({
+        error: (err) =>
+          this._appConfig
+            .openAlertMessageBox(
+              'DEFAULTS.FAILED',
+              'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED'
+            )
+            .subscribe(),
+      });
   }
   private validateRegistrationForm() {
-    let errors = { title: 'DEFAULTS.INVALID_FORM', message: '' };
+    const errors = { title: 'DEFAULTS.INVALID_FORM', message: '' };
     this.parentRegService.validateForm(errors);
     this.studentRegService.validateForm(errors);
-    errors.message
-      ? this._appConfig.openAlertMessageBox(errors.title, errors.message)
-      : (() => {})();
+    errors.message &&
+      this._appConfig
+        .openAlertMessageBox(errors.title, errors.message)
+        .subscribe();
   }
   submitRegisterForm(event: MouseEvent) {
     const submission = () => {

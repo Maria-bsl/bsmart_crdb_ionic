@@ -67,7 +67,15 @@ export class ResetPasswordFormComponent {
     private activatedRoute$: ActivatedRoute,
     private router: Router
   ) {
+    this.init();
     this.createChangePasswordFormGroup();
+  }
+  private init() {
+    const backButton = () => {
+      const backToLogin = () => void 0;
+      this._appConfig.backButtonEventHandler(backToLogin);
+    };
+    backButton();
   }
   private matchValidator(matchTo: string, reverse?: boolean): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -98,11 +106,6 @@ export class ResetPasswordFormComponent {
       ]),
     });
     this.currentPassword.disable();
-  }
-  private displayFailedChangePasswordError() {
-    let failedMessageObs = 'DEFAULTS.FAILED';
-    let msgObs = 'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_UPDATE_PASSWORD_TEXT';
-    this._appConfig.openAlertMessageBox(failedMessageObs, msgObs);
   }
   private requestChangePassword(form: {
     Email_Address: string;
@@ -140,12 +143,21 @@ export class ResetPasswordFormComponent {
           if (Object.prototype.hasOwnProperty.call(res[0], 'Status')) {
             successResetPassword(res[0].Status);
           } else {
-            this.displayFailedChangePasswordError();
+            this._appConfig
+              .openAlertMessageBox(
+                'DEFAULTS.FAILED',
+                'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_UPDATE_PASSWORD_TEXT'
+              )
+              .subscribe();
           }
         },
-        error: (err) => {
-          this.displayFailedChangePasswordError();
-        },
+        error: (err) =>
+          this._appConfig
+            .openAlertMessageBox(
+              'DEFAULTS.FAILED',
+              'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_UPDATE_PASSWORD_TEXT'
+            )
+            .subscribe(),
       });
   }
   submitChangePasswordForm(event: MouseEvent) {

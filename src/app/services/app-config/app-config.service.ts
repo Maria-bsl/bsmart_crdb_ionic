@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
-import { of, switchMap, zip } from 'rxjs';
+import { defer, from, of, switchMap, zip } from 'rxjs';
 import { MessageBoxDialogComponent } from 'src/app/components/dialogs/message-box-dialog/message-box-dialog.component';
 import { FSessionTokens } from 'src/app/models/forms/tokens.model';
 import { UnsubscribeService } from '../unsubscriber/unsubscriber.service';
@@ -15,6 +15,7 @@ import {
   PopupMessageDialogComponent,
   PopupState,
 } from 'src/app/components/dialogs/popup-message-dialog/popup-message-dialog.component';
+import { Dialog } from '@capacitor/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -50,21 +51,32 @@ export class AppConfigService {
       },
     });
   }
-  backButtonEventHandler(callback: () => {}) {
+  backButtonEventHandler(callback: (() => {}) | (() => void)) {
     this.platform.backButton.subscribeWithPriority(0, () => {
       callback();
     });
   }
-  openAlertMessageBox(title: string, message: string) {
-    let titleObs = this.tr.get(title);
-    let messageObs = this.tr.get(message);
-    let merged = zip(titleObs, messageObs);
-    merged.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
-      next: (results) => {
-        let [trTitle, trMessage] = results;
-        this.openMessageBoxDialog(trTitle, trMessage);
-      },
-    });
+  openNativeAlertDialog(title: string, message: string, buttonTitle: string) {
+    return defer(() =>
+      Dialog.alert({
+        title: this.tr.instant(title),
+        message: this.tr.instant(message),
+        buttonTitle: this.tr.instant(buttonTitle),
+      })
+    );
+  }
+  openAlertMessageBox(
+    title: string,
+    message: string,
+    buttonTitle: string = 'DEFAULTS.OK'
+  ) {
+    return defer(() =>
+      Dialog.alert({
+        title: this.tr.instant(title),
+        message: this.tr.instant(message),
+        buttonTitle: this.tr.instant(buttonTitle),
+      })
+    );
   }
   openConfirmMessageBox(title: string, message: string) {
     const confirm = (msg1: string, msg2: string) => {

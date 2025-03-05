@@ -33,8 +33,10 @@
             android:value="AIzaSyBXeOCuK5n8odFY905hUBAZXJzhOmjCpow"
         />
     </application>
-
-    <!-- Permissions -->
+    <queries>
+      <package android:name="com.google.android.gm" />
+    </queries>
+  <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />

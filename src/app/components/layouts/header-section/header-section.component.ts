@@ -52,6 +52,7 @@ export class HeaderSectionComponent {
   @Input() s_showBackButton = false;
   @Input() s_pageTitle = '';
   @Input() canClickProfile: boolean = true;
+  @Input() isTransparent: boolean = false;
   constructor(
     private _appConfig: AppConfigService,
     private activatedRoute: ActivatedRoute,

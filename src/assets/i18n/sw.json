@@ -98,7 +98,8 @@
         "MISSING_EMAIL_ADDRESS": "Umesahau kuingiza barua pepe.",
         "INVALID_EMAIL": "Anwani ya barua pepe uliyoingiza ni batili.",
         "MISSING_SCHOOL": "Umesahahu kuchagua shule",
-        "MISSING_ADMISSION_NO": "Umesahau kuingiza nambari ya kuingia"
+        "MISSING_ADMISSION_NO": "Umesahau kuingiza nambari ya kuingia",
+        "USERNAME_BLANK_SPACE": "Tafadhali ingiza jina moja tu."
       },
       "SUCCESS": {
         "SUCCESSFULLY_REGISTERED_TEXT": "Imesajiliwa kwa mafanikio!",
@@ -118,6 +119,7 @@
   },
   "ADD_STUDENT_PAGE": {
     "TITLE": "Ongeza Mwanafunzi",
+    "COMPLETE_FORM_TO_ADD_STUDENT": "Kamilisha fomu hapa chini kuongeza mwanafunzi mpya.",
     "SUCCESS": {
       "SUCCESS_ADD_STUDENT": "Mwanafunzi ameongezwa kwa mafanikio!"
     },
@@ -144,6 +146,7 @@
   "DASHBOARD_PAGE": {
     "CATEGORIES_TEXT": "Kategoria",
     "STATISTICS_TEXT": "Takwimu",
+    "YOUR_CHILD": "Mwanao",
     "LABELS": {
       "SCHOOL_FEES": "Ada ya shule",
       "FEES": "ADA",
@@ -319,7 +322,9 @@
     },
     "ERRORS": {
       "FAILED_TO_SEND_CODE": "Imeshindwa kutuma msimbo",
-      "OTP_CODE_DO_NOT_MATCH": "Nambari uliyoingiza hailingani."
+      "OTP_CODE_DO_NOT_MATCH": "Nambari uliyoingiza hailingani.",
+      "OTP_CODE_HAS_EXPIRED": "Nambari yako imeisha. Tunaweza kutuma tena nambari yako.",
+      "MISSING_CODE": "Tafadhali ingiza msimbo wa uthibitishaji."
     }
   },
   "EDIT_PROFILE_PAGE": {

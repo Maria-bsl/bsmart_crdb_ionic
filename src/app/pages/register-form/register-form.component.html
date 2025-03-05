@@ -1,6 +1,6 @@
 <div class="w-full h-full flex flex-col">
-  <div class="w-full h-24 flex flex-row items-center justify-between px-4">
-    <h6 class="!text-[var(--mat-sys-on-primary)] mat-title-large">
+  <div class="w-full h-24 flex flex-row items-center justify-between px-4 py-2">
+    <h6 class="text-[var(--mat-sys-on-primary)] mat-headline-small">
       {{ "REGISTER.TITLE_TEXT" | translate }}
     </h6>
     <img
@@ -14,10 +14,10 @@
     class="w-full h-full bg-[var(--mat-sys-surface)] px-4 py-4 flex flex-col space-y-4"
   >
     <div class="flex flex-col space-y-1">
-      <h6 class="!text-[var(--mat-sys-on-primary-container)] mat-title-small">
+      <h6 class="mat-title-large">
         {{ "REGISTER.REGISTER_NOW" | translate }}
       </h6>
-      <h6 class="!text-[var(--mat-sys-on-primary-container)] mat-body-small">
+      <h6 class="mat-body-small">
         {{ "REGISTER.REGISTER_DESCRIPTION" | translate }}
       </h6>
     </div>
@@ -31,7 +31,7 @@
           class="carousel-item flex flex-col w-full space-y-1 h-fit duration-500"
         >
           <div class="flex flex-col">
-            <h6 class="mat-label-small text-black">
+            <h6 class="mat-label-small">
               {{ "REGISTER.REGISTER_FORM.LABELS.FULL_NAME" | translate }}
             </h6>
             <mat-form-field class="form-field-input">
@@ -49,11 +49,11 @@
             </mat-form-field>
           </div>
           <div class="flex flex-col">
-            <h6 class="mat-label-small text-black">
+            <h6 class="mat-label-small">
               {{ "REGISTER.REGISTER_FORM.LABELS.PHONE_NUMBER" | translate }}
             </h6>
             <mat-form-field class="form-field-input">
-              <span class="text-black" matTextPrefix>+255 &nbsp;</span>
+              <span matTextPrefix>+255 &nbsp;</span>
               <input
                 matInput
                 type="tel"
@@ -68,7 +68,7 @@
             </mat-form-field>
           </div>
           <div class="flex flex-col">
-            <h6 class="mat-label-small text-black">
+            <h6 class="mat-label-small">
               {{ "REGISTER.REGISTER_FORM.LABELS.USERNAME" | translate }}
             </h6>
             <mat-form-field class="form-field-input">
@@ -81,12 +81,21 @@
                 [formControl]="parentRegService.User_Name"
               />
               <mat-error>
+                @if (parentRegService.User_Name | hasFormControlError:
+                'required') {
                 {{ "DEFAULTS.ERRORS.CANNOT_BE_BLANK" | translate }}
+                } @else if (parentRegService.User_Name | hasFormControlError:
+                'pattern') {
+                {{
+                  "REGISTER.REGISTER_FORM.ERRORS.USERNAME_BLANK_SPACE"
+                    | translate
+                }}
+                }
               </mat-error>
             </mat-form-field>
           </div>
           <div class="flex flex-col">
-            <h6 class="mat-label-small text-black">
+            <h6 class="mat-label-small">
               {{ "REGISTER.REGISTER_FORM.LABELS.EMAIL_ADDRESS" | translate }}
             </h6>
             <mat-form-field class="form-field-input">
@@ -127,7 +136,7 @@
             formGroupName="{{ ind }}"
           >
             <div class="flex flex-col">
-              <h6 class="mat-label-small text-black">
+              <h6 class="mat-label-small">
                 {{ "REGISTER.REGISTER_FORM.LABELS.SCHOOL" | translate }}
               </h6>
               <mat-form-field class="form-field-input">
@@ -165,7 +174,7 @@
               </mat-form-field>
             </div>
             <div class="flex flex-col">
-              <h6 class="mat-label-small text-black">
+              <h6 class="mat-label-small">
                 {{ "REGISTER.REGISTER_FORM.LABELS.ADMISSION_NO" | translate }}
               </h6>
               <mat-form-field class="form-field-input">
@@ -206,16 +215,16 @@
         }
       </a>
     </div>
-    <div class="flex flex-row">
-      <span class="text-black text-xs"
-        >{{ "REGISTER.ALREADY_SIGNED_UP" | translate }}
-        <ion-text
+    <div class="w-full">
+      <h6 class="mat-label-small w-full text-center my-4">
+        {{ "REGISTER.ALREADY_SIGNED_UP" | translate }}
+        <a
           [routerLink]="'/login'"
-          color="primary"
-          class="text-xs hover:underline"
-          >{{ "REGISTER.LOGIN_HERE" | translate }}</ion-text
+          class="!text-[var(--mat-sys-primary)] hover:underline"
         >
-      </span>
+          {{ "REGISTER.LOGIN_HERE" | translate }}
+        </a>
+      </h6>
     </div>
   </div>
   <div

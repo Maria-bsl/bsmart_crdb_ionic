@@ -54,6 +54,8 @@
         "PASSWORD": "Enter your password"
       },
       "ERRORS": {
+        "USERNAME": "Please enter username",
+        "PASSWORD": "Please enter password",
         "USERNAME_OR_PASSWORD_INCORRECT": "The username or password you entered is incorrect."
       },
       "ACTIONS": {
@@ -96,7 +98,8 @@
         "MISSING_EMAIL_ADDRESS": "You forgot to enter an email address.",
         "INVALID_EMAIL": "The email address you entered is invalid.",
         "MISSING_SCHOOL": "You forgot to select a school.",
-        "MISSING_ADMISSION_NO": "You forgot to enter an admission number."
+        "MISSING_ADMISSION_NO": "You forgot to enter an admission number.",
+        "USERNAME_BLANK_SPACE": "A username may not contain spaces."
       },
       "SUCCESS": {
         "SUCCESSFULLY_REGISTERED_TEXT": "Successfully registered!",
@@ -116,6 +119,7 @@
   },
   "ADD_STUDENT_PAGE": {
     "TITLE": "Add Student",
+    "COMPLETE_FORM_TO_ADD_STUDENT": "Complete the form below to add a new student.",
     "SUCCESS": {
       "SUCCESS_ADD_STUDENT": "Student added successfully!"
     },
@@ -142,6 +146,7 @@
   "DASHBOARD_PAGE": {
     "CATEGORIES_TEXT": "Categories",
     "STATISTICS_TEXT": "Statistics",
+    "YOUR_CHILD": "Your child",
     "LABELS": {
       "SCHOOL_FEES": "School Fees",
       "FEES": "FEES",
@@ -317,7 +322,9 @@
     },
     "ERRORS": {
       "FAILED_TO_SEND_CODE": "Failed to send code",
-      "OTP_CODE_DO_NOT_MATCH": "The code you entered does not match."
+      "OTP_CODE_DO_NOT_MATCH": "The code you entered does not match.",
+      "OTP_CODE_HAS_EXPIRED": "Your code has expired. Get new code?",
+      "MISSING_CODE": "Please enter the verification code."
     }
   },
   "EDIT_PROFILE_PAGE": {

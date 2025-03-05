@@ -12,6 +12,7 @@ import {
   catchError,
   delay,
   endWith,
+  filter,
   finalize,
   interval,
   map,
@@ -69,10 +70,18 @@ export class OtpFormPageComponent {
     private _appConfig: AppConfigService,
     private _tr: TranslateService
   ) {
+    this.init();
     this.initOtpCode();
     this.createFormGroup();
     this.createOtpCode();
     this.startTimer();
+  }
+  private init() {
+    const backButton = () => {
+      const backToLogin = () => void 0;
+      this._appConfig.backButtonEventHandler(backToLogin);
+    };
+    backButton();
   }
   private startTimer() {
     this.timer$ = interval(1000).pipe(
@@ -112,10 +121,12 @@ export class OtpFormPageComponent {
   }
   resendOtpCode(event: any) {
     const erroneousRes = async (err: any) => {
-      this._appConfig.openAlertMessageBox(
-        this._tr.instant('DEFAULTS.WARNING'),
-        this._tr.instant('OTP_PAGE.ERRORS.FAILED_TO_SEND_CODE')
-      );
+      this._appConfig
+        .openAlertMessageBox(
+          this._tr.instant('DEFAULTS.WARNING'),
+          this._tr.instant('OTP_PAGE.ERRORS.FAILED_TO_SEND_CODE')
+        )
+        .subscribe();
     };
     this._loading
       .open()
@@ -138,10 +149,9 @@ export class OtpFormPageComponent {
       .subscribe({
         next: (res: { Status: string; OTP_Code: string | null }[]) => {
           if (!res[0].OTP_Code) {
-            this._appConfig.openAlertMessageBox(
-              'DEFAULTS.WARNING',
-              res[0].Status
-            );
+            this._appConfig
+              .openAlertMessageBox('DEFAULTS.WARNING', res[0].Status)
+              .subscribe();
           } else {
             this.otpCode$ = this.otpCode$.pipe(
               map((val) => {
@@ -153,11 +163,32 @@ export class OtpFormPageComponent {
       });
   }
   submitForm(event: any) {
+    if (this.formGroup.invalid) {
+      this._appConfig
+        .openAlertMessageBox('DEFAULTS.WARNING', 'OTP_PAGE.ERRORS.MISSING_CODE')
+        .subscribe();
+      return;
+    }
+    const openExpiredOtp = () => {
+      const dialogRef = this._appConfig.openConfirmMessageBox(
+        'DEFAULTS.WARNING',
+        'OTP_PAGE.ERRORS.OTP_CODE_HAS_EXPIRED'
+      );
+      dialogRef
+        .pipe(mergeMap((ref) => ref.componentInstance.confirmed.asObservable()))
+        .subscribe({
+          next: (value) => {
+            console.log('has closed');
+          },
+        });
+    };
     this._loading
       .open()
       .pipe(
         delay(1200),
         tap((loading) => loading && loading.close()),
+        tap(() => !(this.resendCodeTimeout > 0) && openExpiredOtp()),
+        filter(() => this.resendCodeTimeout > 0),
         mergeMap((loading) =>
           this.otpCode$.pipe(
             map((res) => {
@@ -176,10 +207,12 @@ export class OtpFormPageComponent {
               },
             });
           } else {
-            this._appConfig.openAlertMessageBox(
-              'DEFAULTS.WARNING',
-              'OTP_PAGE.ERRORS.OTP_CODE_DO_NOT_MATCH'
-            );
+            this._appConfig
+              .openAlertMessageBox(
+                'DEFAULTS.WARNING',
+                'OTP_PAGE.ERRORS.OTP_CODE_DO_NOT_MATCH'
+              )
+              .subscribe();
           }
         },
       });
