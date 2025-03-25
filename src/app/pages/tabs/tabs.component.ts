@@ -7,6 +7,8 @@ import {
   IonLabel,
   IonContent,
   IonRouterOutlet,
+  IonTab,
+  IonHeader,
 } from '@ionic/angular/standalone';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -42,6 +44,8 @@ import { addIcons } from 'ionicons';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
+    IonTab,
+    IonHeader,
   ],
 })
 export class TabsComponent {

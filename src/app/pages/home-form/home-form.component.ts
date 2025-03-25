@@ -94,10 +94,10 @@ export class HomeFormComponent implements AfterViewInit, AfterViewChecked {
     private platform: Platform,
     private studentsService: StudentDetailsFormService
   ) {
+    this.registerIcons();
     this.init();
   }
   private init() {
-    this.registerIcons();
     const backButton = () => {
       const backToLogin = () => new Promise((r, j) => r(console.log));
       this._appConfig.backButtonEventHandler(backToLogin);

@@ -346,7 +346,11 @@
       "RENEW": "Renew",
       "AVAILABLE_PLANS": "Available Plans",
       "DAYS": "Days",
-      "PACKAGE_HISTORY": "Package History"
+      "PACKAGE_HISTORY": "Package History",
+      "ERROR_OCCURRED_ON_OUR_PAGE": "Oops! Something went wrong on our side. Please try again.",
+      "SUBSCRIPTIONS": "Subscriptions",
+      "CHOOSE_THE_RIGHT_PLAN_FOR_YOU": "Choose the right plan for you.",
+      "VIEW_HISTORY": "View History"
     }
   },
   "SUBSCRIPTION_PAGE": {
@@ -356,7 +360,14 @@
       "PAY_WITH_MPESA_TEXT": "Pay with M-PESA",
       "PAY_WITH_CARD": "Pay with card",
       "SUBSCRIPTION": "Subscription",
-      "TRANSACTION_COMPLETED": "Transaction completed successfully!"
+      "TRANSACTION_COMPLETED": "Transaction completed successfully!",
+      "MAKE_PAYMENT": "Make payment",
+      "COMPLETE_YOUR_PAYMENT_BELOW": "Complete your payment below.",
+      "PAY_NOW": "Pay now",
+      "CONTROL_NUMBER": "Control number",
+      "PAYMENT_MADE_TO_CONTROL_NUMBER": "A payment was made to the control number {{}}.",
+      "PACKAGE_HISTORY": "Package history",
+      "YOUR_PACKAGE_HISTORY_LIST": "Your package history list"
     },
     "SUBSCRIBE_FORM": {
       "LABELS": {
@@ -367,7 +378,8 @@
       },
       "ERRORS": {
         "MISSING_PHONE_NUMBER": "Please specify.",
-        "INVALID_PHONE_NUMBER": "Invalid phone number."
+        "INVALID_PHONE_NUMBER": "Invalid phone number.",
+        "FAILED_TO_PROCESS_PAYMENT": "We could not process your payment. Please contact support or try again."
       }
     },
     "ERRORS": {

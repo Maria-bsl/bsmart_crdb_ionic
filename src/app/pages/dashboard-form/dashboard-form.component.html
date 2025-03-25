@@ -224,6 +224,7 @@
         <div class="grid grid-cols-4 w-full gap-2">
           <ng-container *ngFor="let module of modules$ | async; index as ind">
             <mat-card
+              (click)="openDashboardModule(module)"
               matRipple
               class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
             >

@@ -3,6 +3,7 @@ import {
   MAT_DIALOG_DATA,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
 } from '@angular/material/dialog';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { IonTitle, IonContent, IonText } from '@ionic/angular/standalone';
@@ -56,6 +57,7 @@ export class PayWithMpesaComponent implements OnInit, OnDestroy {
     private _appConfig: AppConfigService,
     private tr: TranslateService,
     public mpesaService: PayWithMpesaService,
+    private readonly dialogRef: MatDialogRef<PayWithMpesaComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
       amount: number | undefined;
@@ -64,6 +66,14 @@ export class PayWithMpesaComponent implements OnInit, OnDestroy {
     }
   ) {
     this.registerIcons();
+    const backButton = () => {
+      const backToLogin = () =>
+        this.mpesaService.isLoading()
+          ? new Promise((resolve) => resolve(1))
+          : new Promise((resolve) => resolve(this.dialogRef.close()));
+      this._appConfig.backButtonEventHandler(backToLogin);
+    };
+    backButton();
   }
   private async createFormGroup() {
     this.payFormGroup = this.fb.group({
@@ -90,7 +100,7 @@ export class PayWithMpesaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.createFormGroup();
   }
-  async submitPayWithMpesaForm(event: any) {
+  submitPayWithMpesaForm(event: any) {
     if (this.payFormGroup.valid) {
       this.input_PurchasedItemsDesc.setValue(this.data.description);
       this.input_ThirdPartyConversationID.setValue(v4().replaceAll('-', ''));

@@ -7,13 +7,17 @@
       <div
         class="absolute left-0 top-4 right-0 flex flex-col space-y-2 justify-center items-center"
       >
-        <ion-text class="text-center w-full font-semibold">
+        <ion-text
+          class="text-center w-full font-semibold text-[var(--mat-sys-on-surface)]"
+        >
           {{ "GET_SUPPORT_PAGE.LABELS.CALL_US" | translate }} -
           <span class="font-normal">{{
             (supportMobileNumber$ | async)?.join(" | ")
           }}</span>
         </ion-text>
-        <ion-text class="text-center w-full font-semibold">
+        <ion-text
+          class="text-center w-full font-semibold text-[var(--mat-sys-on-surface)]"
+        >
           {{ "GET_SUPPORT_PAGE.LABELS.MAIL_US" | translate }} -
           <span class="font-normal">{{
             (supportEmail$ | async)?.join(" | ")
@@ -25,12 +29,12 @@
       >
         <img src="assets/images/support_.png" alt="" srcset="" />
         <ion-text
-          class="text-center w-full placeholer-text px-8 mat-body-large"
+          class="text-center w-full placeholer-text px-8 mat-body-large text-[var(--mat-sys-on-surface)]"
         >
           {{ "DASHBOARD_PAGE.LABELS.GET_SUPPORT" | translate }}
         </ion-text>
         <ion-text
-          class="text-center w-full placeholer-text px-8 mat-body-small"
+          class="text-center w-full placeholer-text px-8 mat-body-small text-[var(--mat-sys-on-surface)]"
         >
           {{ "GET_SUPPORT_PAGE.LABELS.SUPPORT_TEXT" | translate }}
         </ion-text>

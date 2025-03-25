@@ -98,6 +98,11 @@ $typography-theme: mat.define-theme(
     @include mat.typography-hierarchy($typography-theme);
     @include mat.system-level-typography($typography-theme);
     @include mat.form-field-density(-3);
+    @include mat.tabs-overrides(
+      (
+        container-height: 40px,
+      )
+    );
   }
 }
 
@@ -183,6 +188,11 @@ $typography-theme: mat.define-theme(
     @include mat.typography-hierarchy($typography-theme);
     @include mat.system-level-typography($typography-theme);
     @include mat.form-field-density(-3);
+    @include mat.tabs-overrides(
+      (
+        container-height: 40px,
+      )
+    );
   }
 }
 

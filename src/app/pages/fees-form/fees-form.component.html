@@ -1,8 +1,10 @@
 <ion-content class="w-screen h-screen relative">
   <div
-    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
+    class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface)]"
   >
-    <app-header-section></app-header-section>
+    <app-header-section
+      [s_pageTitle]="'DASHBOARD_PAGE.LABELS.FEES' | translate"
+    ></app-header-section>
     <mat-tab-group
       #tabGroup
       dynamicHeight
@@ -96,9 +98,10 @@
           @if (!(studentPaidInvoice$ | async) || (studentPaidInvoice$ |
           async)?.length === 0) {
           <div class="w-full grid place-items-center">
-            <span class="!py-4 w-full text-center mat-body-large !font-light">{{
-              "FEES_PAGE.LABELS.NO_FEES_AVAILABLE" | translate
-            }}</span>
+            <span
+              class="!py-4 w-full text-center mat-body-large !font-light text-[var(--mat-sys-on-surface)]"
+              >{{ "FEES_PAGE.LABELS.NO_FEES_AVAILABLE" | translate }}</span
+            >
           </div>
           } @else {@for (pendingInvoices of studentPaidInvoice$ | async; track
           pendingInvoices) {

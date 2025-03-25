@@ -346,7 +346,11 @@
       "RENEW": "Upya",
       "AVAILABLE_PLANS": "Mipango inayopatikana",
       "DAYS": "Siku",
-      "PACKAGE_HISTORY": "Historia ya Kifurushi"
+      "PACKAGE_HISTORY": "Historia ya Kifurushi",
+      "ERROR_OCCURRED_ON_OUR_PAGE": "Lo! Kuna kitu kilienda vibaya upande wetu. Tafadhali jaribu tena.s",
+      "SUBSCRIPTIONS": "Usajili",
+      "CHOOSE_THE_RIGHT_PLAN_FOR_YOU": "Chagua mpango sahihi kwa ajili yako.",
+      "VIEW_HISTORY": "Tazama Historia"
     }
   },
   "SUBSCRIPTION_PAGE": {
@@ -356,7 +360,14 @@
       "PAY_WITH_MPESA_TEXT": "Lipa kwa M-PESA",
       "PAY_WITH_CARD": "Lipa kwa kadi",
       "SUBSCRIPTION": "Michango",
-      "TRANSACTION_COMPLETED": "Shughuli imekamilika kwa mafanikio!"
+      "TRANSACTION_COMPLETED": "Shughuli imekamilika kwa mafanikio!",
+      "MAKE_PAYMENT": "Fanya malipo",
+      "COMPLETE_YOUR_PAYMENT_BELOW": "Kamilisha malipo yako hapa chini.",
+      "PAY_NOW": "Lipa sasa",
+      "CONTROL_NUMBER": "Nambari ya udhibiti",
+      "PAYMENT_MADE_TO_CONTROL_NUMBER": "Malipo yalifanywa kwa nambari ya udhibiti {{}}.",
+      "PACKAGE_HISTORY": "Historia ya kifurushi",
+      "YOUR_PACKAGE_HISTORY_LIST": "Orodha yako ya historia ya kifurushi"
     },
     "SUBSCRIBE_FORM": {
       "LABELS": {
@@ -367,7 +378,8 @@
       },
       "ERRORS": {
         "MISSING_PHONE_NUMBER": "Tafadhali fafanua.",
-        "INVALID_PHONE_NUMBER": "Nambari ya simu batili."
+        "INVALID_PHONE_NUMBER": "Nambari ya simu batili.",
+        "FAILED_TO_PROCESS_PAYMENT": "Hatuwezi kufanya malipo yako. Tafadhali wasiliana na msaada au jaribu tena."
       }
     },
     "ERRORS": {

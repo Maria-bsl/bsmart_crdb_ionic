@@ -68,7 +68,9 @@ export class GetSupportFormComponent {
     let failedMessageObs = 'DEFAULTS.FAILED';
     let errorMessageObs =
       'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_GET_PARENT_DETAILS';
-    this._appConfig.openAlertMessageBox(failedMessageObs, errorMessageObs);
+    this._appConfig
+      .openAlertMessageBox(failedMessageObs, errorMessageObs)
+      .subscribe();
   }
   private getParentDetails(username: string) {
     const createParentDetail$ = (detail: GetParentDetail | null) => {

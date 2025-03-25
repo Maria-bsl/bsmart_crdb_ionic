@@ -8,6 +8,7 @@ import {
   retryWhen,
   switchMap,
   throwError,
+  timeout,
   timer,
 } from 'rxjs';
 import { RGetFacilities } from 'src/app/models/responses/RGetFacilities';
@@ -41,6 +42,11 @@ import { FStudentMarksForm } from 'src/app/models/forms/f-add-student';
 import { ISubject, ISubjectBook } from 'src/app/models/forms/isubjects';
 import { RouteDetail, VehicleDetail } from 'src/app/models/forms/transports';
 import { IPackage } from 'src/app/models/forms/package.model';
+import {
+  C2BMpesaPayment,
+  C2BMpesaResponse,
+  SessionKey,
+} from 'src/app/models/forms/mpesa.model';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +81,7 @@ export class ApiService {
   }
   private performPost<T>(url: string, body: T, headers: Map<string, string>) {
     return this.post(url, body, headers).pipe(
+      timeout(30000),
       catchError((err) => {
         throw err;
       })
@@ -215,9 +222,48 @@ export class ApiService {
     const url = `/SchoolDetails/GetPackagePrice`;
     return this.performPost(url, body, new Map());
   }
+  getPackageList(body: {}): Observable<
+    { Package_Mas_Sno: number; Package_Name: string }[]
+  > {
+    const url = `/SchoolDetails/GetPackages`;
+    return this.performPost(url, body, new Map());
+  }
   getPackageHistoryList(body: { User_Name: string }): Observable<IPackage[]> {
     const url = `/SchoolDetails/GetPackageHistory`;
     return this.performPost(url, body, new Map());
+  }
+  packageRenew(body: {
+    User_Name: string;
+    Package_Mas_Sno: number;
+  }): Observable<
+    {
+      Package_ControlNumber: string;
+      Package_Amount: number;
+      Package_Mas_Sno: number;
+    }[]
+  > {
+    const url = `/SchoolDetails/GetPackage_Renew`;
+    return this.performPost(url, body, new Map());
+  }
+  generateMpesaSessionKey(token: string): Observable<SessionKey> {
+    const url = `${environment.MPESA_API_ENDPOINT}/vodacomTZN/getSession`;
+    return this._http.get(url, {
+      headers: new HttpHeaders()
+        .set('origin', '*')
+        .set('Content-Type', 'application/json')
+        .set('Authorization', `Bearer ${token}`),
+    }) as Observable<SessionKey>;
+  }
+  mpesaSingleStagePayment(
+    token: string,
+    payment: C2BMpesaPayment
+  ): Observable<C2BMpesaResponse> {
+    const url = `${environment.MPESA_API_ENDPOINT}/vodacomTZN/c2bPayment/singleStage/`;
+    const headers = new Map();
+    headers.set('origin', '*');
+    headers.set('Content-Type', 'application/json');
+    headers.set('Authorization', `Bearer ${token}`);
+    return this.performPost(url, payment, headers);
   }
   GetToken(): Observable<RGetToken> {
     let { username, password } = {

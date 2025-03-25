@@ -11,7 +11,9 @@
           <mat-tab [label]="'LIBRARY_PAGE.LABELS.BOOKS_RETURNED' | translate">
             @if ((booksReturned$ | async)! && (booksReturned$ | async)! |
             isEmptyShelf) {
-            <div class="grid place-items-center w-full py-8">
+            <div
+              class="grid place-items-center w-full py-8 text-[var(--mat-sys-on-surface)]"
+            >
               {{ "LIBRARY_PAGE.ERRORS.NO_BOOKS_AVAILABLE" | translate }}
             </div>
             } @else {
@@ -51,7 +53,9 @@
           <mat-tab [label]="'LIBRARY_PAGE.LABELS.BOOKS_BORROWED' | translate">
             @if ((booksBorrowed$ | async)! && (booksBorrowed$ | async)! |
             isEmptyShelf) {
-            <div class="grid place-items-center w-full py-8">
+            <div
+              class="grid place-items-center w-full py-8 text-[var(--mat-sys-on-surface)]"
+            >
               {{ "LIBRARY_PAGE.ERRORS.NO_BOOKS_AVAILABLE" | translate }}
             </div>
             } @else {

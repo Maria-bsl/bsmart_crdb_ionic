@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import {
   catchError,
   delay,
@@ -21,6 +21,7 @@ import { ApiService } from '../api-service/api.service';
 })
 export class SharedService {
   parentDetails$!: Observable<RParentDetail>;
+  transactionSuccess = new EventEmitter<void>();
   constructor(
     private _loading: LoadingService,
     private _unsubscribe: UnsubscribeService,

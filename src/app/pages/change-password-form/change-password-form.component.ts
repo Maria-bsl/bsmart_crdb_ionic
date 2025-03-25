@@ -10,6 +10,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -43,6 +44,7 @@ import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.s
     IonText,
     IonContent,
     MatToolbarModule,
+    MatButtonModule,
     IonButtons,
     IonBackButton,
     TranslateModule,
@@ -107,15 +109,20 @@ export class ChangePasswordFormComponent {
     this.currentPassword.disable();
   }
   private displayFailedToGetParentDetailsError() {
-    let failedMessageObs = 'DEFAULTS.FAILED';
-    let errorMessageObs =
-      'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_GET_PARENT_DETAILS';
-    this._appConfig.openAlertMessageBox(failedMessageObs, errorMessageObs);
+    this._appConfig
+      .openAlertMessageBox(
+        'DEFAULTS.FAILED',
+        'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_GET_PARENT_DETAILS'
+      )
+      .subscribe();
   }
   private displayFailedChangePasswordError() {
-    let failedMessageObs = 'DEFAULTS.FAILED';
-    let msgObs = 'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_UPDATE_PASSWORD_TEXT';
-    this._appConfig.openAlertMessageBox(failedMessageObs, msgObs);
+    this._appConfig
+      .openAlertMessageBox(
+        'DEFAULTS.FAILED',
+        'CHANGE_PASSWORD_FORM.ERRORS.FAILED_TO_UPDATE_PASSWORD_TEXT'
+      )
+      .subscribe();
   }
   private getParentDetails(username: string) {
     const createParentDetail = (parentDetail: GetParentDetail | null) => {

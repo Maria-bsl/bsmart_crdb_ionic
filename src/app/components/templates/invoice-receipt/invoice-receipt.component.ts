@@ -50,6 +50,8 @@ import {
   StudentPaidInvoice,
   StudentPendingInvoice,
 } from 'src/app/models/forms/invoices.model';
+import { SharedService } from 'src/app/services/shared-service/shared.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-receipt',
@@ -85,10 +87,10 @@ export class InvoiceReceiptComponent implements OnInit, AfterViewInit {
     private jsPdfService: JspdfUtilsService,
     private appConfig: AppConfigService,
     private _dialog: MatDialog,
-    //private _unsubscribe: UnsubscriberService,
     private _unsubscribe: UnsubscribeService,
     private tr: TranslateService,
-    private _snackBar: MatSnackBar
+    private _shared: SharedService,
+    private _router: Router
   ) {
     let icons = ['arrow-right', 'download'];
     this.appConfig.addIcons(icons, '/assets/bootstrap-icons');
@@ -153,15 +155,19 @@ export class InvoiceReceiptComponent implements OnInit, AfterViewInit {
       panelClass: 'm-pesa-panel',
       disableClose: true,
     });
-    dialog.componentInstance.mpesaService.transactionCompleted
+    this._shared.transactionSuccess
       .asObservable()
-      .pipe(this._unsubscribe.takeUntilDestroy)
+      .pipe(
+        switchMap(() =>
+          defer(() =>
+            this._router.navigate(['/tabs/tab-1/dashboard'], {
+              replaceUrl: true,
+            })
+          )
+        )
+      )
       .subscribe({
-        next: async (isSuccess) => {
-          if (isSuccess) {
-            dialog.close();
-          }
-        },
+        next: (value) => value && dialog.close(),
       });
   }
 }

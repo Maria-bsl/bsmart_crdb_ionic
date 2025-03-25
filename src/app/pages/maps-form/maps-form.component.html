@@ -6,7 +6,7 @@
       <div class="flex flex-row items-center w-full my-4">
         <ion-buttons slot="start">
           <ion-back-button
-            class="text-black bg-white rounded-full"
+            class="text-[var(--mat-sys-on-surface)] bg-[var(--mat-sys-surface)] rounded-full"
             defaultHref="/tabs/tab-1"
           ></ion-back-button>
         </ion-buttons>
@@ -28,29 +28,35 @@
   >
     <div class="w-fit h-full flex flex-row items-center space-x-2">
       <div
-        class="flex flex-col bg-white px-2 w-40 h-fit rounded-lg shadow"
+        class="flex flex-col bg-[var(--mat-sys-surface)] px-2 w-40 h-fit rounded-lg shadow"
         *ngFor="let routeDetail of routeDetail$ | async; index: ind"
       >
         <div class="flex flex-row items-center space-x-1">
-          <ion-text class="mat-body-small">{{ routeDetail.Area }}</ion-text>
+          <ion-text class="mat-body-small text-[var(--mat-sys-on-surface)]">{{
+            routeDetail.Area
+          }}</ion-text>
         </div>
         <div class="flex flex-row items-center space-x-1">
-          <ion-text class="mat-body-small">{{ routeDetail.Arrival }}</ion-text>
+          <ion-text class="mat-body-small text-[var(--mat-sys-on-surface)]">{{
+            routeDetail.Arrival
+          }}</ion-text>
         </div>
         <div class="flex flex-row items-center space-x-1">
-          <ion-text class="mat-body-small">{{
+          <ion-text class="mat-body-small text-[var(--mat-sys-on-surface)]">{{
             routeDetail.Departure
           }}</ion-text>
         </div>
         <div class="flex flex-row items-center space-x-1">
-          <ion-text class="mat-body-small">{{ routeDetail.Landmark }}</ion-text>
+          <ion-text class="mat-body-small text-[var(--mat-sys-on-surface)]">{{
+            routeDetail.Landmark
+          }}</ion-text>
         </div>
       </div>
     </div>
   </div>
   <div
     #swipeContainer
-    class="px-3 py-3 h-20 duration-200 transition-[height] absolute left-0 right-0 bottom-0 w-full bg-white rounded-tl-3xl rounded-tr-3xl"
+    class="px-3 py-3 h-20 duration-200 transition-[height] absolute left-0 right-0 bottom-0 w-full bg-[var(--mat-sys-surface)] rounded-tl-3xl rounded-tr-3xl"
   >
     <ng-template #loading>
       <div class="w-full h-[320px] grid place-items-center">
@@ -60,16 +66,20 @@
     <div class="flex flex-col">
       <div #swipeDiv class="flex flex-col w-full">
         <div class="w-full grid place-items-center">
-          <div class="w-16 h-1 bg-gray-300 rounded-full"></div>
+          <div class="w-16 h-1 bg-[var(--mat-sys-neutral)] rounded-full"></div>
         </div>
         <h6
-          class="mat-body-small !font-normal uppercase text-[var(--md-sys-color-on-surface-variant)]"
+          class="mat-body-small !font-normal uppercase text-[var(--mat-sys-on-surface)]"
         >
           {{ "MAPS_PAGE.LABELS.YOUR_LOCATION_TEXT" | translate }}
         </h6>
-        <h4 class="mat-title-medium !font-semibold">Biz-Logic Solutions</h4>
+        <h4
+          class="mat-title-medium !font-semibold text-[var(--mat-sys-on-surface)]"
+        >
+          Biz-Logic Solutions
+        </h4>
         <mat-divider
-          class="w-full !h-0.5 !border-t-[var(--md-sys-color-on-surface-variant)]"
+          class="w-full !h-0.5 !border-t-[var(--mat-sys-on-surface)]"
         ></mat-divider>
       </div>
       <div
@@ -83,80 +93,96 @@
       >
         <div class="flex flex-col w-full">
           <div class="flex flex-row items-center justify-between">
-            <h6 class="mat-title-medium !font-light opacity-100">
+            <h6
+              class="mat-title-medium !font-light opacity-100 text-[var(--mat-sys-on-surface)]"
+            >
               {{ "MAPS_PAGE.LABELS.ROUTE_DETAILS" | translate }}
             </h6>
           </div>
           <div class="flex flex-col w-full">
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.ROUTE_NNAME" | translate }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ vehicleDetails[0].Route_Name }}
               </p>
             </div>
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.DROP_OFF_TIME" | translate }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ vehicleDetails[0].Arrival }}
               </p>
             </div>
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.PICK_UP_TIME" | translate }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ vehicleDetails[0].Departure }}
               </p>
             </div>
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.LANDMARK_AREA" | translate }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ vehicleDetails[0].Landmark }}
               </p>
             </div>
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.VEHICLE_REGISTRATION_NO" | translate }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ vehicleDetails[0].Vehicle_Registration_No }}
               </p>
             </div>
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.DRIVR_MOBILE" | translate }}
                 {{ "(" + vehicleDetails[0].Driver_Name + ")" }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ "+255" + vehicleDetails[0].Driver_Mobile }}
               </p>
             </div>
             <div class="flex flex-row items-center justify-between">
               <p
-                class="mat-body-small !font-normal text-[var(--md-sys-color-on-surface-variant)]"
+                class="mat-body-small !font-normal text-[var(--mat-sys-on-surface)]"
               >
                 {{ "MAPS_PAGE.LABELS.ATTENDANT_MOBILE" | translate }}
                 {{ "(" + vehicleDetails[0].Attendant_Name + ")" }}
               </p>
-              <p class="mat-body-small !font-normal capitalize">
+              <p
+                class="mat-body-small !font-normal capitalize text-[var(--mat-sys-on-surface)]"
+              >
                 {{ "+255" + vehicleDetails[0].Attendant_Mobile }}
               </p>
             </div>

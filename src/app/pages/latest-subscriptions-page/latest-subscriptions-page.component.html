@@ -2,180 +2,128 @@
   <div
     class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
   >
-    <app-header-section></app-header-section>
-    <div class="flex flex-col w-full p-4 space-y-4">
-      <mat-card
-        [class]="
-          studentDetails.Package_Name === 'Gold'
-            ? '!bg-[#F7EF6A]'
-            : studentDetails.Package_Name === 'Trail'
-            ? '!bg-[#EBDAB0]'
-            : '!bg-[#EAEAEA]'
-        "
-        appearance="raised"
-        class="relative"
+    <mat-toolbar
+      class="!w-full flex flex-row items-center justify-between !h-[72px] !p-2 !shadow-sm !bg-[var(--mat-sys-primary)]"
+    >
+      <button class="flex flex-row items-center btn !p-0 w-fit btn-ghost">
+        <span
+          class="w-10 h-10 rounded-full bg-[var(--mat-sys-on-primary-fixed-variant)] relative grid place-items-center"
+        >
+          <img
+            src="assets/images/african (1).png"
+            style="
+              filter: invert(52%) sepia(57%) saturate(472%) hue-rotate(107deg)
+                brightness(93%) contrast(91%);
+            "
+            alt=""
+            srcset=""
+            class="absolute w-8 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
+        </span>
+        <div class="flex flex-col">
+          <h6 class="mat-body-small text-left text-[var(--mat-sys-on-primary)]">
+            {{ "HOME_PAGE.LABELS.JAMBO" | translate }}
+          </h6>
+          <h6 class="mat-body-large text-left text-[var(--mat-sys-on-primary)]">
+            {{ studentDetails$ | getParentName | async }}
+          </h6>
+        </div>
+      </button>
+      <button
+        [matMenuTriggerFor]="menu"
+        mat-icon-button
+        class="!text-[var(--mat-sys-on-primary-fixed)]"
       >
-        <div class="flex flex-col w-full h-full">
-          <div class="flex flex-row items-center justify-between px-2">
-            <img
-              class="w-16"
-              [src]="studentDetails.Package_Name | switchPackageName"
-              alt=""
-              srcset=""
-            />
-            <mat-chip>{{
-              "LATEST_SUBSCRIPTIONS_PAGE.LABELS.CURRENT" | translate
-            }}</mat-chip>
-          </div>
-          <div class="flex flex-col w-full px-4">
-            <h6 class="mat-headline-small !tracking-widest">
-              {{ studentDetails.Package_Name }}
-            </h6>
-            <ng-container *ngIf="package$ && package$ | async as packages">
-              <div class="flex flex-row items-center justify-between">
-                <button class="mat-body-small !font-semibold text-gray-500">
-                  {{
-                    ((packages | findPackage : studentDetails.Package_Mas_Sno)
-                      ?.Package_Amount | currency : "TZS") +
-                      "/" +
-                      (packages | findPackage : studentDetails.Package_Mas_Sno)
-                        ?.Package_Days +
-                      ("LATEST_SUBSCRIPTIONS_PAGE.LABELS.DAYS" | translate)
-                  }}
-                </button>
-                <button
-                  (click)="
-                    openSubscriptionPage($event, studentDetails.Package_Mas_Sno)
-                  "
-                  mat-button
-                  class="flex flex-row-reverse space-x-1 items-center"
-                >
-                  <mat-icon svgIcon="chevron-right" matPrefix></mat-icon>
-                  <a>
-                    {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.RENEW" | translate }}
-                  </a>
-                </button>
+        <mat-icon svgIcon="gear" matPrefix></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          (click)="logoutClicked($event)"
+          mat-menu-item
+          class="flex flex-row items-center !text-[var(--mat-sys-error)]"
+        >
+          <mat-icon
+            class="!text-[var(--mat-sys-error)]"
+            svgIcon="box-arrow-right"
+          ></mat-icon>
+          <h6 class="mat-body-medium pt-2">
+            {{ "DASHBOARD_PAGE.LABELS.LOGOUT" | translate }}
+          </h6>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    <div
+      class="flex flex-col w-full p-4 spce-y-4 justify-between h-full"
+      *ngIf="studentDetails$ | isExpiredPackage | async"
+    >
+      <div class="flex flex-col w-full space-y-4">
+        <div class="w-full grid place-items-center">
+          <h6
+            class="mat-title-large text-[var(--mat-sys-on-surface)] text-center w-full !font-normal"
+          >
+            {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.SUBSCRIPTIONS" | translate }}
+          </h6>
+          <h6
+            class="mat-title-small text-[var(--mat-sys-on-surface)] text-center w-full !font-light"
+          >
+            {{
+              "LATEST_SUBSCRIPTIONS_PAGE.LABELS.CHOOSE_THE_RIGHT_PLAN_FOR_YOU"
+                | translate
+            }}
+          </h6>
+        </div>
+        <div class="flex flex-col w-full space-y-1">
+          <mat-radio-group>
+            <ng-container
+              *ngFor="let package of packagePrices$ | async; index as ind"
+            >
+              <div
+                matRipple
+                (click)="packageClicked(package.Package_Name)"
+                class="w-full rounded-lg border border-[var(--mat-sys-tertiary-container)] flex flex-col relative py-4 mb-1"
+              >
+                <mat-radio-button [checked]="false" class="w-full h-full">
+                  <div class="flex flex-col w-full">
+                    <h6
+                      class="mat-title-large text-[var(--mat-sys-on-tertiary-container)]"
+                    >
+                      {{ package.Package_Name }}
+                    </h6>
+                    <ul class="!list-disc flex flex-row items-center flex-wrap">
+                      <li
+                        *ngFor="
+                          let mName of package.M_Name
+                            | subscriptionsModuleNames;
+                          index as ind
+                        "
+                        class="inline mr-2.5"
+                      >
+                        <h6
+                          class="mat-label-small text-[var(--mat-sys-on-tertiary-container)] !font-light"
+                        >
+                          {{ mName }}
+                        </h6>
+                      </li>
+                    </ul>
+                    <div
+                      class="w-full flex flex-row items-center justify-end pt-4"
+                    >
+                      <h6
+                        class="mat-label-large absolute right-2 bottom-1 text-[var(--mat-sys-on-tertiary-container)]"
+                      >
+                        {{ package.Package_Amount | currency : "TZS" }}
+                      </h6>
+                    </div>
+                  </div>
+                </mat-radio-button>
               </div>
             </ng-container>
-          </div>
-        </div>
-      </mat-card>
-      <div class="flex flex-col w-full">
-        <h4 class="mat-title-large">
-          {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.AVAILABLE_PLANS" | translate }}
-        </h4>
-        <ng-container *ngIf="package$ && package$ | async as packages">
-          <div class="flex flex-col w-full space-y-2">
-            @for (package of packages; track package) {
-            <mat-card
-              class="relative"
-              matRipple
-              *ngIf="package.Package_Mas_Sno !== studentDetails.Package_Mas_Sno"
-              appearance="outlined"
-              (click)="openSubscriptionPage($event, package.Package_Mas_Sno)"
-            >
-              <mat-card-content>
-                <div class="flex flex-row items-center space-x-1 relative">
-                  <mat-icon
-                    class="absolute right-2 top-1/2 -translate-y-1/2"
-                    svgIcon="chevron-right"
-                    matPrefix
-                  ></mat-icon>
-                  <img
-                    class="w-14"
-                    mat-card-image
-                    [src]="package.Package_Name | switchPackageName"
-                    alt="Photo of a Shiba Inu"
-                  />
-                  <div class="flex flex-col">
-                    <mat-card-title class="uppercase !font-semibold">{{
-                      package.Package_Name
-                    }}</mat-card-title>
-                    <mat-card-subtitle
-                      class="!text-[var(--md-sys-color-neutral)]"
-                      >{{
-                        (package.Package_Amount | currency : "TZS") +
-                          "/" +
-                          package.Package_Days +
-                          ("LATEST_SUBSCRIPTIONS_PAGE.LABELS.DAYS" | translate)
-                      }}</mat-card-subtitle
-                    >
-                  </div>
-                </div>
-              </mat-card-content>
-            </mat-card>
-            }
-          </div>
-        </ng-container>
-      </div>
-      <div class="flex flex-col w-full">
-        <h4 class="mat-title-large">
-          {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.PACKAGE_HISTORY" | translate }}
-        </h4>
-        <div class="carousel carousel-center rounded-box py-2 space-x-1">
-          <ng-container
-            *ngIf="
-              packageHistory$ && packageHistory$ | async as packageHistoryList
-            "
-          >
-            @for (packageHistory of packageHistoryList; track packageHistory) {
-            <mat-card
-              appearance="raised"
-              [class]="
-                packageHistory.Package_Name === 'Gold'
-                  ? '!bg-[#F7EF6A]'
-                  : packageHistory.Package_Name === 'Trail'
-                  ? '!bg-[#EBDAB0]'
-                  : '!bg-[#EAEAEA]'
-              "
-              class="!carousel-item !w-96"
-            >
-              <div class="flex flex-col w-full">
-                <div class="flex flex-row items-center justify-between px-2">
-                  <img
-                    class="w-16 h-16"
-                    [src]="packageHistory.Package_Name | switchPackageName"
-                    alt=""
-                    srcset=""
-                  />
-                  <div class="flex flex-row items-center space-x-1 p-1">
-                    <button class="mat-label-small">
-                      {{ packageHistory.Submit_Date }}
-                    </button>
-                  </div>
-                </div>
-                <ion-title class="mat-headline-small !tracking-widest">{{
-                  packageHistory.Package_Name
-                }}</ion-title>
-                <ng-container *ngIf="package$ && package$ | async as packages">
-                  <div class="flex flex-row items-center flex-wrap ml-6 mr-6">
-                    <ng-container
-                      *ngFor="
-                        let packageName of packageHistory?.M_Name?.split(',');
-                        index as ind
-                      "
-                    >
-                      <div class="flex flex-row items-center">
-                        <button class="mat-label-large">
-                          {{ packageName.replace(",", "") }}
-                        </button>
-                        <div
-                          *ngIf="
-                            ind !==
-                            packageHistory?.M_Name?.split(',')?.length! - 1
-                          "
-                          class="w-2 h-2 bg-black mx-2 rounded-full"
-                        ></div>
-                      </div>
-                    </ng-container>
-                  </div>
-                </ng-container>
-              </div>
-            </mat-card>
-            }
-          </ng-container>
+          </mat-radio-group>
         </div>
       </div>
+      <a (click)="navigateToHistory($event)" mat-flat-button>
+        {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.VIEW_HISTORY" | translate }}
+      </a>
     </div>
   </div>
 </ion-content>

@@ -10,7 +10,21 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink } from '@angular/router';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import { DashboardService } from 'src/app/services/dashboard-service/dashboard.service';
-import { finalize, Observable, of } from 'rxjs';
+import {
+  catchError,
+  defaultIfEmpty,
+  defer,
+  filter,
+  finalize,
+  isEmpty,
+  map,
+  mergeMap,
+  Observable,
+  of,
+  switchMap,
+  throwError,
+  withLatestFrom,
+} from 'rxjs';
 import { OverallAttendance } from 'src/app/models/forms/attendance';
 import { StudentPendingInvoice } from 'src/app/models/forms/invoices.model';
 import { CommonModule } from '@angular/common';
@@ -23,7 +37,7 @@ import { MatDividerModule } from '@angular/material/divider';
 
 type Module = {
   name: string;
-  route: string;
+  route: string | null | undefined;
   showBackButton: boolean;
   pageTitle: string;
   icon: string;
@@ -100,7 +114,7 @@ export class DashboardFormComponent {
     },
     {
       name: this._tr.instant('DASHBOARD_PAGE.LABELS.NOTIFICATIONS'),
-      route: '',
+      route: null,
       showBackButton: false,
       pageTitle: this._tr.instant('DASHBOARD_PAGE.LABELS.NOTIFICATIONS'),
       icon: 'bell-fill',
@@ -119,7 +133,7 @@ export class DashboardFormComponent {
     private _tr: TranslateService,
     private unsubscribe: UnsubscribeService,
     private dashboardService: DashboardService,
-    private loadingService: LoadingService,
+    private _loading: LoadingService,
     private apiService: ApiService,
     private platform: Platform
   ) {
@@ -164,171 +178,49 @@ export class DashboardFormComponent {
       `/assets/figma`
     );
   }
-  openFeesPage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.SCHOOL_FEES')
-      .pipe(this.unsubscribe.takeUntilDestroy)
+  openDashboardModule(moduleObj: Module) {
+    of(moduleObj)
+      .pipe(
+        filter((mod) => mod.route != null),
+        defaultIfEmpty(null),
+        mergeMap((value) =>
+          value === null ? throwError(() => 'NOT_FOUND') : of(value as Module)
+        ),
+        catchError((err) => {
+          const body = {
+            Facility_Reg_Sno:
+              this.dashboardService.selectedStudent.Facility_Reg_Sno,
+            Admission_No: this.dashboardService.selectedStudent.Admission_No,
+          };
+          this._loading
+            .open()
+            .pipe(
+              switchMap((loading) =>
+                this.apiService.getEventList(body).pipe(
+                  finalize(() => {
+                    loading && loading.close();
+                    this._appConfig
+                      .openAlertMessageBox(
+                        'DEFAULTS.INFO',
+                        'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
+                      )
+                      .subscribe();
+                  })
+                )
+              )
+            )
+            .subscribe();
+          throw err;
+        })
+      )
       .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/fees'], {
+        next: (value) =>
+          this.router.navigate([value.route], {
             queryParams: {
-              'show-back-button': true,
-              'page-title': message,
+              'show-back-button': value.showBackButton,
+              'page-title': value.pageTitle,
             },
-          });
-        },
-        error: (err) => console.error(err),
-      });
-  }
-  openTimetablePage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.TIME_TABLE')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/time-table'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-            },
-          });
-        },
-        error: (err) => console.error(err),
-      });
-  }
-  openResultsPage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.RESULTS')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/results'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-            },
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
-  openAttendancePage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.ATTENDANCE')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/attendance'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-            },
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
-  openLibraryPage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.LIBRARY')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/library'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-            },
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
-  openBooksPage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.BOOKS')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/books'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-            },
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
-  requestEventDetails(event: MouseEvent) {
-    this.loadingService
-      .startLoading()
-      .then((loading) => {
-        let body = {
-          Facility_Reg_Sno:
-            this.dashboardService.selectedStudent.Facility_Reg_Sno,
-          Admission_No: this.dashboardService.selectedStudent.Admission_No,
-        };
-        this.apiService
-          .getEventList(body)
-          .pipe(
-            this.unsubscribe.takeUntilDestroy,
-            finalize(() => this.loadingService.dismiss())
-          )
-          .subscribe({
-            next: (res) => {
-              if (res && res[0] && res[0].Status === 'No events available') {
-                this._appConfig
-                  .openAlertMessageBox(
-                    'DEFAULTS.INFO',
-                    'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
-                  )
-                  .subscribe();
-              } else {
-                this._appConfig
-                  .openAlertMessageBox(
-                    'DEFAULTS.WARNING',
-                    'DASHBOARD_PAGE.ERRORS.NO_EVENTS_AVAILABLE'
-                  )
-                  .subscribe();
-              }
-            },
-            error: (err) => console.error('Failed to fetch event details', err),
-          });
-      })
-      .catch((err) => console.error(err));
-  }
-  openGetSupportPage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.GET_SUPPORT')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/get-support'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-            },
-          });
-        },
-        error: (e) => console.error(e),
-      });
-  }
-  openUpcomingFeesPage(event: MouseEvent) {
-    this._tr
-      .get('DASHBOARD_PAGE.LABELS.SCHOOL_FEES')
-      .pipe(this.unsubscribe.takeUntilDestroy)
-      .subscribe({
-        next: (message) => {
-          this.router.navigate(['/tabs/tab-1/fees'], {
-            queryParams: {
-              'show-back-button': true,
-              'page-title': message,
-              'is-pending-fee': true,
-            },
-          });
-        },
-        error: (err) => console.error(err),
+          }),
       });
   }
   get modules$() {

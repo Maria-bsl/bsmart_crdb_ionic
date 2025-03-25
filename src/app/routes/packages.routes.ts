@@ -26,6 +26,13 @@ export const routes: Routes = [
             (c) => c.SubscriptionPageComponent
           ),
       },
+      {
+        path: 'history',
+        loadComponent: () =>
+          import('../pages/package-history/package-history.component').then(
+            (c) => c.PackageHistoryComponent
+          ),
+      },
     ],
   },
 ];

@@ -4,9 +4,28 @@ import { EventEmitter, Injectable, OnDestroy, signal } from '@angular/core';
 //   C2BMpesaResponse,
 //   SessionKey,
 // } from 'src/app/core/interfaces/c2b-mpesa';
-//import * as crypto from 'crypto';
-import { from, retry, catchError, Observable, firstValueFrom } from 'rxjs';
-import { LoadingService } from '../loading-service/loading.service';
+import {
+  from,
+  retry,
+  catchError,
+  Observable,
+  firstValueFrom,
+  iif,
+  of,
+  map,
+  filter,
+  pairwise,
+  tap,
+  switchMap,
+  finalize,
+  concatMap,
+  defaultIfEmpty,
+  throwError,
+} from 'rxjs';
+import {
+  filterNotNull,
+  LoadingService,
+} from '../loading-service/loading.service';
 //import { UnsubscriberService } from '../unsubscriber/unsubscriber.service';
 import { toast } from 'ngx-sonner';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +41,9 @@ import {
   C2BMpesaResponse,
 } from 'src/app/models/forms/mpesa.model';
 import * as forge from 'node-forge';
+import { environment } from 'src/environments/environment';
+import { ApiService } from '../api-service/api.service';
+import { SharedService } from '../shared-service/shared.service';
 
 const GENERATE_SESSION_KEY_ENDPOINT =
   'https://openapi.m-pesa.com/sandbox/ipg/v2/vodacomTZN/getSession/';
@@ -33,21 +55,17 @@ const REQUEST_C2B_ENDPOINT =
   providedIn: 'root',
 })
 export class PayWithMpesaService {
-  transactionCompleted: EventEmitter<boolean> = new EventEmitter(false);
+  //transactionCompleted: EventEmitter<boolean> = new EventEmitter(false);
   isLoading = signal<boolean>(false);
   constructor(
-    private loadingService: LoadingService,
     private unsubscribe: UnsubscribeService,
     private tr: TranslateService,
     private appConfig: AppConfigService,
-    private router: Router
+    private _shared: SharedService
   ) {}
-  private _publicKeyBase64 =
-    'MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEArv9yxA69XQKBo24BaF/D+fvlqmGdYjqLQ5WtNBb5tquqGvAvG3WMFETVUSow/LizQalxj2ElMVrUmzu5mGGkxK08bWEXF7a1DEvtVJs6nppIlFJc2SnrU14AOrIrB28ogm58JjAl5BOQawOXD5dfSk7MaAA82pVHoIqEu0FxA8BOKU+RGTihRU+ptw1j4bsAJYiPbSX6i71gfPvwHPYamM0bfI4CmlsUUR3KvCG24rB6FNPcRBhM3jDuv8ae2kC33w9hEq8qNB55uw51vK7hyXoAa+U7IqP1y6nBdlN25gkxEA8yrsl1678cspeXr+3ciRyqoRgj9RD/ONbJhhxFvt1cLBh+qwK2eqISfBb06eRnNeC71oBokDm3zyCnkOtMDGl7IvnMfZfEPFCfg5QgJVk1msPpRvQxmEsrX9MQRyFVzgy2CWNIb7c+jPapyrNwoUbANlN8adU1m6yOuoX7F49x+OjiG2se0EJ6nafeKUXw/+hiJZvELUYgzKUtMAZVTNZfT8jjb58j8GVtuS+6TM2AutbejaCV84ZK58E2CRJqhmjQibEUO6KPdD7oTlEkFy52Y1uOOBXgYpqMzufNPmfdqqqSM4dU70PO8ogyKGiLAIxCetMjjm6FCMEA3Kc8K0Ig7/XtFm9By6VxTJK1Mg36TlHaZKP6VzVLXMtesJECAwEAAQ==';
-  private _apiKey = 'RhldyLF56YkXbhusKjaS6VnT4X480ADP';
   private encryptedToken(publicKey: string, token: string): string {
-    const publicKeyPem = `-----BEGIN PUBLIC KEY-----\n${publicKey}\n-----END PUBLIC KEY-----`;
     try {
+      const publicKeyPem = `-----BEGIN PUBLIC KEY-----\n${publicKey}\n-----END PUBLIC KEY-----`;
       const forgePublicKey = forge.pki.publicKeyFromPem(publicKeyPem);
       const encryptedBytes = forgePublicKey.encrypt(token, 'RSAES-PKCS1-V1_5');
       const encryptedBase64 = forge.util.encode64(encryptedBytes);
@@ -114,7 +132,7 @@ export class PayWithMpesaService {
   }
   private sendC2BRequest(payment: C2BMpesaPayment, sessionKey: SessionKey) {
     const token = this.encryptedToken(
-      this._publicKeyBase64,
+      environment.MPESA_PUBLIC_KEY,
       sessionKey.output_SessionID
     );
     AbortSignal.timeout ??= function timeout(ms) {
@@ -176,89 +194,121 @@ export class PayWithMpesaService {
     let message = 'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED';
     switch (res.output_ResponseCode) {
       case 'INS-2051': //MSISDN invalid
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-2006': //Insufficient balance
         message = 'SUBSCRIPTION_PAGE.ERRORS.INSUFFICIENT_FUNDS';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-998': //Invalid Market
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-997': //API Not Enabled
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-996': //API Used outside of usage time
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-995': //API Single Transaction Limit Breached
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-994': //Organization Transaction Value Limit Breached
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-993	': //Organization Transaction Count Limit Breached
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-992': //Multiple Limits Breached
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-991': //Customer Transaction Count Limit Breached
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-990': //Customer Transaction Value Limit Breached
         message = 'SUBSCRIPTION_PAGE.ERRORS.CUSTOMER_TRANSACTION_LIMIT_REACHED';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-30': //Invalid Purchased Items Description Used
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-28': //Invalid ThirdPartyConversationID Used
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-26': //Invalid Currency Used
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-21': //Parameter validations failed. Please try again.
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-20': //Not All Parameters Provided. Please try again.
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-17': //Invalid Transaction Reference. Length Should Be Between 1 and 20.
         message = 'SUBSCRIPTION_PAGE.ERRORS.INVALID_REFERENCE_NUMBER';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-15': //Invalid Amount Used
         message = 'SUBSCRIPTION_PAGE.ERRORS.INVALID_AMOUNT_USED';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-13': //Invalid Shortcode Used
         message = 'SUBSCRIPTION_PAGE.ERRORS.INVALID_SHORT_CODE';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-10': //Duplicate Transaction
         message = 'SUBSCRIPTION_PAGE.ERRORS.DUPLICATE_TRANSACTION';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-9': //Request timeout
         message = 'SUBSCRIPTION_PAGE.ERRORS.TRANSACTION_CANCELLED';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-6': //Transaction Failed
         message = 'SUBSCRIPTION_PAGE.ERRORS.TRANSACTION_FAILED_CHECK_PIN';
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-1': //Internal Error
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
       case 'INS-0': //Request processed successfully
-        let successText = await firstValueFrom(this.tr.get('DEFAULTS.SUCCESS'));
-        let text = await firstValueFrom(
-          this.tr.get('SUBSCRIPTION_PAGE.LABELS.TRANSACTION_COMPLETED')
+        const ref = this.appConfig.openStatePanel(
+          'success',
+          this.tr.instant('SUBSCRIPTION_PAGE.LABELS.TRANSACTION_COMPLETED'),
+          true
         );
-        Swal.fire({
-          title: successText,
-          text: text,
-          icon: 'success',
-          heightAuto: false,
-          allowOutsideClick: false,
-        }).then((dialog) => {
-          if (dialog.isConfirmed) {
-            const navigate = (route: string) => {
-              this.router.navigateByUrl(route, {
-                replaceUrl: true,
-              });
-            };
-            location.pathname.includes('package')
-              ? navigate('/home')
-              : navigate('/tabs/tab-1/dashboard');
-          }
+        ref.componentInstance.buttonClicked.asObservable().subscribe({
+          next: () => this._shared.transactionSuccess.emit(),
         });
-        this.transactionCompleted.emit(true);
+        this.isLoading.set(false);
         return;
       default:
-        break;
+        this.appConfig.openAlertMessageBox(title, message).subscribe();
+        this.isLoading.set(false);
+        return;
     }
-    this.appConfig.openAlertMessageBox(title, message);
-    this.isLoading.set(false);
   }
   private parseSendC2BResponse(response$: Observable<C2BMpesaResponse>) {
     response$.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
@@ -266,9 +316,12 @@ export class PayWithMpesaService {
         this.switchC2BResponse(res);
       },
       error: (err) => {
-        let title = 'SUBSCRIPTION_PAGE.ERRORS.FAILED_TRANSACTION';
-        let message = 'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED';
-        this.appConfig.openAlertMessageBox(title, message);
+        this.appConfig
+          .openAlertMessageBox(
+            'SUBSCRIPTION_PAGE.ERRORS.FAILED_TRANSACTION',
+            'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED'
+          )
+          .subscribe();
         this.isLoading.set(false);
       },
     });
@@ -276,7 +329,10 @@ export class PayWithMpesaService {
   makeC2BPayment(payment: C2BMpesaPayment) {
     this.isLoading.set(true);
     const encryptNewSessionKey = () => {
-      const token = this.encryptedToken(this._publicKeyBase64, this._apiKey);
+      const token = this.encryptedToken(
+        environment.MPESA_PUBLIC_KEY,
+        environment.MPESA_APP_API_KEY
+      );
       const generatedSessionKey$ = this.generateKey(token);
       generatedSessionKey$.pipe(this.unsubscribe.takeUntilDestroy).subscribe({
         next: (response) => {
@@ -294,7 +350,7 @@ export class PayWithMpesaService {
           console.error(err);
           const title = 'SUBSCRIPTION_PAGE.ERRORS.FAILED_TRANSACTION';
           const message = 'SUBSCRIPTION_PAGE.ERRORS.PROCESSING_FAILED';
-          this.appConfig.openAlertMessageBox(title, message);
+          this.appConfig.openAlertMessageBox(title, message).subscribe();
           this.isLoading.set(false);
         },
       });

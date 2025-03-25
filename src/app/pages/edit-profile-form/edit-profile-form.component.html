@@ -11,9 +11,12 @@
         (ngSubmit)="submitProfileForm($event)"
       >
         <div class="flex flex-col w-full">
-          <ion-text class="mat-body-small !font-semibold">{{
-            "EDIT_PROFILE_PAGE.FORM.LABELS.PARENT_NAME" | translate
-          }}</ion-text>
+          <ion-text
+            class="mat-body-small !font-semibold text-[var(--mat-sys-on-surface)]"
+            >{{
+              "EDIT_PROFILE_PAGE.FORM.LABELS.PARENT_NAME" | translate
+            }}</ion-text
+          >
           <mat-form-field class="form-field-input">
             <input
               [formControl]="Parent_Name"
@@ -30,9 +33,12 @@
           </mat-form-field>
         </div>
         <div class="flex flex-col w-full">
-          <ion-text class="mat-body-small !font-semibold">{{
-            "EDIT_PROFILE_PAGE.FORM.LABELS.EMAIL_ADDRESS" | translate
-          }}</ion-text>
+          <ion-text
+            class="mat-body-small !font-semibold text-[var(--mat-sys-on-surface)]"
+            >{{
+              "EDIT_PROFILE_PAGE.FORM.LABELS.EMAIL_ADDRESS" | translate
+            }}</ion-text
+          >
           <mat-form-field>
             <input
               [formControl]="Email_Address"
@@ -54,9 +60,12 @@
           </mat-form-field>
         </div>
         <div class="flex flex-col w-full">
-          <ion-text class="mat-body-small !font-semibold" ccc>{{
-            "REGISTER.REGISTER_FORM.LABELS.PHONE_NUMBER" | translate
-          }}</ion-text>
+          <ion-text
+            class="mat-body-small !font-semibold text-[var(--mat-sys-on-surface)]"
+            >{{
+              "REGISTER.REGISTER_FORM.LABELS.PHONE_NUMBER" | translate
+            }}</ion-text
+          >
           <mat-form-field>
             <span matTextPrefix>+255 &nbsp;</span>
             <input

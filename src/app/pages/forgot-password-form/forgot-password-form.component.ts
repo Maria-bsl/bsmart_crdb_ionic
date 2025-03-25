@@ -80,10 +80,9 @@ export class ForgotPasswordFormComponent {
   private displayErrorOccurredText() {
     let failedMessageObs = 'DEFAULTS.FAILED';
     let errorOccuredMessageObs = 'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED';
-    this._appConfig.openAlertMessageBox(
-      failedMessageObs,
-      errorOccuredMessageObs
-    );
+    this._appConfig
+      .openAlertMessageBox(failedMessageObs, errorOccuredMessageObs)
+      .subscribe();
   }
   private requestForgotPassword(body: { Email_Address: string }) {
     this.loadingService.startLoading().then((loading) => {
@@ -96,10 +95,9 @@ export class ForgotPasswordFormComponent {
         .subscribe({
           next: (res: { Status: string; OTP_Code: string | null }[]) => {
             if (!res[0].OTP_Code) {
-              this._appConfig.openAlertMessageBox(
-                'DEFAULTS.WARNING',
-                res[0].Status
-              );
+              this._appConfig
+                .openAlertMessageBox('DEFAULTS.WARNING', res[0].Status)
+                .subscribe();
             } else {
               let message: string = this._tr.instant(
                 'FORGOT_PASSWORD.IF_AN_EMAIL_EXISTS_MESSAGE_WILL_BE_SENT'

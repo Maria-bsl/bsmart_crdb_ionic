@@ -1,15 +1,15 @@
-<form class="flex flex-col w-full h-full bg-white">
+<form class="flex flex-col w-full h-full bg-[var(--mat-sys-surface)]">
   <div class="w-full h-12 relative">
-    <div class="w-full h-full relative bg-gray-100">
+    <div class="w-full h-full relative">
       <h6
-        class="absolute left-0 top-1/2 -translate-y-1/2 mat-title-medium p-4 font-semibold bg-transparent text-black w-full"
+        class="absolute left-0 top-1/2 -translate-y-1/2 mat-title-large p-4 font-semibold bg-transparent text-[var(--mat-sys-on-surface)] w-full"
       >
         {{ data.title }}
       </h6>
     </div>
   </div>
   <mat-divider></mat-divider>
-  <h6 class="mat-label-small !font-normal p-4 text-gray-600">
+  <h6 class="mat-label-small !font-normal p-4 text-[var(--mat-sys-on-surface)]">
     {{ data.message }}
   </h6>
   <mat-divider></mat-divider>

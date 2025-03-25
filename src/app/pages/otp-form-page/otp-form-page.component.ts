@@ -59,7 +59,7 @@ export class OtpFormPageComponent {
   otpCodeConfig$!: Observable<any>;
   formGroup!: FormGroup;
   timer$!: Observable<number>;
-  private resendCodeTimeout: number = 0;
+  private resendCodeTimeout: number = 300;
   constructor(
     private router: Router,
     private activatedRoute$: ActivatedRoute,

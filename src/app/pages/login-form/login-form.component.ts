@@ -22,11 +22,25 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
-import { LoadingService } from 'src/app/services/loading-service/loading.service';
+import {
+  filterNotNull,
+  LoadingService,
+} from 'src/app/services/loading-service/loading.service';
 import { ApiService } from 'src/app/services/api-service/api.service';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import { FLoginForm } from 'src/app/models/forms/login.model';
-import { finalize, switchMap } from 'rxjs';
+import {
+  catchError,
+  EMPTY,
+  filter,
+  finalize,
+  map,
+  mergeMap,
+  of,
+  switchMap,
+  tap,
+  timeout,
+} from 'rxjs';
 import { NavController } from '@ionic/angular/standalone';
 import {
   GetSDetails,
@@ -37,6 +51,9 @@ import {
   ExternalLinks,
   PackageNames,
 } from 'src/app/models/forms/package-names';
+import { AppUtilities } from 'src/app/utils/AppUtilities';
+import { MatDialog } from '@angular/material/dialog';
+import { PayWithMpesaComponent } from 'src/app/components/dialogs/pay-with-mpesa/pay-with-mpesa.component';
 
 @Component({
   selector: 'app-login-form',
@@ -66,7 +83,8 @@ export class LoginFormComponent {
     private _api: ApiService,
     private _appConfig: AppConfigService,
     private _unsubscribe: UnsubscribeService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private _dialog: MatDialog
   ) {
     this.registerIcons();
     this.createLoginFormGroup();
@@ -104,27 +122,63 @@ export class LoginFormComponent {
         switchMap((ref) =>
           this._api.signIn(body).pipe(
             this._unsubscribe.takeUntilDestroy,
+            catchError((err) => {
+              this._appConfig
+                .openAlertMessageBox(
+                  'DEFAULTS.FAILED',
+                  'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED'
+                )
+                .subscribe();
+              throw err;
+            }),
+            filterNotNull(),
+            map((result) => result[0]),
+            tap(
+              (res) =>
+                AppUtilities.hasOwnProperty(res, 'status') &&
+                (res as GetSDetailsErrorStatus).status !== 'Expired' &&
+                this._appConfig
+                  .openAlertMessageBox(
+                    'DEFAULTS.FAILED',
+                    'LOGIN.LOGIN_FORM.ERRORS.USERNAME_OR_PASSWORD_INCORRECT'
+                  )
+                  .subscribe()
+            ),
+            tap(
+              (res) =>
+                AppUtilities.hasOwnProperty(res, 'status') &&
+                (res as GetSDetailsErrorStatus).status === 'Expired' &&
+                this.navCtrl.navigateForward(['/package'], {
+                  queryParams: {
+                    User_Name: btoa(this.User_Name.value),
+                    Password: btoa(this.Password.value),
+                  },
+                })
+            ),
+            filter((res) => !AppUtilities.hasOwnProperty(res, 'status')),
+            tap((res) => {
+              const GetSDetails = JSON.stringify(res);
+              localStorage.setItem('GetSDetails', GetSDetails);
+              localStorage.setItem('User_Name', body.User_Name);
+              localStorage.setItem('Password', body.Password);
+              this.navCtrl.navigateForward(['/home']);
+            }),
             finalize(() => ref && ref.close())
           )
         )
       )
-      .subscribe({
-        next: (res) => login(res),
-        error: (err) =>
-          this._appConfig
-            .openAlertMessageBox(
-              'DEFAULTS.FAILED',
-              'DEFAULTS.ERRORS.UNEXPECTED_ERROR_OCCURED'
-            )
-            .subscribe(),
-      });
+      .subscribe();
   }
   onRegisterClicked(event: MouseEvent) {
     this.router.navigate(['/register'], { replaceUrl: true });
   }
   submitForm(event: MouseEvent) {
+    this.User_Name.setValue(this.User_Name.value.trim());
+    this.Password.setValue(this.Password.value.trim());
     if (this.loginFormGroup.valid) {
-      this.loginUser({ ...this.loginFormGroup.value });
+      this.loginUser({
+        ...this.loginFormGroup.value,
+      });
     } else {
       this.loginFormGroup.markAllAsTouched();
     }

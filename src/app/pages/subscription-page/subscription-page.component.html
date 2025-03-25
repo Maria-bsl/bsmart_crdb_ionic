@@ -2,105 +2,115 @@
   <div
     class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex flex-col bg-[var(--mat-sys-surface-container-high)]"
   >
-    <app-header-section></app-header-section>
-    <div class="flex flex-col w-full p-4 space-y-4">
-      <ng-container *ngIf="package$ && package$ | async as package">
-        <mat-card
-          [class]="
-            package.Package_Name === 'Gold'
-              ? '!bg-[#F7EF6A]'
-              : package.Package_Name === 'Trail'
-              ? '!bg-[#EBDAB0]'
-              : '!bg-[#EAEAEA]'
-          "
-          appearance="raised"
-          class="mx-4 relative"
+    <mat-toolbar
+      class="!w-full flex flex-row items-center justify-between !h-[72px] !p-2 !shadow-sm !bg-[var(--mat-sys-primary)]"
+    >
+      <button
+        (click)="goBack($event)"
+        class="flex flex-row items-center btn w-fit btn-ghost !bg-[var(--mat-sys-tertiary-container)]"
+      >
+        <mat-icon svgIcon="chevron-left" matPrefix></mat-icon>
+        <h6 class="mat-body-large text-left pt-0.5">
+          {{ "SUBSCRIPTION_PAGE.LABELS.MAKE_PAYMENT" | translate }}
+        </h6>
+      </button>
+      <button
+        [matMenuTriggerFor]="menu"
+        mat-icon-button
+        class="!text-[var(--mat-sys-on-primary-fixed)]"
+      >
+        <mat-icon svgIcon="gear" matPrefix></mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          (click)="logoutClicked($event)"
+          mat-menu-item
+          class="flex flex-row items-center !text-[var(--mat-sys-error)]"
         >
-          <div class="flex flex-col w-full">
-            <div class="flex flex-row items-center justify-between px-2">
-              <img
-                class="w-16"
-                [src]="package.Package_Name | switchPackageName"
-                alt=""
-                srcset=""
-              />
-              <mat-chip>
-                {{ "LATEST_SUBSCRIPTIONS_PAGE.LABELS.RENEW" | translate }}
-              </mat-chip>
-            </div>
-            <ion-title class="mat-headline-small !tracking-widest">{{
-              package.Package_Name
-            }}</ion-title>
-            <ng-container *ngIf="package$ && package$ | async as packages">
-              <div class="flex flex-row items-center flex-wrap ml-6 mr-2">
-                <ng-container
-                  *ngFor="
-                    let packageName of package.M_Name?.split(',');
-                    index as ind
-                  "
+          <mat-icon
+            class="!text-[var(--mat-sys-error)]"
+            svgIcon="box-arrow-right"
+          ></mat-icon>
+          <h6 class="mat-body-medium pt-2">
+            {{ "DASHBOARD_PAGE.LABELS.LOGOUT" | translate }}
+          </h6>
+        </button>
+      </mat-menu>
+    </mat-toolbar>
+    <div class="flex flex-col w-full p-4 space-y-4">
+      <div class="w-full grid place-items-center">
+        <h6
+          class="mat-title-large text-[var(--mat-sys-on-surface)] text-center w-full !font-normal"
+        >
+          {{ "SUBSCRIPTION_PAGE.LABELS.MAKE_PAYMENT" | translate }}
+        </h6>
+        <h6
+          class="mat-title-small text-[var(--mat-sys-on-surface)] text-center w-full !font-light"
+        >
+          {{
+            "SUBSCRIPTION_PAGE.LABELS.COMPLETE_YOUR_PAYMENT_BELOW" | translate
+          }}
+        </h6>
+      </div>
+      <div
+        class="w-full h-56 bg-[var(--mat-sys-tertiary-container)] rounded-lg flex flex-col justify-between p-4"
+      >
+        <div
+          *ngIf="package$ | async as packageData"
+          class="flex flex-col justify-between h-full w-full"
+        >
+          <div class="flex flex-col w-full py-1">
+            <img class="w-12" src="assets/images/box.png" alt="" />
+            <h6
+              class="mat-title-large text-[var(--mat-sys-on-tertiary-container)]"
+            >
+              {{ packageData?.Package_Name }}
+            </h6>
+            <ul class="!list-disc flex flex-row items-center flex-wrap">
+              <li
+                *ngFor="
+                  let mName of packageData.M_Name | subscriptionsModuleNames
+                "
+                class="inline mr-2.5"
+              >
+                <h6
+                  class="mat-label-small text-[var(--mat-sys-on-tertiary-container)] !font-light"
                 >
-                  <div class="flex flex-row items-center">
-                    <button class="mat-body-large">
-                      {{ packageName.replace(",", "") }}
-                    </button>
-                    <div
-                      *ngIf="ind !== package.M_Name?.split(',')?.length! - 1"
-                      class="w-2 h-2 bg-black mx-2 rounded-full"
-                    ></div>
-                  </div>
-                </ng-container>
-              </div>
-              <div class="flex flex-row items-center justify-between my-3">
-                <button
-                  class="ml-6 mat-body-small !font-semibold text-gray-500"
-                >
-                  {{
-                    (package.Package_Amount | currency : "TZS") +
-                      "/" +
-                      package.Package_Days +
-                      ("LATEST_SUBSCRIPTIONS_PAGE.LABELS.DAYS" | translate)
-                  }}
-                </button>
-              </div>
-            </ng-container>
+                  {{ mName }}
+                </h6>
+              </li>
+            </ul>
           </div>
-        </mat-card>
-      </ng-container>
-      <div class="flex flex-col w-full px-5 mt-8">
-        <h6 class="mat-title-large">
+          <div class="w-full flex flex-row items-center justify-between">
+            <h6
+              class="mat-label-large text-[var(--mat-sys-on-tertiary-container)] !font-light"
+            >
+              {{ packageData?.Package_Amount | currency : "TZS" }}
+            </h6>
+            <button (click)="openPayWithMpesa()" mat-flat-button>
+              {{ "SUBSCRIPTION_PAGE.LABELS.PAY_NOW" | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col w-full space-y-1">
+        <h6 class="mat-title-small text-[var(--mat-sys-on-surface)]">
           {{ "SUBSCRIPTION_PAGE.LABELS.HOW_WOULD_YOU_LIKE_TO_PAY" | translate }}
         </h6>
-        <div class="flex flex-col w-full space-y-2">
-          <button
-            (click)="openPayWithMpesa()"
-            type="button"
-            matRipple
-            class="flex flex-row items-center justify-between bg-[var(--mat-sys-on-primary)] p-2 rounded h-20"
-          >
-            <ion-text class="mat-body-large">
-              {{ "SUBSCRIPTION_PAGE.LABELS.PAY_WITH_MPESA_TEXT" | translate }}
-            </ion-text>
-            <img
-              class="w-24"
-              src="assets/images/mpesa-vodacom.png"
-              alt=""
-              srcset=""
-            />
-          </button>
-          <button
-            matRipple
-            class="flex flex-row items-center justify-between bg-[var(--mat-sys-color-on-surface)] p-2 rounded h-20"
-          >
-            <ion-text class="mat-body-large">
-              {{ "SUBSCRIPTION_PAGE.LABELS.PAY_WITH_CARD" | translate }}
-            </ion-text>
-            <img
-              class="w-28"
-              src="assets/images/visa-and-mastercard-logo-26.png"
-              alt=""
-              srcset=""
-            />
-          </button>
+        <div
+          (click)="openPayWithMpesa()"
+          matRipple
+          class="flex flex-row items-center justify-between bg-[var(--mat-sys-primary)] p-2 rounded h-20 w-full"
+        >
+          <ion-text class="mat-body-large">
+            {{ "SUBSCRIPTION_PAGE.LABELS.PAY_WITH_MPESA_TEXT" | translate }}
+          </ion-text>
+          <img
+            class="w-24"
+            src="assets/images/mpesa-vodacom.png"
+            alt=""
+            srcset=""
+          />
         </div>
       </div>
     </div>

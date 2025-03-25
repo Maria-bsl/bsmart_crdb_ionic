@@ -133,10 +133,9 @@ export class EditProfileFormComponent {
               for (let [key, value] of form) {
                 if (value !== null && key === 'Status') {
                   hasError = true;
-                  this._appConfig.openAlertMessageBox(
-                    'DEFAULTS.WARNING',
-                    value
-                  );
+                  this._appConfig
+                    .openAlertMessageBox('DEFAULTS.WARNING', value)
+                    .subscribe();
                 }
               }
               !hasError && this.requestParentDetails();
