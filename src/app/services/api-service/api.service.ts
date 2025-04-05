@@ -47,6 +47,7 @@ import {
   C2BMpesaResponse,
   SessionKey,
 } from 'src/app/models/forms/mpesa.model';
+import { IPackageRenew } from 'src/app/pages/subscription-page/subscription-page.component';
 
 @Injectable({
   providedIn: 'root',
@@ -235,13 +236,7 @@ export class ApiService {
   packageRenew(body: {
     User_Name: string;
     Package_Mas_Sno: number;
-  }): Observable<
-    {
-      Package_ControlNumber: string;
-      Package_Amount: number;
-      Package_Mas_Sno: number;
-    }[]
-  > {
+  }): Observable<IPackageRenew[]> {
     const url = `/SchoolDetails/GetPackage_Renew`;
     return this.performPost(url, body, new Map());
   }

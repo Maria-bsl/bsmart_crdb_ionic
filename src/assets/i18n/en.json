@@ -367,7 +367,21 @@
       "CONTROL_NUMBER": "Control number",
       "PAYMENT_MADE_TO_CONTROL_NUMBER": "A payment was made to the control number {{}}.",
       "PACKAGE_HISTORY": "Package history",
-      "YOUR_PACKAGE_HISTORY_LIST": "Your package history list"
+      "YOUR_PACKAGE_HISTORY_LIST": "Your package history list",
+      "PROCESSING_PAYMENT": "Processing Payment",
+      "TRANSACTION_FAILED": "Transaction failed",
+      "TRANSACTION_SUCCESSFUL": "Transaction successful"
+    },
+    "PAY_BY_MPESA": {
+      "DIAL_MESSAGE": "Dial USSD Code *150*00#",
+      "SELECT_FINANCIAL_SERVICES": "Select financial services (6)",
+      "SELECT_MPESA_TO_BANK": "Select Mpesa to bank (2)",
+      "SELECT_BANK": "Select CRDB bank (1)",
+      "ENTER_CONTROL_NUMBER": "Enter the control number that you acquired from the system (2)",
+      "ENTER_THE_AMOUNT": "Enter the requested amount",
+      "ENTER_THE_PIN": "Enter your PIN",
+      "CONFIRM_TRANSACTION": "Enter 1 to confirm or 2 to cancel",
+      "PLEASE_ENTER_PIN": "Please enter your PIN"
     },
     "SUBSCRIBE_FORM": {
       "LABELS": {

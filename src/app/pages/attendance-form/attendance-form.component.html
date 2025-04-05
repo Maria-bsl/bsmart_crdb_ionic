@@ -84,9 +84,10 @@
     </div>
     <ng-template #notFoundTemplate>
       <div class="w-full h-full grid place-items-center">
-        <span class="mat-body-large w-full text-center">{{
-          "ATTENDANCE_PAGE.LABELS.NOT_AVAILABLE" | translate
-        }}</span>
+        <span
+          class="mat-body-small w-full text-center text-[var(--mat-sys-on-surface)]"
+          >{{ "ATTENDANCE_PAGE.LABELS.NOT_AVAILABLE" | translate }}</span
+        >
       </div>
     </ng-template>
   </div>

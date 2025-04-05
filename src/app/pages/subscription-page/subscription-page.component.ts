@@ -1,11 +1,20 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,14 +26,25 @@ import {
   IonTitle,
   IonText,
   NavController,
+  IonModal,
+  IonHeader,
+  IonItem,
+  IonToolbar,
+  IonButton,
+  IonInput,
+  ModalController,
 } from '@ionic/angular/standalone';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
+  bufferCount,
+  concatMap,
+  debounceTime,
   defer,
   filter,
   finalize,
   firstValueFrom,
   from,
+  lastValueFrom,
   map,
   mergeMap,
   Observable,
@@ -32,6 +52,9 @@ import {
   shareReplay,
   switchMap,
   tap,
+  toArray,
+  withLatestFrom,
+  zip,
 } from 'rxjs';
 import { PayWithMpesaComponent } from 'src/app/components/dialogs/pay-with-mpesa/pay-with-mpesa.component';
 import { HeaderSectionComponent } from 'src/app/components/layouts/header-section/header-section.component';
@@ -50,13 +73,23 @@ import {
 import { SharedService } from 'src/app/services/shared-service/shared.service';
 import { UnsubscribeService } from 'src/app/services/unsubscriber/unsubscriber.service';
 import Swal from 'sweetalert2';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
+
+export interface IPackageRenew {
+  Package_ControlNumber: string;
+  Package_Amount: number;
+  Package_Mas_Sno: number;
+}
 
 @Component({
   selector: 'app-subscription-page',
   templateUrl: './subscription-page.component.html',
   styleUrls: ['./subscription-page.component.scss'],
   standalone: true,
+  providers: [AndroidPermissions],
   imports: [
+    IonInput,
+    IonButton,
     IonContent,
     IonButtons,
     IonBackButton,
@@ -74,27 +107,39 @@ import Swal from 'sweetalert2';
     MatTabsModule,
     MatButtonModule,
     MatRippleModule,
+    MatFormFieldModule,
+    MatInputModule,
     HeaderSectionComponent,
     MatChipsModule,
     SubscriptionModuleNamesPipe,
+    IonModal,
+    IonHeader,
+    IonToolbar,
+    IonItem,
+    ReactiveFormsModule,
   ],
 })
 export class SubscriptionPageComponent {
-  //package$!: Observable<IPackage>;
   packagePrices$!: Observable<IPackage[]>;
+  packageRenew$!: Observable<IPackageRenew>;
+  formGroup!: FormGroup;
+  loading = signal<boolean>(false);
   constructor(
     private tr: TranslateService,
     private appConfig: AppConfigService,
     private _dialog: MatDialog,
     private unsubscribe: UnsubscribeService,
-    private navCtrl: NavController,
+    private modalCtrl: ModalController,
     private location: Location,
     private _loading: LoadingService,
     private router: Router,
     private _api: ApiService,
     private activatedRoute: ActivatedRoute,
-    private _shared: SharedService
+    private _shared: SharedService,
+    private _fb: FormBuilder,
+    private androidPermissions: AndroidPermissions
   ) {
+    this.createFormGroup();
     this.registerIcons();
     this.requestStudentPackage();
     const backButton = () => {
@@ -108,6 +153,144 @@ export class SubscriptionPageComponent {
       '/assets/bootstrap-icons'
     );
     this.appConfig.addIcons(['mpesa-vodacom'], '/assets/components');
+  }
+  private createFormGroup() {
+    this.formGroup = this._fb.group({
+      pin: this._fb.control('', [Validators.required]),
+    });
+    this.pin.valueChanges
+      .pipe(
+        filter((value) => value.length >= 4),
+        debounceTime(0),
+        mergeMap((value) =>
+          this.package$.pipe(
+            map((res) => res.Package_Amount),
+            mergeMap((amount) =>
+              this.packageRenew$.pipe(
+                map((res) => [
+                  '*150*00#',
+                  res.Package_ControlNumber,
+                  `${amount}`,
+                  value,
+                  '1',
+                ])
+              )
+            )
+          )
+        )
+        //tap(() => this.loading.set(true))
+      )
+      .subscribe({
+        next: (value) => {
+          const checked$ = of(
+            this.androidPermissions.PERMISSION.CALL_PHONE,
+            this.androidPermissions.PERMISSION.RECEIVE_SMS
+          );
+          checked$
+            .pipe(
+              concatMap((permission?) =>
+                defer(() =>
+                  this.androidPermissions.checkPermission(permission)
+                ).pipe(map((res) => res.hasPermission))
+              ),
+              bufferCount(2)
+            )
+            .subscribe({
+              next: (permissions) => {
+                //this.loading.set(true);
+                !permissions.every((res) => res) &&
+                  value.push('MISSING PERMISSION');
+                this.makePayment(value.join(','));
+              },
+            });
+        },
+        error: (err) => console.error(err),
+        complete: () => console.log('done'),
+      });
+  }
+  private makePayment(payment: string) {
+    this.loading.set(true);
+    const win = window as any;
+    const message = (msg: string) =>
+      this.appConfig.openAlertMessageBox('DEFAULTS.FAILED', msg);
+    const stopReceiver = () => {
+      this.loading.set(false);
+      win.sms.stopReceiving(
+        function () {
+          alert('has stopped receiver Correctly');
+        },
+        function () {
+          alert('Error while stopping the SMS receiver');
+        }
+      );
+    };
+    const startReceiver = () => {
+      const transactionStatus = (
+        state: 'error' | 'success',
+        message: string
+      ) => {
+        const dialog = this.appConfig.openStatePanel(
+          state,
+          this.tr.instant(message)
+        );
+        dialog.afterOpened().subscribe({
+          next: () => this.loading.set(false),
+        });
+        dialog.afterClosed().subscribe({
+          next: () => {
+            this.router.navigate(['/home'], { replaceUrl: true });
+          },
+        });
+      };
+      win.sms.startReceiving(
+        function (msg: string) {
+          const toLower = msg.toLowerCase();
+          const targetStrings = ['imethibitishwa', 'confirmed'];
+          if (targetStrings.some((str) => !toLower.includes(str))) {
+            transactionStatus(
+              'error',
+              'SUBSCRIPTION_PAGE.LABELS.TRANSACTION_FAILED'
+            );
+          } else {
+            transactionStatus(
+              'success',
+              'SUBSCRIPTION_PAGE.LABELS.PAYMENT_SUCCESSFUL'
+            );
+          }
+          stopReceiver();
+        },
+        function () {
+          message('SUBSCRIPTION_PAGE.LABELS.TRANSACTION_FAILED');
+          stopReceiver();
+        }
+      );
+    };
+    const paymentProcess = () => {
+      startReceiver();
+      win.plugins.voIpUSSD.show(
+        payment,
+        function (data: any) {
+          console.log('USSD Success: ' + data);
+        },
+        function (err: any) {
+          console.log('USSD Erreur: ' + err);
+        }
+      );
+    };
+    win.sms.isSupported(
+      (supported: any) => {
+        if (supported) {
+          paymentProcess();
+        } else {
+          message('SUBSCRIPTION_PAGE.LABELS.TRANSACTION_FAILED');
+        }
+      },
+      () => {
+        message('SUBSCRIPTION_PAGE.LABELS.TRANSACTION_FAILED');
+      }
+    );
+    this.createFormGroup();
+    this.modalCtrl.dismiss();
   }
   private registerIcons() {
     const icons = [
@@ -127,6 +310,26 @@ export class SubscriptionPageComponent {
           .pipe(finalize(() => loading && loading.close()))
       ),
       shareReplay(1) // ✅ Ensures that all subscribers get the last emitted value
+    );
+    this.packageRenew$ = this.activatedRoute.queryParams.pipe(
+      map((params) => ({
+        package: JSON.parse(params['package']) as IPackage,
+        User_Name:
+          atob(params['User_Name']) ?? atob(localStorage.getItem('User_Name')!),
+      })),
+      mergeMap((res) =>
+        this._api
+          .packageRenew({
+            User_Name: res.User_Name,
+            Package_Mas_Sno: res.package.Package_Mas_Sno,
+          })
+          .pipe(
+            map((res) => res[0])
+            // filter(
+            //   (res) => res.Package_Amount !== 0 && res.Package_Mas_Sno !== 0
+            // )
+          )
+      )
     );
   }
   private payWithMpesa(bag: IPackage) {
@@ -240,5 +443,8 @@ export class SubscriptionPageComponent {
       ),
       map((values) => values[0])
     );
+  }
+  get pin() {
+    return this.formGroup.get('pin') as FormControl;
   }
 }

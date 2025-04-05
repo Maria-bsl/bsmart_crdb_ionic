@@ -367,7 +367,21 @@
       "CONTROL_NUMBER": "Nambari ya udhibiti",
       "PAYMENT_MADE_TO_CONTROL_NUMBER": "Malipo yalifanywa kwa nambari ya udhibiti {{}}.",
       "PACKAGE_HISTORY": "Historia ya kifurushi",
-      "YOUR_PACKAGE_HISTORY_LIST": "Orodha yako ya historia ya kifurushi"
+      "YOUR_PACKAGE_HISTORY_LIST": "Orodha yako ya historia ya kifurushi",
+      "PROCESSING_PAYMENT": "Tunashughulikia malipo yako",
+      "TRANSACTION_FAILED": "Muamala umeshindwa",
+      "TRANSACTION_SUCCESSFUL": "Muamala umefanikiwa"
+    },
+    "PAY_BY_MPESA": {
+      "DIAL_MESSAGE": "Piga USSD Code *150*00#",
+      "SELECT_FINANCIAL_SERVICES": "Chagua huduma za kifedha (6)",
+      "SELECT_MPESA_TO_BANK": "Tuma pesakwenda benki (2)",
+      "SELECT_BANK": "Chagua CRDB (1)",
+      "ENTER_CONTROL_NUMBER": "Weka namba yako ya malipo uliyo ipata kutoka kwenye mfumo (2)",
+      "ENTER_THE_AMOUNT": "Weka kiasi cha kulipa",
+      "ENTER_THE_PIN": "Weka namba yako ya siri",
+      "CONFIRM_TRANSACTION": "Weka 1 kubali au 2 kusitisha",
+      "PLEASE_ENTER_PIN": "Tafadhali ingiza neno siri"
     },
     "SUBSCRIBE_FORM": {
       "LABELS": {

@@ -6,6 +6,12 @@ import {
   isPlatform,
   IonButton,
   IonText,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonItem,
+  IonButtons,
+  IonInput,
 } from '@ionic/angular/standalone';
 import { NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -54,6 +60,9 @@ import {
 import { AppUtilities } from 'src/app/utils/AppUtilities';
 import { MatDialog } from '@angular/material/dialog';
 import { PayWithMpesaComponent } from 'src/app/components/dialogs/pay-with-mpesa/pay-with-mpesa.component';
+import { PayWithMpesaService } from 'src/app/services/pay-with-mpesa/pay-with-mpesa.service';
+import { environment } from 'src/environments/environment.prod';
+import { OpenaiService } from 'src/app/services/openai-service/openai.service';
 
 @Component({
   selector: 'app-login-form',
@@ -61,6 +70,7 @@ import { PayWithMpesaComponent } from 'src/app/components/dialogs/pay-with-mpesa
   styleUrls: ['./login-form.component.scss'],
   standalone: true,
   imports: [
+    IonInput,
     IonText,
     TranslateModule,
     CommonModule,
@@ -72,6 +82,13 @@ import { PayWithMpesaComponent } from 'src/app/components/dialogs/pay-with-mpesa
     IonButton,
     RouterLink,
     HasFormControlErrorPipe,
+    IonModal,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonItem,
+    IonTitle,
   ],
 })
 export class LoginFormComponent {
@@ -84,7 +101,8 @@ export class LoginFormComponent {
     private _appConfig: AppConfigService,
     private _unsubscribe: UnsubscribeService,
     private navCtrl: NavController,
-    private _dialog: MatDialog
+    private _mpesa: PayWithMpesaService,
+    private _openAi: OpenaiService
   ) {
     this.registerIcons();
     this.createLoginFormGroup();

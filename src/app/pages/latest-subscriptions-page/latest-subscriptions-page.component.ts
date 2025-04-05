@@ -388,6 +388,9 @@ export class LatestSubscriptionsPageComponent {
                     ),
                     'is-pending-fee': true,
                     package: JSON.stringify(value),
+                    User_Name: btoa(
+                      params['User_Name'] ?? localStorage.getItem('User_Name')!
+                    ),
                   },
                 })
               )
@@ -423,7 +426,13 @@ export class LatestSubscriptionsPageComponent {
         error: (err) => console.error(err),
       });
   }
+  goBack(event: MouseEvent) {
+    this.appConfig.goBack();
+  }
   get activePackage() {
     return this.formGroup.get('activePackage') as FormControl;
+  }
+  get isLoggedInPackage() {
+    return !!localStorage.getItem('User_Name');
   }
 }

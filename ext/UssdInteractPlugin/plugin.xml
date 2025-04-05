@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<plugin
+  id="io.bsmartcrdb.ussdinteract"
+  version="0.0.1"
+  xmlns="http://apache.org/cordova/ns/plugins/1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+><name>UssdInteractPlugin</name><js-module
+    name="UssdInteractPlugin"
+    src="www/UssdInteractPlugin.js"
+  ><clobbers target="cordova.plugins.UssdInteractPlugin" /></js-module><platform
+    name="android"
+  ><config-file parent="/*" target="res/xml/config.xml"><feature
+        name="UssdInteractPlugin"
+      ><param
+          name="android-package"
+          value="io.bsmartcrdb.ussdinteract.UssdInteractPlugin"
+        /></feature></config-file><config-file
+      parent="/*"
+      target="AndroidManifest.xml"
+    /><source-file
+      src="src/android/UssdInteractPlugin.java"
+      target-dir="src/io/bsmartcrdb/ussdinteract/UssdInteractPlugin"
+    /></platform></plugin>

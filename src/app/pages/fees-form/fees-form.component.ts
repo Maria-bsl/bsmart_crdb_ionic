@@ -76,7 +76,6 @@ export class FeesFormComponent {
         })
       )
     );
-  //s_tabCurrentIndex = signal<number>(0);
   tabCurrentIndex$!: Observable<number>;
   constructor(
     private _appConfig: AppConfigService,

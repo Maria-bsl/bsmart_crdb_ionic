@@ -1,7 +1,8 @@
 {
-  "name": "bsmart_crdb_mobile_app",
+  "name": "bsmartacademia",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular-standalone"
 }

@@ -5,7 +5,10 @@
     <mat-toolbar
       class="!w-full flex flex-row items-center justify-between !h-[72px] !p-2 !shadow-sm !bg-[var(--mat-sys-primary)]"
     >
-      <button class="flex flex-row items-center btn !p-0 w-fit btn-ghost">
+      <button
+        *ngIf="!isLoggedInPackage; else isLoggedInPackageTemplate"
+        class="flex flex-row items-center btn !p-0 w-fit btn-ghost"
+      >
         <span
           class="w-10 h-10 rounded-full bg-[var(--mat-sys-on-primary-fixed-variant)] relative grid place-items-center"
         >
@@ -29,6 +32,17 @@
           </h6>
         </div>
       </button>
+      <ng-template #isLoggedInPackageTemplate>
+        <button
+          (click)="goBack($event)"
+          class="flex flex-row items-center btn w-fit btn-ghost !bg-[var(--mat-sys-tertiary-container)]"
+        >
+          <mat-icon svgIcon="chevron-left" matPrefix></mat-icon>
+          <h6 class="mat-body-large text-left pt-0.5">
+            {{ "SUBSCRIPTION_PAGE.LABELS.SUBSCRIBE" | translate }}
+          </h6>
+        </button>
+      </ng-template>
       <button
         [matMenuTriggerFor]="menu"
         mat-icon-button

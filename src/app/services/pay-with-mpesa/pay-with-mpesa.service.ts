@@ -63,7 +63,7 @@ export class PayWithMpesaService {
     private appConfig: AppConfigService,
     private _shared: SharedService
   ) {}
-  private encryptedToken(publicKey: string, token: string): string {
+  encryptedToken(publicKey: string, token: string): string {
     try {
       const publicKeyPem = `-----BEGIN PUBLIC KEY-----\n${publicKey}\n-----END PUBLIC KEY-----`;
       const forgePublicKey = forge.pki.publicKeyFromPem(publicKeyPem);

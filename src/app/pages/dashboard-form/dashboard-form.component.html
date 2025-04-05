@@ -239,119 +239,83 @@
               >
             </mat-card>
           </ng-container>
-
-          <!-- <a
-            (click)="openFeesPage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
-          >
-            <mat-icon
-              matPrefix
-              svgIcon="ic_holiday"
-              class="scale-150"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.FEES" | translate
-            }}</ion-text>
-          </a>
-          <a
-            (click)="openTimetablePage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
-          >
-            <mat-icon
-              matPrefix
-              svgIcon="calendar-date-fill"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.TIME_TABLE" | translate
-            }}</ion-text>
-          </a>
-          <a
-            (click)="openResultsPage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
-          >
-            <mat-icon
-              matPrefix
-              svgIcon="file-earmark-bar-graph-fill"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.RESULTS" | translate
-            }}</ion-text>
-          </a>
-          <a
+        </div>
+      </div>
+      <div class="flex flex-col w-full py-4 px-2">
+        <h1 class="mat-headline-small text-[var(--mat-sys-on-surface)]">
+          {{ "DASHBOARD_PAGE.STATISTICS_TEXT" | translate }}
+        </h1>
+        <div class="flex flex-col w-full space-y-2">
+          <mat-card
             (click)="openAttendancePage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+            class="!w-full"
+            appearance="raised"
           >
-            <mat-icon
-              matPrefix
-              svgIcon="calendar-check-fill"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.ATTENDANCE" | translate
-            }}</ion-text>
-          </a>
-          <a
-            (click)="openLibraryPage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
+            <mat-card-content
+              matRipple
+              class="!flex !flex-row !items-center relative space-x-2"
+            >
+              <mat-icon svgIcon="graduate"></mat-icon>
+              <h6 class="mat-body-medium pl-2 text-[var(--mat-sys-on-surface)]">
+                {{ "DASHBOARD_PAGE.LABELS.ATTENDANCE_RECORD_TEXT" | translate }}
+                <span class="!font-semibold">
+                  <ng-container
+                    *ngIf="
+                      overallAttendance$ && overallAttendance$
+                        | async as overallAttendance
+                    "
+                  >
+                    @if (overallAttendance.length > 0) {
+                    {{ overallAttendance[0].Present }}
+                    } @else {
+                    {{ "0%" }}
+                    }
+                  </ng-container>
+                </span>
+              </h6>
+              <mat-icon
+                class="!text-[var(--mat-sys-inverse-primary)] absolute right-2 top-1/2 -translate-y-1/2"
+                svgIcon="chevron-right"
+              ></mat-icon>
+            </mat-card-content>
+          </mat-card>
+          <mat-card
+            (click)="openUpcomingFeesPage($event)"
+            class="!w-full"
+            appearance="raised"
           >
-            <mat-icon
-              matPrefix
-              svgIcon="book-fill"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.LIBRARY" | translate
-            }}</ion-text>
-          </a>
-          <a
-            (click)="openBooksPage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
-          >
-            <mat-icon
-              matPrefix
-              svgIcon="bookshelf"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.BOOKS" | translate
-            }}</ion-text>
-          </a>
-          <a
-            (click)="requestEventDetails($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
-          >
-            <mat-icon
-              matPrefix
-              svgIcon="bell-fill"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.NOTIFICATIONS" | translate
-            }}</ion-text>
-          </a>
-          <a
-            (click)="openGetSupportPage($event)"
-            matRipple
-            class="grid place-items-center shadow-sm px-2 py-3 gap-y-3 rounded bg-[var(--mat-sys-on-primary)]"
-          >
-            <mat-icon
-              matPrefix
-              svgIcon="headset"
-              class="scale-150 !text-[var(--mat-sys-inverse-primary)]"
-            ></mat-icon>
-            <ion-text class="mat-label-small capitalize">{{
-              "DASHBOARD_PAGE.LABELS.GET_SUPPORT" | translate
-            }}</ion-text>
-          </a> -->
+            <mat-card-content
+              matRipple
+              class="!flex !flex-row !items-center relative space-x-2"
+            >
+              <mat-icon svgIcon="mandombe"></mat-icon>
+              <h6 class="mat-body-medium pl-2 text-[var(--mat-sys-on-surface)]">
+                {{ "DASHBOARD_PAGE.LABELS.FEES_RECORD_TEXT" | translate }}
+                <span class="!font-semibold">
+                  <ng-container
+                    *ngIf="
+                      pendingStudentInvoices$ && pendingStudentInvoices$
+                        | async as pendingStudentInvoices
+                    "
+                  >
+                    @if (pendingStudentInvoices.length > 0) {
+                    {{
+                      pendingStudentInvoices
+                        | accumulateArrayValue : "Pending_Amount"
+                        | currency : "TZS"
+                    }}
+                    } @else {
+                    {{ 0 | currency : "TZS" }}
+                    }
+                  </ng-container>
+                </span>
+              </h6>
+              <mat-icon
+                class="!text-[var(--mat-sys-inverse-primary)] absolute right-2 top-1/2 -translate-y-1/2"
+                svgIcon="chevron-right"
+              ></mat-icon>
+            </mat-card-content>
+          </mat-card>
         </div>
       </div>
     </div>

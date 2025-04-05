@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 
+
 android {
     namespace "com.bizlogicsolutions.bsmart.crdb"
     compileSdk rootProject.ext.compileSdkVersion

@@ -223,6 +223,39 @@ export class DashboardFormComponent {
           }),
       });
   }
+  openAttendancePage(event: MouseEvent) {
+    this._tr
+      .get('DASHBOARD_PAGE.LABELS.ATTENDANCE')
+      .pipe(this.unsubscribe.takeUntilDestroy)
+      .subscribe({
+        next: (message) => {
+          this.router.navigate(['/tabs/tab-1/attendance'], {
+            queryParams: {
+              'show-back-button': true,
+              'page-title': message,
+            },
+          });
+        },
+        error: (e) => console.error(e),
+      });
+  }
+  openUpcomingFeesPage(event: MouseEvent) {
+    this._tr
+      .get('DASHBOARD_PAGE.LABELS.SCHOOL_FEES')
+      .pipe(this.unsubscribe.takeUntilDestroy)
+      .subscribe({
+        next: (message) => {
+          this.router.navigate(['/tabs/tab-1/fees'], {
+            queryParams: {
+              'show-back-button': true,
+              'page-title': message,
+              'is-pending-fee': true,
+            },
+          });
+        },
+        error: (err) => console.error(err),
+      });
+  }
   get modules$() {
     return of(this.modules);
   }

@@ -111,7 +111,11 @@ export class HeaderSectionComponent {
                 localStorage.clear();
                 setTimeout(() => {
                   this._loading.dismiss();
-                  this.router.navigate(['/login']);
+                  this.router.navigate(['/login']).then(() => {
+                    Object.keys(localStorage).forEach((key) =>
+                      localStorage.removeItem(key)
+                    );
+                  });
                 }, 680);
               });
             },

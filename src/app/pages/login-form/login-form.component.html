@@ -1,4 +1,31 @@
-<div id="clickpesa-payout-widget"></div>
+<ion-modal class="!z-[1000]" trigger="open-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button>Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="submitForm($event)" [strong]="true"
+            >Confirm</ion-button
+          >
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding !z-[1000]">
+      <ion-item>
+        <ion-input
+          label="Enter your name"
+          labelPlacement="stacked"
+          type="text"
+          placeholder="Your name"
+        ></ion-input>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
 <div class="w-full h-full flex flex-col">
   <div class="w-full h-24 flex flex-row items-center justify-between px-4 py-2">
     <h6 class="text-[var(--mat-sys-on-primary)] mat-headline-small">
@@ -98,6 +125,7 @@
       <ion-button color="primary" type="submit">{{
         "LOGIN.LOGIN_FORM.ACTIONS.SUBMIT" | translate
       }}</ion-button>
+      <!-- <ion-button id="open-modal" expand="block">Open</ion-button> -->
       <div class="w-full">
         <h6 class="mat-label-small w-full text-center my-4">
           {{ "LOGIN.LOGIN_FORM.LABELS.DONT_HAVE_AN_ACCOUNT" | translate }}
